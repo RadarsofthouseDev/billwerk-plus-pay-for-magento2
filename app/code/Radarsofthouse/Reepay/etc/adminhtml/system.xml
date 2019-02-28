@@ -1,0 +1,162 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="payment">
+			<group id="reepay_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label">
+				<label>Reepay payment</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+
+				</field>
+				<field id="private_key_test" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="21" translate="label" type="text">
+					<label>Private API Key For Test</label>
+					<comment>
+						you can find at https://admin.reepay.com under "Developers" >> "API Credentials".</comment>
+				</field>
+				<field id="private_key" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="23" translate="label" type="text">
+					<label>Private API Key</label>
+					<comment>
+						you can find at https://admin.reepay.com under "Developers" >> "API Credentials".</comment>
+				</field>
+				<field id="api_key_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="24" translate="label" type="select">
+					<label>API Key Type</label>
+					<comment/>
+					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Keytype</source_model>
+				</field>
+				<field id="display_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label>Display type</label>
+					<comment/>
+					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Displaytype</source_model>
+				</field>
+				<field id="auto_capture" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label>Autocapture</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<!-- <field id="send_email_after_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="select">
+                    <label>Send email after payment</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field> -->
+				<field id="order_status_before_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label>Order status before the payment is made</label>
+					<comment>Suggest to use "Pending"</comment>
+					<source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+				</field>
+				<field id="order_status_after_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="select">
+					<label>Order status when the payment is made</label>
+					<comment>Suggest to use "Processing"</comment>
+					<source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="allowwed_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label>Allowed payments</label>
+					<comment/>
+					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Allowwedpayment</source_model>
+				</field>
+				<field id="payment_icons" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="81" translate="label" type="multiselect">
+					<label>Payment icons</label>
+					<comment/>
+					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Paymenticons</source_model>
+				</field>
+				<field id="log" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="85" translate="label" type="select">
+					<label>Log</label>
+					<comment/>
+					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Log</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+			<group id="reepay_viabill" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Reepay Viabill</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Viabill icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+			<group id="reepay_mobilepay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Reepay Mobilepay</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Viabill icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<css src="Radarsofthouse_Reepay::css/reepay.css" />
+		<script src="https://checkout.reepay.com/checkout.js" src_type="url"/>
+	</head>
+	<body>
+		<referenceContainer name="header.container" remove="true"/>
+		<referenceBlock name="catalog.topnav" remove="true"/>
+		<referenceContainer name="footer-container" remove="true"/>
+		<referenceContainer name="content">
+			<block class="Radarsofthouse\Reepay\Block\Standard\Redirect" name="reepay_standard_redirect" template="Radarsofthouse_Reepay::standard/default.phtml" cacheable="false" />
+		</referenceContainer>
+	</body>
+</page>

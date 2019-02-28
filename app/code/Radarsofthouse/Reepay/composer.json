@@ -1,0 +1,25 @@
+{
+    "name": "radarsofthouse/module-reepay",
+    "description": "payment with reepay.com",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "email": "info@mage2gen.com",
+            "name": "Mage2Gen"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Radarsofthouse\\Reepay\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

@@ -1,0 +1,9 @@
+<?php $paymentIcons = $this->getPaymentIcons(); ?>
+<?php if (count($paymentIcons) > 0): ?>
+    <?php foreach ($paymentIcons as $paymentIcon): ?>
+        <img class="reepay-payment-icon" src="<?php echo $this->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/'.$paymentIcon.'.png'); ?>">
+    <?php endforeach; ?>
+<?php endif; ?>
+
+
+

@@ -1,0 +1,398 @@
+<?php
+
+namespace Radarsofthouse\Reepay\Client;
+
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
+
+/**
+ * Class Api
+ *
+ * @package Radarsofthouse\Reepay\Client
+ */
+class Api
+{
+    const BASE_URI = 'https://api.reepay.com/v1/';
+    const TIMEOUT = 10;
+    const VERSION = '1.0.0';
+
+    private $client;
+    private $privateKey;
+    private $requestSuccessful = false;
+    private $httpError = '';
+    private $errors = [];
+    private $lastResponse = [];
+    private $lastRequest = [];
+
+    /**
+     * Index constructor.
+     *
+     */
+    public function __construct()
+    {
+        $this->initClient();
+    }
+
+    /**
+     * initialize
+     *
+     */
+    private function initClient()
+    {
+        $this->client = new Client([
+            'base_uri' => static::BASE_URI,
+            RequestOptions::TIMEOUT => self::TIMEOUT,
+            RequestOptions::VERIFY => false,
+        ]);
+        $this->lastResponse = [
+            'headers' => null,
+            'body' => null,
+        ];
+    }
+
+    /**
+     * set private key
+     *
+     * @param string
+     * @return void
+     */
+    public function setPrivateKey($privateKey)
+    {
+        $this->privateKey = $privateKey;
+    }
+
+    /**
+     * Get last error
+     *
+     * @return bool
+     */
+    public function getHttpError()
+    {
+        return $this->httpError ?: false;
+    }
+
+    /**
+     * Get array of errors
+     *
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
+     * Get last response
+     *
+     * @return mixed
+     */
+    public function getLastResponse()
+    {
+        return $this->lastResponse;
+    }
+
+    /**
+     * Get last request
+     *
+     * @return mixed
+     */
+    public function getLastRequest()
+    {
+        return $this->lastRequest;
+    }
+
+    /**
+     * Get last request status
+     *
+     * @return bool
+     */
+    public function success()
+    {
+        return $this->requestSuccessful;
+    }
+
+    /**
+     * Perform a DELETE request
+     *
+     * @param string $endpoint
+     * @param array $args
+     * @param int $timeout
+     * @return mixed
+     * @throws \Exception
+     */
+    public function delete($apiKey, $endpoint, $args = [], $timeout = self::TIMEOUT)
+    {
+        $this->setPrivateKey($apiKey);
+
+        return $this->request('delete', $endpoint, $args, $timeout);
+    }
+
+    /**
+     * Perform a GET request
+     *
+     * @param $endpoint
+     * @param array $args
+     * @param int $timeout
+     * @return mixed
+     * @throws \Exception
+     */
+    public function get($apiKey, $endpoint, $args = [], $timeout = self::TIMEOUT)
+    {
+        $this->setPrivateKey($apiKey);
+
+        return $this->request('get', $endpoint, $args, $timeout);
+    }
+
+    /**
+     * Perform a PATCH request
+     *
+     * @param string $endpoint
+     * @param array $args
+     * @param int $timeout
+     * @return mixed
+     * @throws \Exception
+     */
+    public function patch($apiKey, $endpoint, $args = [], $timeout = self::TIMEOUT)
+    {
+        $this->setPrivateKey($apiKey);
+
+        return $this->request('patch', $endpoint, $args, $timeout);
+    }
+
+    /**
+     * Perform a POST request
+     *
+     * @param string $endpoint
+     * @param array $args
+     * @param int $timeout
+     * @return mixed
+     * @throws \Exception
+     */
+    public function post($apiKey, $endpoint, $args = [], $timeout = self::TIMEOUT)
+    {
+        $this->setPrivateKey($apiKey);
+
+        return $this->request('post', $endpoint, $args, $timeout);
+    }
+
+    /**
+     * Perform a PUT request
+     *
+     * @param string $endpoint
+     * @param array $args
+     * @param int $timeout
+     * @return mixed
+     * @throws \Exception
+     */
+    public function put($apiKey, $endpoint, $args = [], $timeout = self::TIMEOUT)
+    {
+        $this->setPrivateKey($apiKey);
+
+        return $this->request('put', $endpoint, $args, $timeout);
+    }
+
+    /**
+     * Perform an API request request
+     *
+     * @param $verb
+     * @param $endpoint
+     * @param array $args
+     * @param int $timeout
+     * @param bool $isCheckout
+     * @return mixed
+     * @throws \Exception
+     */
+    private function request($verb, $endpoint, $args = [], $timeout = self::TIMEOUT)
+    {
+        $url = static::BASE_URI . $endpoint;
+        $response = $this->prepareStateForRequest($verb, $endpoint, $url, $timeout);
+        $responseContent = null;
+        $options = [
+            RequestOptions::VERSION => 1.0,
+            RequestOptions::AUTH => [$this->privateKey, 'password'],
+            RequestOptions::HEADERS => [
+                'User-Agent' => 'magento/ba460eaaf82cf719170e3365f63094c4',
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'X-Client-Version' => self::VERSION,
+                'X-Magento-Version' => $this->getMagentoVersion(),
+                'X-Magento-Edition' => $this->getMagentoEdition(),
+            ],
+        ];
+
+        try {
+            switch ($verb) {
+                case 'post':
+                    $options[RequestOptions::JSON] = $args;
+                    $this->lastRequest['body'] = json_encode($args);
+                    $responseContent = $this->client->post($url, $options);
+
+                    break;
+                case 'get':
+                    $options[RequestOptions::QUERY] = $args;
+                    $responseContent = $this->client->get($url, $options);
+
+                    break;
+                case 'delete':
+                    $options[RequestOptions::QUERY] = $args;
+                    $responseContent = $this->client->delete($url, $options);
+
+                    break;
+                case 'put':
+                    $options[RequestOptions::JSON] = $args;
+                    $this->lastRequest['body'] = json_encode($args);
+                    $responseContent = $this->client->put($url, $options);
+
+                    break;
+            }
+
+            $response = $this->requestSuccess($responseContent);
+        } catch (RequestException $e) {
+            $response = $this->requestError($e);
+        }
+        $formattedResponse = $this->formatResponse($response);
+
+        return $formattedResponse;
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return array
+     */
+    private function requestSuccess(ResponseInterface $response)
+    {
+        $this->requestSuccessful = true;
+        $this->lastResponse['headers'] = $this->getHeadersAsArray($response);
+        $this->lastResponse['headers']['http_code'] = $response->getStatusCode();
+        $this->lastResponse['headers']['http_reason'] = $response->getReasonPhrase();
+        $this->lastResponse['body'] = (string)$response->getBody()->getContents();
+
+        return $this->lastResponse;
+    }
+
+    /**
+     * @param RequestException $e
+     * @return array
+     */
+    private function requestError(RequestException $e)
+    {
+        $this->requestSuccessful = false;
+        $this->lastRequest['headers'] = $this->getHeadersAsArray($e->getRequest());
+        if (in_array($e->getRequest()->getMethod(), ['POST', 'PUT'])) {
+            $this->lastRequest['body'] = $e->getRequest()->getBody();
+        }
+        if ($e->hasResponse()) {
+            $this->lastResponse['headers'] = $this->getHeadersAsArray($e->getResponse());
+            $this->lastResponse['headers']['http_code'] = $e->getResponse()->getStatusCode();
+            $this->lastResponse['headers']['http_reason'] = $e->getResponse()->getReasonPhrase();
+            $this->lastResponse['body'] = (string)$e->getResponse()->getBody();
+            $this->httpError = sprintf('%d: %s', $e->getResponse()->getStatusCode(), $e->getResponse()->getReasonPhrase());
+            if (!empty($this->lastResponse['body'])) {
+                $formattedBody = json_decode($this->lastResponse['body'], true);
+                if (array_key_exists('error', $formattedBody)) {
+                    $this->httpError = sprintf('%d: %s', $formattedBody['http_status'], $formattedBody['http_reason']);
+                    $this->errors = [
+                        'request_id' => $formattedBody['request_id'],
+                        'code' => array_key_exists('code', $formattedBody) ? $formattedBody['code'] : '',
+                        'error' => array_key_exists('error', $formattedBody) ? $formattedBody['error'] : '',
+                        'message' => array_key_exists('message', $formattedBody) ? $formattedBody['message'] : '',
+                    ];
+                }
+            }
+        }
+
+        return $this->lastResponse;
+    }
+
+    /**
+     * Reset state prior to request
+     *
+     * @param $verb
+     * @param $endpoint
+     * @param $url
+     * @param $timeout
+     * @return array
+     */
+    private function prepareStateForRequest($verb, $endpoint, $url, $timeout)
+    {
+        $this->httpError = '';
+        $this->errors = [];
+
+        $this->requestSuccessful = false;
+
+        $this->lastResponse = [
+            'headers' => null, // array of details from curl_getinfo()
+            'body' => null, // content of the response
+        ];
+
+        $this->lastRequest = [
+            'method' => strtoupper($verb),
+            'endpoint' => $endpoint,
+            'url' => $url,
+            'body' => '',
+            'timeout' => $timeout,
+        ];
+
+        return $this->lastResponse;
+    }
+
+    /**
+     * Parse header string and return array of headers
+     *
+     * @param $headerString
+     * @return array
+     */
+    private function getHeadersAsArray($headerString)
+    {
+        $headers = [];
+        foreach ($headerString->getHeaders() as $name => $values) {
+            $headers[$name] = implode(', ', $values);
+        }
+
+        return $headers;
+    }
+
+    /**
+     *  json_decode response body
+     *
+     * @param $response
+     * @param bool $type
+     * @return bool|mixed
+     */
+    private function formatResponse($response)
+    {
+        if (!empty($response['body'])) {
+            return json_decode($response['body'], true);
+        }
+
+        return false;
+    }
+
+    /**
+     * Get Magento Version
+     *
+     * @return string
+     */
+    private function getMagentoVersion()
+    {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $productMetadata = $objectManager->get('Magento\Framework\App\ProductMetadataInterface');
+
+        return $productMetadata->getVersion();
+    }
+
+    /**
+     * Get Magento Edition
+     *
+     * @return string
+     */
+    private function getMagentoEdition()
+    {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $productMetadata = $objectManager->get('Magento\Framework\App\ProductMetadataInterface');
+
+        return $productMetadata->getEdition();
+    }
+}

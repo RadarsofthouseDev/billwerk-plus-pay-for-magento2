@@ -1,0 +1,71 @@
+.reepay-standard-redirect .column.main{
+    max-width: 100%;
+}
+.reepay-standard-redirect .nav-sections{
+    margin: 0;
+}
+.reepay-standard-redirect .page-title-wrapper{
+    text-align: center;
+    margin-top: 60px;
+}
+.reepay-payment-layout{
+    width: 560px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+.reepay-payment-layout .logo-wrapper{
+    display: block;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    padding-top: 0;
+    padding-bottom: 50px;
+}
+.reepay-payment-layout .logo-wrapper .logo{
+    float: none;
+    display: inline-block;
+    margin: 0;
+}
+.reepay-payment-layout .order-info{
+    margin-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.reepay-payment-layout #rp_container{
+    width: 500px;
+    height: 730px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+.reepay-payment-layout #rp_container iframe{
+    max-width: 100%;
+}
+.reepay-payment-layout .reepay-embedded{
+    max-width: 100%;
+    display: block;
+}
+.reepay-payment-method img.reepay-payment-icon{
+    height: 20px;
+    width: auto;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.reepay-overlay .pay-btn{
+    width: 150px;
+    background: #337ab7;
+    color: #fff;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 100%;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.reepay-overlay .pay-btn:hover{
+    cursor: pointer;
+}

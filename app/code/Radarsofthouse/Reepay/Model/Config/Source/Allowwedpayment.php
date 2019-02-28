@@ -1,0 +1,37 @@
+<?php
+
+namespace Radarsofthouse\Reepay\Model\Config\Source;
+
+/**
+ * Class Allowwedpayment
+ *
+ * @package Radarsofthouse\Reepay\Model\Config\Source
+ */
+class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
+{
+    /**
+     * Return Reepay payment allowwed payments
+     *
+     * @return array
+     */
+    public function toOptionArray()
+    {
+        return [
+            ['value' => 'card', 'label' => __('All available debit / credit cards')],
+            ['value' => 'dankort', 'label' => __('Dankort')],
+            ['value' => 'visa', 'label' => __('VISA')],
+            ['value' => 'visa_dk', 'label' => __('VISA/Dankort')],
+            ['value' => 'visa_elec', 'label' => __('VISA Electron')],
+            ['value' => 'mc', 'label' => __('MasterCard')],
+            ['value' => 'amex', 'label' => __('American Express')],
+            ['value' => 'mobilepay', 'label' => __('MobilePay')],
+            ['value' => 'viabill', 'label' => __('ViaBill')],
+            ['value' => 'diners', 'label' => __('Diners Club')],
+            ['value' => 'maestro', 'label' => __('Maestro')],
+            ['value' => 'laser', 'label' => __('Laser')],
+            ['value' => 'discover', 'label' => __('Discover')],
+            ['value' => 'jcb', 'label' => __('JCB')],
+            ['value' => 'china_union_pay', 'label' => __('China Union Pay')],
+        ];
+    }
+}

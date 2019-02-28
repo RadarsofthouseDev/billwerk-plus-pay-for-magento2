@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<payment>
+			<reepay_payment>
+				<active>0</active>
+				<title>Credit card by Reepay</title>
+				<instructions>Reepay payment</instructions>
+				<private_key_test/>
+				<private_key/>
+				<api_key_type>0</api_key_type>
+				<display_type>3</display_type>
+				<auto_capture>0</auto_capture>
+				<!-- <send_email_after_payment>0</send_email_after_payment> -->
+				<order_status_before_payment>pending</order_status_before_payment>
+				<order_status_after_payment>processing</order_status_after_payment>
+				<allowspecific/>
+				<specificcountry/>
+				<allowwed_payment>card,dankort,visa,visa_dk,visa_elec,mc,amex,diners,maestro,laser,discover,jcb,china_union_pay</allowwed_payment>
+				<payment_icons>american-express,dankort,diners-club-international,discover,forbrugsforeningen,jcb,maestro,mastercard,mobilepay,unionpay,viabill,visa,visa-electron</payment_icons>
+				<sort_order>0</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaypayment</model>
+			</reepay_payment>
+			<reepay_viabill>
+				<active>0</active>
+				<title>Viabill payment by Reepay</title>
+				<instructions>Viabill payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayviabill</model>
+			</reepay_viabill>
+			<reepay_mobilepay>
+				<active>0</active>
+				<title>Mobilepay payment by Reepay</title>
+				<instructions>Mobilepay payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaymobilepay</model>
+			</reepay_mobilepay>
+		</payment>
+	</default>
+</config>
