@@ -90,7 +90,7 @@ class Cancel extends \Magento\Framework\App\Action\Action
             $order->save();
             $this->logger->addDebug('Cancelled order : '.$orderId);
 
-            $apiKey = $this->reepayHelper->getApiKey();
+            $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
 
             $payment = $order->getPayment();
             $this->reepayHelper->setReepayPaymentState($payment, 'cancelled');

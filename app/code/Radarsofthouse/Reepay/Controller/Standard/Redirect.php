@@ -194,7 +194,7 @@ class Redirect extends \Magento\Framework\App\Action\Action
      */
     private function createReepaySession($order)
     {
-        $apiKey = $this->reepayHelper->getApiKey();
+        $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
 
         $customer = $this->getCustomerData($order);
 

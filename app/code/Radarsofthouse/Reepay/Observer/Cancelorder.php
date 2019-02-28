@@ -45,7 +45,7 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
     {
         $order = $observer->getData('order');
 
-        $apiKey = $this->reepayHelper->getApiKey();
+        $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
 
         $cancelRes = $this->reepayCharge->cancel(
             $apiKey,

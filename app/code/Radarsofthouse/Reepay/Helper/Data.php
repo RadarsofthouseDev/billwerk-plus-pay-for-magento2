@@ -115,15 +115,20 @@ class Data extends AbstractHelper
      *
      * @param string $apiKey
      */
-    public function getApiKey()
+    public function getApiKey($store = null)
     {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        if ($store === null) {
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $storeManagerInterface = $objectManager->create('\Magento\Store\Model\StoreManagerInterface');
+            $store = $storeManagerInterface->getStore()->getStoreId();
+        }
+        
         $apiKey = null;
-        $testModeConfig = $this->scopeConfig->getValue('payment/reepay_payment/api_key_type', $storeScope);
+        $testModeConfig = $this->scopeConfig->getValue('payment/reepay_payment/api_key_type', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store);
         if ($testModeConfig == 1) {
-            $apiKey = $this->scopeConfig->getValue('payment/reepay_payment/private_key', $storeScope);
+            $apiKey = $this->scopeConfig->getValue('payment/reepay_payment/private_key', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store);
         } else {
-            $apiKey = $this->scopeConfig->getValue('payment/reepay_payment/private_key_test', $storeScope);
+            $apiKey = $this->scopeConfig->getValue('payment/reepay_payment/private_key_test', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store);
         }
 
         return $apiKey;

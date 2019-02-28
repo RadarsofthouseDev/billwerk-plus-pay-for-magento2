@@ -39,7 +39,7 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
 
         $logger->addDebug(__METHOD__, ['capture : '.$order->getIncrementId()]);
 
-        $apiKey = $reepayHelper->getApiKey();
+        $apiKey = $reepayHelper->getApiKey($order->getStoreId());
 
         $charge = $reepayCharge->settle(
             $apiKey,
@@ -82,7 +82,7 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
 
         $logger->addDebug(__METHOD__, ['capture : '.$order->getIncrementId()]);
 
-        $apiKey = $reepayHelper->getApiKey();
+        $apiKey = $reepayHelper->getApiKey($order->getStoreId());
 
         $refund = $reepayRefund->create(
             $apiKey,
