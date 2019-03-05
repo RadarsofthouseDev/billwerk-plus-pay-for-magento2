@@ -42,16 +42,6 @@
 					<label>Autocapture</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
-				<!-- <field id="send_email_after_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="select">
-                    <label>Send email after payment</label>
-                    <comment/>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field> -->
-				<field id="order_status_before_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="select">
-					<label>Order status before the payment is made</label>
-					<comment>Suggest to use "Pending"</comment>
-					<source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
-				</field>
 				<field id="order_status_after_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="select">
 					<label>Order status when the payment is made</label>
 					<comment>Suggest to use "Processing"</comment>

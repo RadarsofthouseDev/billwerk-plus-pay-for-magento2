@@ -96,18 +96,6 @@ class Redirect extends \Magento\Framework\App\Action\Action
             $paymentTransactionId = $this->createReepaySession($order);
 
             $this->logger->addDebug('$paymentTransactionId : '.$paymentTransactionId);
-
-            $orderStatusBeforePayment = $this->scopeConfig->getValue('payment/reepay_payment/order_status_before_payment', $storeScope);
-
-            
-            if (!empty($orderStatusBeforePayment)) {
-                $order->setState($orderStatusBeforePayment, true);
-                $order->setStatus($orderStatusBeforePayment);
-                $order->addStatusToHistory($order->getStatus(), 'Reepay : Order status before the payment is made');
-                $order->save();
-                
-                $this->logger->addDebug('Change order status before payment '.$orderId.' to '.$orderStatusBeforePayment);
-            }
             
             if (!empty($paymentTransactionId)) {
                 $reepayStatusModel = $this->_objectManager->create('Radarsofthouse\Reepay\Model\Status');
