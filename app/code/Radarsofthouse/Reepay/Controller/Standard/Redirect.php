@@ -289,7 +289,7 @@ class Redirect extends \Magento\Framework\App\Action\Action
         $taxAmount = ($order->getTaxAmount() * 100);
         if ($taxAmount != 0) {
             $line = [
-                'ordertext' => $this->__('Tax.'),
+                'ordertext' => __('Tax.'),
                 'amount' => (int)$taxAmount,
                 'quantity' => 1,
             ];
@@ -324,7 +324,7 @@ class Redirect extends \Magento\Framework\App\Action\Action
         // other
         if ((int)$total != $orderGrandTotal) {
             $line = [
-                'ordertext' => $this->__('etc.'),
+                'ordertext' => __('etc.'),
                 'amount' => (int)($orderGrandTotal - $total),
                 'quantity' => 1,
             ];
