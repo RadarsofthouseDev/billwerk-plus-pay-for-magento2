@@ -1,0 +1,19 @@
+<!--@subject {{trans "Reepay Payment"}} @-->
+<!--@vars {
+"var increment_id":"Order Id",
+"var payment_url":"Reepay Payment Url"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table class="message-details">
+    <tr>
+        <td>
+            <h1>Payment for order {{var increment_id}}</h1>
+            <p>A new order has been created for you</p>
+            <p><a href="{{var payment_url}}">Click here to make payment</a>.</p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

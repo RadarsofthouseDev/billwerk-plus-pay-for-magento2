@@ -2,7 +2,7 @@
     "@PSR2": true,
     "array_indentation": true,
     "array_syntax": {
-        "syntax": "short"
+        "syntax": "long"
     },
     "binary_operator_spaces": true,
     "blank_line_before_statement": true,

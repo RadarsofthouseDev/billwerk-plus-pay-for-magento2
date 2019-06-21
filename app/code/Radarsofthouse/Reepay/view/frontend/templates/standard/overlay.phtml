@@ -8,7 +8,7 @@
 		<div class="order-section">
         	<div class="order-info">
                 <p><?php echo __('Order ID :'); ?> <?php  echo $order->getIncrementId(); ?></p>
-				<p><?php echo __('Total :'); ?> <?php  echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($order->getGrandTotal(), true, false); ?></p>
+				<p><?php echo __('Total :'); ?> <?php  echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($order->getTotalDue(), true, false); ?></p>
 			</div>
 
 			<div class="button pay-btn">
@@ -59,7 +59,19 @@
             });
 
             rp.addEventHandler(Reepay.Event.Cancel, function(data) {
-                // not do anything for overlay cancel
+                data._isAjax = 1;
+                $.ajax({
+                    url: '<?php echo $this->getCancelUrl(); ?>',
+                    method: 'POST',
+                    data: data,
+                }).done(function(data){
+                    if( data.status == 'success' ){
+                        window.location = data.redirect_url;
+                    }
+                }).fail(function(err){
+                    console.log("Ajax error");
+                    console.log(err);
+                });
             });
 
             rp.addEventHandler(Reepay.Event.Close, function(data) {

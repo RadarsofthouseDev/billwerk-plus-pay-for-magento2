@@ -3,7 +3,6 @@
 namespace Radarsofthouse\Reepay\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\App\Helper\Context;
 use Radarsofthouse\Reepay\Client\Checkout;
 
 /**
@@ -14,17 +13,19 @@ use Radarsofthouse\Reepay\Client\Checkout;
 class Session extends AbstractHelper
 {
     const ENDPOINT = 'session';
-    private $client = null;
-    private $logger = null;
+    protected $client = null;
+    protected $logger = null;
 
     /**
      * constructor.
      *
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param Logger $logger
+     * @param \Magento\Framework\App\Helper\Context $context
+     * @param \Radarsofthouse\Reepay\Helper\Logger $logger
      */
-    public function __construct(Context $context, Logger $logger)
-    {
+    public function __construct(
+        \Magento\Framework\App\Helper\Context $context,
+        \Radarsofthouse\Reepay\Helper\Logger $logger
+    ) {
         parent::__construct($context);
         $this->client = new Checkout();
         $this->logger = $logger;

@@ -41,7 +41,7 @@ class Logger extends AbstractHelper
         $this->debugLogger = $debug;
         $this->infoLogger = $info;
         $this->errorLogger = $error;
-        $this->loggerLevel = $dataHelper->getApiConfig(self::CONFIG_PATH);
+        $this->loggerLevel = \Monolog\Logger::DEBUG;
         $this->scopeConfig = $scopeConfig;
     }
 

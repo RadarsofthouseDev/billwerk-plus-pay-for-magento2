@@ -9,7 +9,7 @@
 		<div class="order-section">
         	<div class="order-info">
 				<p><?php echo __('Order ID :'); ?> <?php  echo $order->getIncrementId(); ?></p>
-				<p><?php echo __('Total :'); ?> <?php  echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($order->getGrandTotal(), true, false); ?></p>
+				<p><?php echo __('Total :'); ?> <?php  echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($order->getTotalDue(), true, false); ?></p>
         	</div>
         </div>
         <div id="rp_container"></div>

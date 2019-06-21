@@ -121,4 +121,14 @@ class Redirect extends \Magento\Framework\View\Element\Template
     {
         return $this->urlInterface->getUrl('reepay/standard/error');
     }
+
+    /**
+     * get payment cancel callback url
+     *
+     * @return string
+     */
+    public function getCancelUrl()
+    {
+        return $this->urlInterface->getUrl('reepay/standard/cancel');
+    }
 }

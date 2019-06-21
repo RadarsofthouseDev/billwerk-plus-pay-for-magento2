@@ -69,18 +69,26 @@ class Cancel extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $params = $this->request->getParams('');
+        
+        $this->logger->addDebug(__METHOD__, $params);
+
+        if (!empty($params['error'])) {
+            if ($params['error'] == "error.session.SESSION_DELETED") {
+                return $this->resultRedirectFactory->create()->setPath('checkout/cart');
+            }
+        }
+
+        if (empty($params['invoice']) || empty($params['id'])) {
+            return $this->resultRedirectFactory->create()->setPath('checkout/cart');
+        }
+
         $orderId = $params['invoice'];
         $id = $params['id'];
         $isAjax = 0;
         if (isset($params['_isAjax'])) {
             $isAjax = 1;
         }
-        
-        $this->logger->addDebug(__METHOD__, $params);
 
-        if (empty($params['invoice']) || empty($params['id'])) {
-            return;
-        }
 
         $order = $this->orderInterface->loadByIncrementId($orderId);
 
@@ -100,6 +108,14 @@ class Cancel extends \Magento\Framework\App\Action\Action
                 $apiKey,
                 $id
             );
+
+
+            $this->checkoutSession->restoreQuote();
+
+            $this->checkoutSession->unsLastQuoteId()
+                ->unsLastSuccessQuoteId()
+                ->unsLastOrderId()
+                ->unsLastRealOrderId();
         }
 
         // unset reepay session id on checkout session
@@ -113,12 +129,12 @@ class Cancel extends \Magento\Framework\App\Action\Action
         if ($isAjax == 1) {
             $result = [
                 'status' => 'success',
-                'redirect_url' => $this->url->getUrl('checkout/onepage/failure'),
+                'redirect_url' => $this->url->getUrl('checkout/cart'),
             ];
 
             return  $this->resultJsonFactory->create()->setData($result);
         } else {
-            return $this->resultRedirectFactory->create()->setPath('checkout/onepage/failure');
+            return $this->resultRedirectFactory->create()->setPath('checkout/cart');
         }
     }
 }

@@ -26,12 +26,15 @@ class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'amex', 'label' => __('American Express')],
             ['value' => 'mobilepay', 'label' => __('MobilePay')],
             ['value' => 'viabill', 'label' => __('ViaBill')],
+            ['value' => 'klarna_pay_later', 'label' => __('Klarna Pay Later')],
+            ['value' => 'klarna_pay_now', 'label' => __('Klarna Pay Now')],
             ['value' => 'diners', 'label' => __('Diners Club')],
             ['value' => 'maestro', 'label' => __('Maestro')],
             ['value' => 'laser', 'label' => __('Laser')],
             ['value' => 'discover', 'label' => __('Discover')],
             ['value' => 'jcb', 'label' => __('JCB')],
             ['value' => 'china_union_pay', 'label' => __('China Union Pay')],
+            ['value' => 'ffk', 'label' => __('Forbrugsforeningen')],
         ];
     }
 }

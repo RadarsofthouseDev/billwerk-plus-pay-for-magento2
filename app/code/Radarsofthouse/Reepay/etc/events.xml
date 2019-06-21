@@ -3,4 +3,10 @@
 	<event name="order_cancel_after">
 		<observer name="radarsofthouse_reepay_cancelorder" instance="Radarsofthouse\Reepay\Observer\Cancelorder" />
 	</event>
+	<event name="checkout_submit_all_after">
+		<observer name="radarsofthouse_reepay_checkout_submit_all_after" instance="Radarsofthouse\Reepay\Observer\SendPaymentLink" />
+	</event>
+	<event name="sales_order_payment_place_start">
+		<observer name="radarsofthouse_reepay_sales_order_payment_place_start" instance="Radarsofthouse\Reepay\Observer\SalesOrderPaymentPlaceStart"/>
+	</event>
 </config>

@@ -9,61 +9,57 @@ namespace Radarsofthouse\Reepay\Controller\Standard;
  */
 class Accept extends \Magento\Framework\App\Action\Action
 {
-    private $orderInterface;
-    private $resultPageFactory;
-    private $reepayCharge;
-    private $reepaySession;
-    private $logger;
-    protected $request;
-    protected $orderManagement;
-    protected $checkoutSession;
-    protected $url;
-    protected $scopeConfig;
-    protected $resultJsonFactory;
-    protected $reepayHelper;
+    protected $_orderInterface;
+    protected $_reepayCharge;
+    protected $_reepaySession;
+    protected $_logger;
+    protected $_request;
+    protected $_url;
+    protected $_resultJsonFactory;
+    protected $_reepayHelper;
+    protected $_reepayStatus;
+    protected $_priceHelper;
+    protected $_orderSender;
 
     /**
      * Constructor
      *
      * @param \Magento\Framework\App\Action\Context  $context
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Framework\App\Request\Http $request
      * @param \Magento\Sales\Api\Data\OrderInterface $orderInterface
-     * @param \Magento\Sales\Api\OrderManagementInterface $orderManagement
-     * @param \Magento\Checkout\Model\Session $checkoutSession
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
      * @param \Radarsofthouse\Reepay\Helper\Session $reepaySession
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
      * @param \Radarsofthouse\Reepay\Helper\Logger $logger
+     * @param \Radarsofthouse\Reepay\Model\Status $reepayStatus
+     * @param \Magento\Framework\Pricing\Helper\Data $priceHelper
+     * @param \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\App\Request\Http $request,
         \Magento\Sales\Api\Data\OrderInterface $orderInterface,
-        \Magento\Sales\Api\OrderManagementInterface $orderManagement,
-        \Magento\Checkout\Model\Session $checkoutSession,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Radarsofthouse\Reepay\Helper\Charge $reepayCharge,
         \Radarsofthouse\Reepay\Helper\Session $reepaySession,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
-        \Radarsofthouse\Reepay\Helper\Logger $logger
+        \Radarsofthouse\Reepay\Helper\Logger $logger,
+        \Radarsofthouse\Reepay\Model\Status $reepayStatus,
+        \Magento\Framework\Pricing\Helper\Data $priceHelper,
+        \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender
     ) {
-        $this->resultPageFactory = $resultPageFactory;
-        $this->request = $request;
-        $this->orderInterface = $orderInterface;
-        $this->orderManagement = $orderManagement;
-        $this->checkoutSession = $checkoutSession;
-        $this->url = $context->getUrl();
-        $this->scopeConfig = $scopeConfig;
-        $this->reepayCharge = $reepayCharge;
-        $this->reepaySession = $reepaySession;
-        $this->resultJsonFactory = $resultJsonFactory;
-        $this->reepayHelper = $reepayHelper;
-        $this->logger = $logger;
+        $this->_request = $request;
+        $this->_orderInterface = $orderInterface;
+        $this->_url = $context->getUrl();
+        $this->_reepayCharge = $reepayCharge;
+        $this->_reepaySession = $reepaySession;
+        $this->_resultJsonFactory = $resultJsonFactory;
+        $this->_reepayHelper = $reepayHelper;
+        $this->_logger = $logger;
+        $this->_reepayStatus = $reepayStatus;
+        $this->_priceHelper = $priceHelper;
+        $this->_orderSender = $orderSender;
 
         parent::__construct($context);
     }
@@ -75,7 +71,7 @@ class Accept extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        $params = $this->request->getParams('');
+        $params = $this->_request->getParams('');
         $orderId = $params['invoice'];
         $id = $params['id'];
         $isAjax = 0;
@@ -83,33 +79,71 @@ class Accept extends \Magento\Framework\App\Action\Action
             $isAjax = 1;
         }
         
-        $this->logger->addDebug(__METHOD__, $params);
+        $this->_logger->addDebug(__METHOD__, $params);
 
         if (empty($params['invoice']) || empty($params['id'])) {
             return;
         }
 
-        $order = $this->orderInterface->loadByIncrementId($orderId);
+        $order = $this->_orderInterface->loadByIncrementId($orderId);
+        $apiKey = $this->_reepayHelper->getApiKey($order->getStoreId());
 
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $reepayStatusModel = $objectManager->create('Radarsofthouse\Reepay\Model\Status');
-        $reepayStatus = $reepayStatusModel->load($orderId, 'order_id');
+        $reepayStatus = $this->_reepayStatus->load($orderId, 'order_id');
         if ($reepayStatus->getStatusId()) {
-            if ($reepayStatus->getStatus() != 'created') {
-                $this->logger->addDebug('order : '.$orderId.' has been accepted already');
-                $this->_redirect('checkout/onepage/success');
+            $this->_logger->addDebug('order : '.$orderId.' has been accepted already');
+            
+            if( $this->_reepayHelper->getConfig('send_order_email_when_success', $order->getStoreId() ) ){
+                if (!$order->getEmailSent()) {
+                    try {
+                        $this->_orderSender->send($order);
+                        $order->addStatusHistoryComment(__('Sent order confirmation email to customer'))
+                            ->setIsCustomerNotified(true)
+                            ->save();
+                    } catch (\Exception $e) {
+                        $order->addStatusHistoryComment(__('Send order confirmation email failure: %s', $e->getMessage()))
+                            ->setIsCustomerNotified(false)
+                            ->save();
+                    }
+                }
+            }
+
+            // delete reepay session
+            $sessionRes = $this->_reepaySession->delete(
+                $apiKey,
+                $id
+            );
+            
+
+            if ($isAjax == 1) {
+                $result = [];
+                $result['status'] = 'success';
+                if (!empty($order->getRemoteIp())) {
+                    // place online
+                    $result['redirect_url'] = $this->_url->getUrl('checkout/onepage/success');
+                } else {
+                    // place by admin
+                    $result['redirect_url'] = $this->_url->getUrl('reepay/standard/success');
+                }
+
+                return  $this->_resultJsonFactory->create()->setData($result);
+            } else {
+                $this->_logger->addDebug('Redirect to checkout/onepage/success');
+                if (!empty($order->getRemoteIp())) {
+                    // place online
+                    $this->_redirect('checkout/onepage/success');
+                } else {
+                    // place by admin
+                    $this->_redirect('reepay/standard/success');
+                }
             }
         }
         
-        $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
-        $chargeRes = $this->reepayCharge->get(
+        $chargeRes = $this->_reepayCharge->get(
             $apiKey,
             $orderId
         );
 
-        // update Reepay payment data
+        // add Reepay payment data
         $data = [
             'order_id' => $orderId,
             'first_name' => $order->getBillingAddress()->getFirstname(),
@@ -121,162 +155,55 @@ class Accept extends \Magento\Framework\App\Action\Action
             'card_type' => $chargeRes['source']['card_type'],
             'status' => $chargeRes['state'],
         ];
-        $this->reepayHelper->updateReepayPaymentData($orderId, $data);
-        $this->logger->addDebug('updateReepayPaymentData', $data);
+        $newReepayStatus = $this->_reepayStatus;
+        $newReepayStatus->setData($data);
+        $newReepayStatus->save();
 
-        $this->addTransactionToOrder($order, $chargeRes);
+        $this->_reepayHelper->addTransactionToOrder($order, $chargeRes);
+
+        if ($this->_reepayHelper->getConfig('send_order_email_when_success', $order->getStoreId())) {
+            if (!$order->getEmailSent()) {
+                try {
+                    $this->_orderSender->send($order);
+                    $order->addStatusHistoryComment(__('Sent order confirmation email to customer'))
+                        ->setIsCustomerNotified(true)
+                        ->save();
+                } catch (\Exception $e) {
+                    $order->addStatusHistoryComment(__('Send order confirmation email failure: %s', $e->getMessage()))
+                        ->setIsCustomerNotified(false)
+                        ->save();
+                }
+            }
+        }
+        
 
         // delete reepay session
-        $sessionRes = $this->reepaySession->delete(
+        $sessionRes = $this->_reepaySession->delete(
             $apiKey,
             $id
         );
 
-        // unset reepay session id on checkout session
-        /*
-        if ($this->checkoutSession->getReepaySessionID() && $this->checkoutSession->getReepaySessionOrder()) {
-            $this->checkoutSession->unsReepaySessionID();
-            $this->checkoutSession->unsReepaySessionOrder();
-        }
-        */
-        
-        /*
-        $orderEmailSender = $objectManager->create('Magento\Sales\Model\Order\Email\Sender\OrderSender');
-        $sendEmailAfterPayment = $this->scopeConfig->getValue("payment/reepay_payment/send_email_after_payment", $storeScope);
-        if ($sendEmailAfterPayment) {
-            $orderEmailSender->send($order);
-        }
-        */
-
         if ($isAjax == 1) {
-            $result = [
-                'status' => 'success',
-                'redirect_url' => $this->url->getUrl('checkout/onepage/success'),
-            ];
+            $result = [];
+            $result['status'] = 'success';
+            if (!empty($order->getRemoteIp())) {
+                // place online
+                $result['redirect_url'] = $this->_url->getUrl('checkout/onepage/success');
+            } else {
+                // place by admin
+                $result['redirect_url'] = $this->_url->getUrl('reepay/standard/success');
+            }
 
-            return  $this->resultJsonFactory->create()->setData($result);
+            return  $this->_resultJsonFactory->create()->setData($result);
         } else {
-            $this->logger->addDebug('Redirect to checkout/onepage/success');
-            $this->_redirect('checkout/onepage/success');
-        }
-    }
-
-    /**
-     * add transaction to order
-     *
-     * @param \Magento\Sales\Model\Order $order
-     * @param array $paymentData
-     * @return string Transaction Id
-     */
-    public function addTransactionToOrder($order, $paymentData = [])
-    {
-        try {
-            $this->logger->addDebug(__METHOD__);
-
-            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-
-            $paymentData = $this->preparePaymentData($paymentData);
-
-            $state = '';
-            $isClosed = 0;
-            if ($paymentData['state'] == 'authorized') {
-                $state = \Magento\Sales\Model\Order\Payment\Transaction::TYPE_AUTH;
-                $isClosed = 0;
-            } elseif ($paymentData['state'] == 'settled') {
-                $state = \Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE;
-                $isClosed = 1;
+            $this->_logger->addDebug('Redirect to checkout/onepage/success');
+            if (!empty($order->getRemoteIp())) {
+                // place online
+                $this->_redirect('checkout/onepage/success');
+            } else {
+                // place by admin
+                $this->_redirect('reepay/standard/success');
             }
-
-            $payment = $order->getPayment();
-            $payment->setLastTransId($paymentData['transaction']);
-            $payment->setTransactionId($paymentData['transaction']);
-            $payment->setAdditionalInformation([\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $paymentData]);
-
-            $formatedPrice = $order->getBaseCurrency()->formatTxt($order->getGrandTotal());
-
-            $transactionBuilder = $objectManager->create('Magento\Sales\Model\Order\Payment\Transaction\Builder');
-            $transaction = $transactionBuilder->setPayment($payment)
-                ->setOrder($order)
-                ->setTransactionId($paymentData['transaction'])
-                ->setAdditionalInformation([\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $paymentData])
-                ->setFailSafe(true)
-                ->build($state)
-                ->setIsClosed($isClosed);
-
-            // Add transaction to payment
-            $payment->addTransactionCommentsToOrder($transaction, __('The authorized amount is %1.', $formatedPrice));
-            $payment->setParentTransactionId(null);
-
-            // Save payment, transaction and order
-            $payment->save();
-            $order->save();
-            $transaction->save();
-
-            $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
-            $orderStatusAfterPayment = $this->scopeConfig->getValue('payment/reepay_payment/order_status_after_payment', $storeScope);
-            if (!empty($orderStatusAfterPayment)) {
-                $grandTotal = $objectManager->create('Magento\Framework\Pricing\Helper\Data')->currency($order->getGrandTotal(), true, false);
-
-                $order->setState($orderStatusAfterPayment, true);
-                $order->setStatus($orderStatusAfterPayment);
-                $order->addStatusToHistory($order->getStatus(), 'Reepay : The authorized amount is '.$grandTotal);
-                $order->save();
-
-                $this->logger->addDebug('Change order status after payment'.$order->getIncrementId().' to '.$orderStatusAfterPayment);
-            }
-
-            $this->logger->addDebug('Transaction ID : '.$transaction->getTransactionId());
-
-            return  $transaction->getTransactionId();
-        } catch (Exception $e) {
-            $this->logger->addError('addTransactionToOrder Exception : '.$e->getMessage());
-            $this->messageManager->addExceptionMessage($e, $e->getMessage());
         }
-    }
-
-    /**
-     * prepare payment data
-     *
-     * @param array $paymentData
-     * @return array $paymentData
-     */
-    public function preparePaymentData($paymentData)
-    {
-        if (isset($paymentData['order_lines'])) {
-            unset($paymentData['order_lines']);
-        }
-
-        if (isset($paymentData['billing_address'])) {
-            unset($paymentData['billing_address']);
-        }
-
-        if (isset($paymentData['shipping_address'])) {
-            unset($paymentData['shipping_address']);
-        }
-
-        if (isset($paymentData['source'])) {
-            $source = $paymentData['source'];
-            unset($paymentData['source']);
-            $paymentData['source_type'] = $source['type'];
-            $paymentData['source_fingerprint'] = $source['fingerprint'];
-            $paymentData['source_card_type'] = $source['card_type'];
-            $paymentData['source_exp_date'] = $source['exp_date'];
-            $paymentData['source_masked_card'] = $source['masked_card'];
-        }
-
-        if (isset($paymentData['amount']) && $paymentData['amount'] > 0) {
-            $paymentData['amount'] = $paymentData['amount'] / 100;
-        }
-
-        if (isset($paymentData['refunded_amount']) && $paymentData['refunded_amount'] > 0) {
-            $paymentData['refunded_amount'] = $paymentData['refunded_amount'] / 100;
-        }
-
-        if (isset($paymentData['authorized_amount']) && $paymentData['authorized_amount'] > 0) {
-            $paymentData['authorized_amount'] = $paymentData['authorized_amount'] / 100;
-        }
-        $this->logger->addDebug('$paymentData : ', $paymentData);
-
-        return $paymentData;
     }
 }
