@@ -1,12 +1,11 @@
 {
-    "name": "radarsofthouse/module-reepay",
-    "description": "payment with reepay.com",
+    "name": "radarsofthouse/reepay",
+    "description": "Reepay payment for Magento 2",
     "type": "magento2-module",
-    "license": "GPL-3.0",
     "authors": [
         {
-            "email": "info@mage2gen.com",
-            "name": "Mage2Gen"
+            "email": "info@radarsofthouse.dk",
+            "name": "Radarsofthouse"
         }
     ],
     "minimum-stability": "dev",
