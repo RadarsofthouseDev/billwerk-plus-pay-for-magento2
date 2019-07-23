@@ -9,6 +9,7 @@
             "name": "Radarsofthouse"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "guzzlehttp/guzzle": "~6.0"
     },
