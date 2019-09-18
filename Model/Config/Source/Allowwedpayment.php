@@ -35,6 +35,8 @@ class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'jcb', 'label' => __('JCB')],
             ['value' => 'china_union_pay', 'label' => __('China Union Pay')],
             ['value' => 'ffk', 'label' => __('Forbrugsforeningen')],
+            ['value' => 'applepay', 'label' => __('Apple Pay')],
+            ['value' => 'paypal', 'label' => __('PayPal')],
         ];
     }
 }

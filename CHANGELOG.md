@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.0.6 on 18 September 2019
+- Add new payment options (Apple Pay, Paypal)
+
 ## Version 1.0.5 on 3 July 2019
  - Add billing address and terms and conditions on payment methods in the checkout page.
 	
