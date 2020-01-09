@@ -150,9 +150,9 @@ class Accept extends \Magento\Framework\App\Action\Action
             'last_name' => $order->getBillingAddress()->getLastname(),
             'email' => $order->getCustomerEmail(),
             'token' => $params['id'],
-            'masked_card_number' => $chargeRes['source']['masked_card'],
-            'fingerprint' => $chargeRes['source']['fingerprint'],
-            'card_type' => $chargeRes['source']['card_type'],
+            'masked_card_number' => isset($chargeRes['source']['masked_card']) ? $chargeRes['source']['masked_card'] : '',
+            'fingerprint' => isset($chargeRes['source']['fingerprint']) ? $chargeRes['source']['fingerprint'] : '',
+            'card_type' => isset($chargeRes['source']['card_type']) ? $chargeRes['source']['card_type'] : '',
             'status' => $chargeRes['state'],
         ];
         $newReepayStatus = $this->_reepayStatus;

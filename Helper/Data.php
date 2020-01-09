@@ -127,34 +127,34 @@ class Data extends AbstractHelper
     {
         $reepayStatus = $this->_reepayStatus->load($orderId, 'order_id');
         if ($reepayStatus->getStatusId()) {
-            if (!empty($data['status'])) {
+            if ( isset($data['status']) && !empty($data['status'])) {
                 $reepayStatus->setStatus($data['status']);
             }
-            if (!empty($data['first_name'])) {
+            if ( isset($data['first_name']) && !empty($data['first_name'])) {
                 $reepayStatus->setFirstName($data['first_name']);
             }
-            if (!empty($data['last_name'])) {
+            if ( isset($data['last_name']) && !empty($data['last_name'])) {
                 $reepayStatus->setLastName($data['last_name']);
             }
-            if (!empty($data['email'])) {
+            if ( isset($data['email']) && !empty($data['email'])) {
                 $reepayStatus->setEmail($data['email']);
             }
-            if (!empty($data['token'])) {
+            if ( isset($data['token']) && !empty($data['token'])) {
                 $reepayStatus->setToken($data['token']);
             }
-            if (!empty($data['masked_card_number'])) {
+            if ( isset($data['masked_card_number']) && !empty($data['masked_card_number'])) {
                 $reepayStatus->setMaskedCardNumber($data['masked_card_number']);
             }
-            if (!empty($data['fingerprint'])) {
+            if ( isset($data['fingerprint']) && !empty($data['fingerprint'])) {
                 $reepayStatus->setFingerprint($data['fingerprint']);
             }
-            if (!empty($data['card_type'])) {
+            if ( isset($data['card_type']) && !empty($data['card_type'])) {
                 $reepayStatus->setCardType($data['card_type']);
             }
-            if (!empty($data['error'])) {
+            if ( isset($data['error']) && !empty($data['error'])) {
                 $reepayStatus->setError($data['error']);
             }
-            if (!empty($data['error_state'])) {
+            if ( isset($data['error_state']) && !empty($data['error_state'])) {
                 $reepayStatus->setErrorState($data['error_state']);
             }
 
@@ -404,11 +404,31 @@ class Data extends AbstractHelper
         if (isset($paymentData['source'])) {
             $source = $paymentData['source'];
             unset($paymentData['source']);
-            $paymentData['source_type'] = $source['type'];
-            $paymentData['source_fingerprint'] = $source['fingerprint'];
-            $paymentData['source_card_type'] = $source['card_type'];
-            $paymentData['source_exp_date'] = $source['exp_date'];
-            $paymentData['source_masked_card'] = $source['masked_card'];
+
+            if( isset($source['type']) ){
+                $paymentData['source_type'] = $source['type'];
+            }
+            if( isset($source['fingerprint']) ){
+                $paymentData['source_fingerprint'] = $source['fingerprint'];
+            }
+            if( isset($source['provider']) ){
+                $paymentData['source_provider'] = $source['provider'];
+            }
+            if( isset($source['card_type']) ){
+                $paymentData['source_card_type'] = $source['card_type'];
+            }
+            if( isset($source['exp_date']) ){
+                $paymentData['source_exp_date'] = $source['exp_date'];
+            }
+            if( isset($source['masked_card']) ){
+                $paymentData['source_masked_card'] = $source['masked_card'];
+            }
+            if( isset($source['type']) ){
+                $paymentData['source_type'] = $source['type'];
+            }
+            if( isset($source['auth_transaction']) ){
+                $paymentData['source_auth_transaction'] = $source['auth_transaction'];
+            }
         }
 
         if (isset($paymentData['amount']) && $paymentData['amount'] > 0) {
@@ -523,18 +543,21 @@ class Data extends AbstractHelper
      * @param array $transactionData
      * @return int (Magento Transaction ID)
      */
-    public function addCaptureTransactionToOrder($order, $transactionData = [])
+    public function addCaptureTransactionToOrder($order, $transactionData = [], $chargeRes = [])
     {
         try {
             // prepare transaction data
             $transactionData = $this->prepareCaptureTransactionData($transactionData);
+
+            // prepare payment data from Charge
+            $paymentData = $this->preparePaymentData($chargeRes);
 
             //get payment object from order object
             $payment = $order->getPayment();
             $payment->setLastTransId($transactionData['id']);
             $payment->setTransactionId($transactionData['id']);
             $payment->setAdditionalInformation(
-                [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $transactionData]
+                [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $paymentData]
             );
             
             $formatedPrice = $order->getBaseCurrency()->formatTxt($transactionData['amount']);
@@ -593,18 +616,21 @@ class Data extends AbstractHelper
      * @param array $transactionData
      * @return int (Magento Transaction ID)
      */
-    public function addRefundTransactionToOrder($order, $transactionData = [])
+    public function addRefundTransactionToOrder($order, $transactionData = [], $chargeRes = [])
     {
         try {
             // prepare transaction data
             $transactionData = $this->prepareRefundTransactionData($transactionData);
+
+            // prepare payment data from Charge
+            $paymentData = $this->preparePaymentData($chargeRes);
 
             //get payment object from order object
             $payment = $order->getPayment();
             $payment->setLastTransId($transactionData['id']);
             $payment->setTransactionId($transactionData['id']);
             $payment->setAdditionalInformation(
-                [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $transactionData]
+                [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $paymentData]
             );
             
             $formatedPrice = $order->getBaseCurrency()->formatTxt($transactionData['amount']);

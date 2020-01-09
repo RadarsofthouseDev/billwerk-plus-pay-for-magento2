@@ -240,7 +240,13 @@ class Index extends \Magento\Framework\App\Action\Action
                     ];
                 }
 
-                $transactionID = $this->reepayHelper->addCaptureTransactionToOrder($order, $reepayTransactionData);
+                $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
+                $chargeRes = $this->reepayCharge->get(
+                    $apiKey,
+                    $order_id
+                );
+
+                $transactionID = $this->reepayHelper->addCaptureTransactionToOrder($order, $reepayTransactionData, $chargeRes);
                 if ($transactionID) {
                     $this->reepayHelper->setReepayPaymentState($order->getPayment(), 'settled');
                     $order->save();
@@ -322,8 +328,14 @@ class Index extends \Magento\Framework\App\Action\Action
                 }
 
                 // create refund transaction
+                $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
+                $chargeRes = $this->reepayCharge->get(
+                    $apiKey,
+                    $order_id
+                );
+
                 $refundAmount = $this->reepayHelper->convertAmount($refundData['amount']);
-                $transactionID = $this->reepayHelper->addRefundTransactionToOrder($order, $refundData);
+                $transactionID = $this->reepayHelper->addRefundTransactionToOrder($order, $refundData ,$chargeRes );
 
                 if ($transactionID) {
                     $this->reepayHelper->setReepayPaymentState($order->getPayment(), 'refunded');
@@ -453,11 +465,12 @@ class Index extends \Magento\Framework\App\Action\Action
                 'last_name' => $order->getBillingAddress()->getLastname(),
                 'email' => $order->getCustomerEmail(),
                 // 'token' => $params['id'],
-                'masked_card_number' => $chargeRes['source']['masked_card'],
-                'fingerprint' => $chargeRes['source']['fingerprint'],
-                'card_type' => $chargeRes['source']['card_type'],
+                'masked_card_number' => isset($chargeRes['source']['masked_card']) ? $chargeRes['source']['masked_card'] : '',
+                'fingerprint' => isset($chargeRes['source']['fingerprint']) ? $chargeRes['source']['fingerprint'] : '',
+                'card_type' => isset($chargeRes['source']['card_type']) ? $chargeRes['source']['card_type'] : '',
                 'status' => $chargeRes['state'],
             ];
+
 
             $newReepayStatus = $this->reepayStatus;
             $newReepayStatus->setData($data);
