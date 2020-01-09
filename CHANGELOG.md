@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.0.7 on 9 January 2020
+- Save payment additional data when authorize, settled and refund 
+- Fixed PHP Notice: Undefined index
+
 ## Version 1.0.6 on 18 September 2019
 - Add new payment options (Apple Pay, Paypal)
 
