@@ -51,7 +51,7 @@ class Email extends AbstractHelper
         $this->_logger->addDebug('$emailTemplateId : '.$emailTemplateId);
 
         if(empty($emailTemplateId)){
-            $emailTemplateId = "payment_us_reepay_payment_payment_link";
+            $emailTemplateId = "payment_reepay_payment_payment_link";
         }
 
         $senderName = $this->_scopeConfig->getValue(

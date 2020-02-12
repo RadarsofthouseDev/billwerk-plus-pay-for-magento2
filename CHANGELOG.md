@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.0.8 on 12 February 2020
+- Fixed payment_link email template issue for other languages.
+
 ## Version 1.0.7 on 9 January 2020
 - Save payment additional data when authorize, settled and refund 
 - Fixed PHP Notice: Undefined index

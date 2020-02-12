@@ -74,7 +74,7 @@
 				</field>
 				<field id="payment_link" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="82" translate="label" type="select">
 					<label>Payment Link Email Template</label>
-					<source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Email\Template</source_model>
 				</field>
 				<field id="log" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="85" translate="label" type="select">
 					<label>Log</label>
