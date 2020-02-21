@@ -78,7 +78,7 @@ class Refund extends AbstractHelper
             $log['response_errors'] = $this->client->getErrors();
             $this->logger->addError(__METHOD__, $log, true);
 
-            return false;
+            return $response;
         }
     }
 }

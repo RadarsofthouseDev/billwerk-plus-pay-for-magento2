@@ -35,6 +35,7 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
         $reepayCharge = $objectManager->create('Radarsofthouse\Reepay\Helper\Charge');
         $reepayHelper = $objectManager->create('Radarsofthouse\Reepay\Helper\Data');
         $logger = $objectManager->create('Radarsofthouse\Reepay\Helper\Logger');
+        $messageManager = $objectManager->create('\Magento\Framework\Message\ManagerInterface');
 
         $order = $payment->getOrder();
         $amount = $amount;
@@ -57,6 +58,14 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
         );
 
         if (!empty($charge)) {
+
+            if( isset($charge["error"]) ){
+                $logger->addDebug("settle error : ",$charge);
+                $messageManager->addError($charge["error"]);
+                throw new \Magento\Framework\Exception\LocalizedException($charge["error"]);
+                return;
+            }
+
             if ($charge['state'] == 'settled') {
                 $_payment = $order->getPayment();
                 $reepayHelper->setReepayPaymentState($_payment, 'settled');
@@ -87,7 +96,10 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
                 $logger->addDebug('set capture transaction data');
             }
         } else {
-            $logger->addError('Empty charge response');
+            $logger->addDebug("Empty settle response from Reepay");
+            $messageManager->addError("Empty settle response from Reepay");
+            throw new \Magento\Framework\Exception\LocalizedException("Empty settle response from Reepay");
+            return;
         }
 
         return $this;
@@ -110,6 +122,7 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
         $reepayRefund = $objectManager->create('Radarsofthouse\Reepay\Helper\Refund');
         $reepayHelper = $objectManager->create('Radarsofthouse\Reepay\Helper\Data');
         $logger = $objectManager->create('Radarsofthouse\Reepay\Helper\Logger');
+        $messageManager = $objectManager->create('\Magento\Framework\Message\ManagerInterface');
         
         $order = $payment->getOrder();
         $amount = $amount;
@@ -132,6 +145,14 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
             $options
         );
         if (!empty($refund)) {
+
+            if( isset($refund["error"]) ){
+                $logger->addDebug("refund error : ",$refund);
+                $messageManager->addError($refund["error"]);
+                throw new \Magento\Framework\Exception\LocalizedException($refund["error"]);
+                return;
+            }
+
             if ($refund['state'] == 'refunded') {
                 $_payment = $order->getPayment();
                 $reepayHelper->setReepayPaymentState($_payment, 'refunded');
@@ -156,9 +177,12 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
                 );
 
                 $logger->addDebug("set refund transaction data");
-            } else {
-                $logger->addDebug("Refund state is not refunded");
             }
+        }else{
+            $logger->addDebug("Empty refund response from Reepay");
+            $messageManager->addError("Empty refund response from Reepay");
+            throw new \Magento\Framework\Exception\LocalizedException("Empty refund response from Reepay");
+            return;
         }
 
         return $this;

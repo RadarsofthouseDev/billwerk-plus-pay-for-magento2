@@ -1,5 +1,10 @@
 
 # Changelog
+## Version 1.0.9 on 21 February 2020
+- Add error handle for capture and refund from Magento
+- Change logic to calculate "Other" line on order lines.
+- Fixed integer parse issue
+
 ## Version 1.0.8 on 12 February 2020
 - Fixed payment_link email template issue for other languages.
 

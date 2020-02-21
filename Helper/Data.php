@@ -277,6 +277,7 @@ class Data extends AbstractHelper
     public function getOrderLines($order)
     {
         $orderTotalDue = $order->getTotalDue() * 100;
+        $orderTotalDue = $this->toInt($orderTotalDue);
         $total = 0;
         $orderLines = [];
 
@@ -284,15 +285,20 @@ class Data extends AbstractHelper
         $orderitems = $order->getAllVisibleItems();
         foreach ($orderitems as $orderitem) {
             $amount = $orderitem->getPriceInclTax() * 100;
+            $amount = round($amount);
+
+            $qty = $orderitem->getQtyOrdered();
+
             $line = [
                 'ordertext' => $orderitem->getProduct()->getName(),
-                'amount' => (int)round($amount),
-                'quantity' => (int)$orderitem->getQtyOrdered(),
+                'amount' => $this->toInt($amount),
+                'quantity' => $this->toInt($qty),
                 'vat' => $orderitem->getTaxPercent()/100,
                 'amount_incl_vat' => "true",
             ];
             $orderLines[] = $line;
-            $total = $total + (int)round($amount*$orderitem->getQtyOrdered());
+
+            $total = $total + $this->toInt($amount) * $this->toInt($qty);
         }
         
         /*
@@ -314,7 +320,7 @@ class Data extends AbstractHelper
         if ($shippingAmount != 0) {
             $line = [
                 'ordertext' => $order->getShippingDescription(),
-                'amount' => (int)$shippingAmount,
+                'amount' => $this->toInt($shippingAmount),
                 'quantity' => 1,
             ];
             if ($order->getShippingTaxAmount() > 0) {
@@ -325,7 +331,7 @@ class Data extends AbstractHelper
                 $line['amount_incl_vat'] = "true";
             }
             $orderLines[] = $line;
-            $total = $total + (int)$shippingAmount;
+            $total = $total + $this->toInt($shippingAmount);
         }
 
         // discount
@@ -333,31 +339,39 @@ class Data extends AbstractHelper
         if ($discountAmount != 0) {
             $line = [
                 'ordertext' => $order->getDiscountDescription(),
-                'amount' => (int)$discountAmount,
+                'amount' => $this->toInt($discountAmount),
                 'quantity' => 1,
                 'vat' => 0,
                 'amount_incl_vat' => "true",
             ];
             $orderLines[] = $line;
-            $total = $total + (int)$discountAmount;
+            $total = $total + $this->toInt($discountAmount);
         }
 
         // other
-        if ((int)$total != (int)$orderTotalDue) {
-            if ((int)($orderTotalDue - $total) > 0) {
-                $line = [
-                    'ordertext' => __('Other'),
-                    'amount' => (int)($orderTotalDue - $total),
-                    'quantity' => 1,
-                    'vat' => 0,
-                    'amount_incl_vat' => "true",
-                ];
-                $orderLines[] = $line;
-            }
+        if ($total != $orderTotalDue) {
+            $amount = $orderTotalDue - $total;
+            $line = [
+                'ordertext' => __('Other'),
+                'amount' => $this->toInt($amount),
+                'quantity' => 1,
+                'vat' => 0,
+                'amount_incl_vat' => "true",
+            ];
+            $orderLines[] = $line;
         }
 
         
         return $orderLines;
+    }
+
+    /**
+     * convert variable to integer
+     *
+     * @return int
+     */
+    public function toInt($number){
+        return (int)($number."");
     }
 
     /**
