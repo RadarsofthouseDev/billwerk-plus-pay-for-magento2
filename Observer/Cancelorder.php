@@ -45,24 +45,31 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
     {
         $order = $observer->getData('order');
 
-        $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
+        $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
+        if( $paymentMethod == "reepay_payment" ||
+            $paymentMethod == "reepay_mobilepay" ||
+            $paymentMethod == "reepay_viabill"
+        ) {
 
-        $cancelRes = $this->reepayCharge->cancel(
-            $apiKey,
-            $order->getIncrementId()
-        );
+            $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
 
-        if (!empty($cancelRes)) {
-            if ($cancelRes['state'] == 'cancelled') {
-                $_payment = $order->getPayment();
-                $_payment = $order->getPayment();
-                $this->reepayHelper->setReepayPaymentState($_payment, 'cancelled');
+            $cancelRes = $this->reepayCharge->cancel(
+                $apiKey,
+                $order->getIncrementId()
+            );
 
-                // delete reepay session
-                $sessionRes = $this->reepaySession->delete(
-                    $apiKey,
-                    $order->getIncrementId()
-                );
+            if (!empty($cancelRes)) {
+                if ($cancelRes['state'] == 'cancelled') {
+                    $_payment = $order->getPayment();
+                    $_payment = $order->getPayment();
+                    $this->reepayHelper->setReepayPaymentState($_payment, 'cancelled');
+
+                    // delete reepay session
+                    $sessionRes = $this->reepaySession->delete(
+                        $apiKey,
+                        $order->getIncrementId()
+                    );
+                }
             }
         }
 

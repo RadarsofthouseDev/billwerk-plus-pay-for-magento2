@@ -1,5 +1,9 @@
 
 # Changelog
+# Version 1.0.10 on 26 February 2020
+- add payment method validation on cancel order observer.
+- Fix checkout session for thank you page.
+
 ## Version 1.0.9 on 21 February 2020
 - Add error handle for capture and refund from Magento
 - Change logic to calculate "Other" line on order lines.

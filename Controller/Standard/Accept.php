@@ -20,6 +20,7 @@ class Accept extends \Magento\Framework\App\Action\Action
     protected $_reepayStatus;
     protected $_priceHelper;
     protected $_orderSender;
+    protected $_checkoutSession;
 
     /**
      * Constructor
@@ -47,7 +48,8 @@ class Accept extends \Magento\Framework\App\Action\Action
         \Radarsofthouse\Reepay\Helper\Logger $logger,
         \Radarsofthouse\Reepay\Model\Status $reepayStatus,
         \Magento\Framework\Pricing\Helper\Data $priceHelper,
-        \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender
+        \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender,
+        \Magento\Checkout\Model\Session $checkoutSession
     ) {
         $this->_request = $request;
         $this->_orderInterface = $orderInterface;
@@ -60,6 +62,7 @@ class Accept extends \Magento\Framework\App\Action\Action
         $this->_reepayStatus = $reepayStatus;
         $this->_priceHelper = $priceHelper;
         $this->_orderSender = $orderSender;
+        $this->_checkoutSession = $checkoutSession;
 
         parent::__construct($context);
     }
@@ -87,6 +90,10 @@ class Accept extends \Magento\Framework\App\Action\Action
 
         $order = $this->_orderInterface->loadByIncrementId($orderId);
         $apiKey = $this->_reepayHelper->getApiKey($order->getStoreId());
+
+
+        $this->_checkoutSession->setLastOrderId($order->getId());
+        $this->_checkoutSession->setLastRealOrderId($order->getIncrementId());
 
         $reepayStatus = $this->_reepayStatus->load($orderId, 'order_id');
         if ($reepayStatus->getStatusId()) {
