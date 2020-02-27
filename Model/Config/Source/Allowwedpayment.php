@@ -37,6 +37,7 @@ class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'ffk', 'label' => __('Forbrugsforeningen')],
             ['value' => 'applepay', 'label' => __('Apple Pay')],
             ['value' => 'paypal', 'label' => __('PayPal')],
+            ['value' => 'resurs', 'label' => __('Resurs Bank')]
         ];
     }
 }

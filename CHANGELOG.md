@@ -1,6 +1,10 @@
 
 # Changelog
-# Version 1.0.10 on 26 February 2020
+## Version 1.0.11 on 27 February 2020
+- add "Resurs Bank" payment option.
+- Fix checkout session for thank you page.
+
+## Version 1.0.10 on 26 February 2020
 - add payment method validation on cancel order observer.
 - Fix checkout session for thank you page.
 

@@ -94,6 +94,8 @@ class Accept extends \Magento\Framework\App\Action\Action
 
         $this->_checkoutSession->setLastOrderId($order->getId());
         $this->_checkoutSession->setLastRealOrderId($order->getIncrementId());
+        $this->_checkoutSession->setLastSuccessQuoteId($order->getQuoteId());
+        $this->_checkoutSession->setLastQuoteId($order->getQuoteId());
 
         $reepayStatus = $this->_reepayStatus->load($orderId, 'order_id');
         if ($reepayStatus->getStatusId()) {
