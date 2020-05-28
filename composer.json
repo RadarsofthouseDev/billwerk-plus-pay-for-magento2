@@ -2,7 +2,7 @@
     "name": "radarsofthouse/reepay",
     "description": "Reepay payment for Magento 2",
     "type": "magento2-module",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "authors": [
         {
             "email": "info@radarsofthouse.dk",

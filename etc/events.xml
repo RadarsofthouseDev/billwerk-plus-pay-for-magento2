@@ -9,4 +9,10 @@
 	<event name="sales_order_payment_place_start">
 		<observer name="radarsofthouse_reepay_sales_order_payment_place_start" instance="Radarsofthouse\Reepay\Observer\SalesOrderPaymentPlaceStart"/>
 	</event>
+    <event name="sales_order_payment_capture">
+        <observer name="radarsofthouse_reepay_sales_order_payment_capture" instance="Radarsofthouse\Reepay\Observer\SalesOrderPaymentCapture"/>
+    </event>
+    <event name="sales_order_payment_refund">
+        <observer name="radarsofthouse_reepay_sales_order_payment_refund" instance="Radarsofthouse\Reepay\Observer\SalesOrderPaymentRefund"/>
+    </event>
 </config>

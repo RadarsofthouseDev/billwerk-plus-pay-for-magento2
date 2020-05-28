@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.0.12 on 28 May 2020
+- fixed invoice issue and credit memo issue for multi currencies. 
+
 ## Version 1.0.11 on 27 February 2020
 - add "Resurs Bank" payment option.
 - Fix checkout session for thank you page.
