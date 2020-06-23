@@ -44,6 +44,62 @@
 																		</item>
 																	</item>
 																</item>
+                                                                <item name="reepay_applepay" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_applepay</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_applepay" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_paypal" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_paypal</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_paypal" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_klarnapaynow" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_klarnapaynow</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_klarnapaynow" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_klarnapaylater" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_klarnapaylater</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_klarnapaylater" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_swish" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_swish</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_swish" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_resurs" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_resurs</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_resurs" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_forbrugsforeningen" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_forbrugsforeningen</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_forbrugsforeningen" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
 															</item>
 														</item>
 													</item>

@@ -42,6 +42,76 @@
 				<sort_order>2</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepaymobilepay</model>
 			</reepay_mobilepay>
+            <reepay_applepay>
+				<active>0</active>
+				<title>Apple Pay payment by Reepay</title>
+				<instructions>Apple Pay payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayapplepay</model>
+			</reepay_applepay>
+            <reepay_paypal>
+				<active>0</active>
+				<title>Paypal payment by Reepay</title>
+				<instructions>Paypal payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaypaypal</model>
+			</reepay_paypal>
+            <reepay_klarnapaynow>
+				<active>0</active>
+				<title>Klarna Pay Now payment by Reepay</title>
+				<instructions>Klarna Pay Now payment</instructions>
+                <show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayklarnapaynow</model>
+			</reepay_klarnapaynow>
+            <reepay_klarnapaylater>
+				<active>0</active>
+				<title>Klarna Pay Later payment by Reepay</title>
+				<instructions>Klarna Pay Later payment</instructions>
+                <show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayklarnapaylater</model>
+			</reepay_klarnapaylater>
+            <reepay_swish>
+				<active>0</active>
+				<title>Swish payment by Reepay</title>
+				<instructions>Swish payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayswish</model>
+			</reepay_swish>
+            <reepay_resurs>
+				<active>0</active>
+				<title>Resurs Bank payment by Reepay</title>
+				<instructions>Resurs Bank payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayresurs</model>
+			</reepay_resurs>
+            <reepay_forbrugsforeningen>
+				<active>0</active>
+				<title>Forbrugsforeningen payment by Reepay</title>
+				<instructions>Forbrugsforeningen payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayforbrugsforeningen</model>
+			</reepay_forbrugsforeningen>
 		</payment>
 	</default>
 </config>

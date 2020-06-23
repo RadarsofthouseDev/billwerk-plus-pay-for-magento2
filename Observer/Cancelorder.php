@@ -48,7 +48,14 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
         $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
         if( $paymentMethod == "reepay_payment" ||
             $paymentMethod == "reepay_mobilepay" ||
-            $paymentMethod == "reepay_viabill"
+            $paymentMethod == "reepay_viabill" ||
+            $paymentMethod == "reepay_applepay" ||
+            $paymentMethod == "reepay_paypal" ||
+            $paymentMethod == "reepay_klarnapaynow" ||
+            $paymentMethod == "reepay_klarnapaylater" ||
+            $paymentMethod == "reepay_swish" ||
+            $paymentMethod == "reepay_resurs" ||
+            $paymentMethod == "reepay_forbrugsforeningen"
         ) {
 
             $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());

@@ -387,6 +387,20 @@ class Data extends AbstractHelper
             $paymentMethods[] = 'viabill';
         } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_mobilepay') {
             $paymentMethods[] = 'mobilepay';
+        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_applepay') {
+            $paymentMethods[] = 'applepay';
+        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_paypal') {
+            $paymentMethods[] = 'paypal';
+        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_klarnapaynow') {
+            $paymentMethods[] = 'klarna_pay_now';
+        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_klarnapaylater') {
+            $paymentMethods[] = 'klarna_pay_later';
+        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_swish') {
+            $paymentMethods[] = 'swish';
+        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_resurs') {
+            $paymentMethods[] = 'resurs';
+        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_forbrugsforeningen') {
+            $paymentMethods[] = 'ffk';
         } else {
             $allowwedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());
             $paymentMethods = explode(',', $allowwedPaymentConfig);
@@ -685,4 +699,5 @@ class Data extends AbstractHelper
     {
         return number_format((float)($amount/100), 2, '.', '');
     }
+
 }

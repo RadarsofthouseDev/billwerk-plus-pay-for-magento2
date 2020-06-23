@@ -69,7 +69,7 @@ class Payment extends AbstractHelper
 
         $settle = false;
         $autoCaptureConfig = $this->_reepayHelper->getConfig('auto_capture', $order->getStoreId());
-        if ($autoCaptureConfig == 1) {
+        if ($autoCaptureConfig == 1 || $order->getPayment()->getMethodInstance()->getCode() == "reepay_swish" ) {
             $settle = true;
         }
 

@@ -69,7 +69,14 @@ class SendPaymentLink implements \Magento\Framework\Event\ObserverInterface
 
             if ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_payment' ||
                 $order->getPayment()->getMethodInstance()->getCode() == 'reepay_mobilepay' ||
-                $order->getPayment()->getMethodInstance()->getCode() == 'reepay_viabill'
+                $order->getPayment()->getMethodInstance()->getCode() == 'reepay_viabill' ||
+                $order->getPayment()->getMethodInstance()->getCode() == 'reepay_applepay' ||
+                $order->getPayment()->getMethodInstance()->getCode() == 'reepay_paypal' ||
+                $order->getPayment()->getMethodInstance()->getCode() == 'reepay_klarnapaynow' ||
+                $order->getPayment()->getMethodInstance()->getCode() == 'reepay_klarnapaylater' ||
+                $order->getPayment()->getMethodInstance()->getCode() == 'reepay_swish' ||
+                $order->getPayment()->getMethodInstance()->getCode() == 'reepay_resurs' ||
+                $order->getPayment()->getMethodInstance()->getCode() == 'reepay_forbrugsforeningen'
             ) {
                 try {
                     $sessionId = $this->_reepayPayment->createReepaySession($order);

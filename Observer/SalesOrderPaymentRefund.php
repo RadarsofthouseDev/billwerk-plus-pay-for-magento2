@@ -41,6 +41,13 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
         if ( $payment->getMethod() == 'reepay_payment' 
             || $payment->getMethod() == 'reepay_viabill'
             || $payment->getMethod() == 'reepay_mobilepay'
+            || $payment->getMethod() == 'reepay_applepay'
+            || $payment->getMethod() == 'reepay_paypal'
+            || $payment->getMethod() == 'reepay_klarnapaynow'
+            || $payment->getMethod() == 'reepay_klarnapaylater'
+            || $payment->getMethod() == 'reepay_swish'
+            || $payment->getMethod() == 'reepay_resurs'
+            || $payment->getMethod() == 'reepay_forbrugsforeningen'
         ) {
             
             $order = $payment->getOrder();

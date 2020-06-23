@@ -1,10 +1,13 @@
 
 # Changelog
+## Version 1.0.13 on 23 June 2020
+- Add "Swish Bank", "ApplePay", "Paypal", "Klarna Pay Now", "Klarna Pay Later", "Resurs" and "Forbrugsforeningen" payment methods.
+
 ## Version 1.0.12 on 28 May 2020
-- fixed invoice issue and credit memo issue for multi currencies. 
+- Fixed invoice issue and credit memo issue for multi currencies. 
 
 ## Version 1.0.11 on 27 February 2020
-- add "Resurs Bank" payment option.
+- Add "Resurs Bank" payment option.
 - Fix checkout session for thank you page.
 
 ## Version 1.0.10 on 26 February 2020

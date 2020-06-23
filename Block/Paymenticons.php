@@ -74,4 +74,132 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         return $paymentIcon;
     }
+
+    /**
+     * get Applepay payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getApplepayPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_applepay/show_icon', $storeScope);
+        
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['applepay'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * get Paypal payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getPaypalPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_paypal/show_icon', $storeScope);
+        
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['paypal'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * get Klarna Pay Now payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getKlarnapaynowPaymentIcon()
+    {
+
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_klarnapaynow/show_icon', $storeScope);
+        
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['klarna-pay-now'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * get Klarna Pay Later payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getKlarnapaylaterPaymentIcon()
+    {
+
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_klarnapaylater/show_icon', $storeScope);
+        
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['klarna-pay-later'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * get Swish payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getSwishPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_swish/show_icon', $storeScope);
+        
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['swish'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * get Resurs payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getResursPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_resurs/show_icon', $storeScope);
+        
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['resurs'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * get Forbrugsforeningen payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getForbrugsforeningenPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_forbrugsforeningen/show_icon', $storeScope);
+        
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['forbrugsforeningen'];
+        }
+
+        return $paymentIcon;
+    }
 }
