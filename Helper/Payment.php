@@ -41,7 +41,6 @@ class Payment extends AbstractHelper
         $this->_reepaySessionHelper = $reepaySessionHelper;
         $this->_reepayHelper = $reepayHelper;
         $this->_storeManager = $storeManager;
-
     }
 
     /**
@@ -56,16 +55,21 @@ class Payment extends AbstractHelper
         $customer = $this->_reepayHelper->getCustomerData($order);
         $billingAddress = $this->_reepayHelper->getOrderBillingAddress($order);
         $shippingAddress = $this->_reepayHelper->getOrderShippingAddress($order);
-        $orderLines = $this->_reepayHelper->getOrderLines($order);
         $paymentMethods = $this->_reepayHelper->getPaymentMethods($order);
 
         $orderData = [
             'handle' => $order->getIncrementId(),
             'currency' => $order->getOrderCurrencyCode(),
-            'order_lines' => $orderLines,
             'billing_address' => $billingAddress,
             'shipping_address' => $shippingAddress,
         ];
+
+        if ($this->_reepayHelper->getConfig('send_order_line') == '1') {
+            $orderData['order_lines'] = $this->_reepayHelper->getOrderLines($order);
+        } else {
+            $grandTotal = $order->getGrandTotal() * 100;
+            $orderData['amount'] = (int)$grandTotal;
+        }
 
         $settle = false;
         $autoCaptureConfig = $this->_reepayHelper->getConfig('auto_capture', $order->getStoreId());
@@ -101,15 +105,15 @@ class Payment extends AbstractHelper
             'nl_NL' => 'nl_NL',
             'pl_PL' => 'pl_PL',
         ];
-        
+
         $options = [];
-        
+
         if (!empty($localMapping[$this->_resolver->getLocale()])) {
             $options['locale'] = $localMapping[$this->_resolver->getLocale()];
         }
 
-        $options['accept_url'] = $this->_storeManager->getStore($order->getStoreId())->getBaseUrl().'reepay/standard/accept';
-        $options['cancel_url'] = $this->_storeManager->getStore($order->getStoreId())->getBaseUrl().'reepay/standard/cancel';
+        $options['accept_url'] = $this->_storeManager->getStore($order->getStoreId())->getBaseUrl() . 'reepay/standard/accept';
+        $options['cancel_url'] = $this->_storeManager->getStore($order->getStoreId())->getBaseUrl() . 'reepay/standard/cancel';
 
         $res = $this->_reepaySessionHelper->chargeCreateWithNewCustomer(
             $apiKey,
@@ -124,6 +128,4 @@ class Payment extends AbstractHelper
 
         return $paymentTransactionId;
     }
-
-
 }

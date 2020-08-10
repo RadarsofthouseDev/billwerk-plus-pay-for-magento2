@@ -9,7 +9,6 @@ namespace Radarsofthouse\Reepay\Observer;
  */
 class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInterface
 {
-
     protected $reepayHelper;
     protected $logger;
     protected $messageManager;
@@ -32,13 +31,14 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $payment = $observer->getPayment();
         $invoice = $observer->getInvoice();
-        
-        if ( $payment->getMethod() == 'reepay_payment' 
+
+        if ($payment->getMethod() == 'reepay_payment'
             || $payment->getMethod() == 'reepay_viabill'
             || $payment->getMethod() == 'reepay_mobilepay'
             || $payment->getMethod() == 'reepay_applepay'
@@ -49,11 +49,19 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             || $payment->getMethod() == 'reepay_resurs'
             || $payment->getMethod() == 'reepay_forbrugsforeningen'
         ) {
-            
             $order = $payment->getOrder();
             $amount = $invoice->getGrandTotal();
+            $originalAmount  = $order->getGrandTotal();
 
-            $this->logger->addDebug(__METHOD__, ['capture : '.$order->getIncrementId().', amount : '.$amount]);
+            if ($amount > $order->getGrandTotal()) {
+                $amount = $order->getGrandTotal();
+            }
+
+            if ($amount != $originalAmount) {
+                $this->logger->addDebug("Change capture amount from {$amount} to {$originalAmount} for order" . $order->getIncrementId());
+            }
+
+            $this->logger->addDebug(__METHOD__, ['capture : ' . $order->getIncrementId() . ', amount : ' . $amount]);
 
             $orderInvoices = $order->getInvoiceCollection();
 
@@ -63,7 +71,7 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             $options['ordertext'] = "settled";
 
             $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
-        
+
             $charge = $this->reepayCharge->settle(
                 $apiKey,
                 $order->getIncrementId(),
@@ -71,9 +79,8 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             );
 
             if (!empty($charge)) {
-
-                if( isset($charge["error"]) ){
-                    $this->logger->addDebug("settle error : ",$charge);
+                if (isset($charge["error"])) {
+                    $this->logger->addDebug("settle error : ", $charge);
                     $this->messageManager->addError($charge["error"]);
                     throw new \Magento\Framework\Exception\LocalizedException($charge["error"]);
                     return;
@@ -84,8 +91,8 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
                     $this->reepayHelper->setReepayPaymentState($_payment, 'settled');
                     $order->save();
 
-                    $this->logger->addDebug('settled : '.$order->getIncrementId());
-                    
+                    $this->logger->addDebug('settled : ' . $order->getIncrementId());
+
                     // separate transactions for partial capture
                     $payment->setIsTransactionClosed(false);
                     $payment->setTransactionId($charge['transaction']);
@@ -111,9 +118,7 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
                 $this->logger->addDebug("Empty settle response from Reepay");
                 $this->messageManager->addError("Empty settle response from Reepay");
                 throw new \Magento\Framework\Exception\LocalizedException("Empty settle response from Reepay");
-                return;
             }
-
         }
     }
 }

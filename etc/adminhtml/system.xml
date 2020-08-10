@@ -38,10 +38,14 @@
 					<comment/>
 					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Displaytype</source_model>
 				</field>
-				<field id="auto_capture" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
-					<label>Autocapture</label>
+				<field id="send_order_line" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label>Send order lines</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="auto_capture" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+                    <label>Auto Capture</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
 				<field id="order_status_after_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="select">
 					<label>Order status when the payment is made</label>
 					<comment>Suggest to use "Processing"</comment>

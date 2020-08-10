@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.0.14 on 10 August 2020
+- Add "Send order lines" option.
+- Prevent capture amount more than authorized amount.
+
 ## Version 1.0.13 on 23 June 2020
 - Add "Swish Bank", "ApplePay", "Paypal", "Klarna Pay Now", "Klarna Pay Later", "Resurs" and "Forbrugsforeningen" payment methods.
 
