@@ -49,6 +49,9 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             || $payment->getMethod() == 'reepay_resurs'
             || $payment->getMethod() == 'reepay_forbrugsforeningen'
         ) {
+            if($payment->getMethod() == 'reepay_swish'){
+                return;
+            }
             $order = $payment->getOrder();
             $amount = $invoice->getGrandTotal();
             $originalAmount  = $order->getGrandTotal();

@@ -8,7 +8,6 @@ namespace Radarsofthouse\Reepay\Controller\Webhooks;
  * @package Radarsofthouse\Reepay\Controller\Webhooks
  */
 
-
 class Index extends \Magento\Framework\App\Action\Action
 {
     protected $resultPageFactory;
@@ -28,6 +27,8 @@ class Index extends \Magento\Framework\App\Action\Action
     protected $transactionSearchResultInterfaceFactory;
     protected $reepayStatus;
     protected $reepayCharge;
+    protected $reepaySurchargeFee;
+    protected $reepayEmail;
 
     /**
      * Index constructor
@@ -47,6 +48,10 @@ class Index extends \Magento\Framework\App\Action\Action
      * @param \Magento\Sales\Model\Service\CreditmemoService $creditmemoService
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Magento\Sales\Api\Data\TransactionSearchResultInterfaceFactory $transactionSearchResultInterfaceFactory
+     * @param \Radarsofthouse\Reepay\Model\Status $reepayStatus
+     * @param \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
+     * @param \Radarsofthouse\Reepay\Helper\SurchargeFee $reepaySurchargeFee
+     * @param \Radarsofthouse\Reepay\Helper\Email $reepayEmail
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -65,7 +70,9 @@ class Index extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Sales\Api\Data\TransactionSearchResultInterfaceFactory $transactionSearchResultInterfaceFactory,
         \Radarsofthouse\Reepay\Model\Status $reepayStatus,
-        \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
+        \Radarsofthouse\Reepay\Helper\Charge $reepayCharge,
+        \Radarsofthouse\Reepay\Helper\SurchargeFee $reepaySurchargeFee,
+        \Radarsofthouse\Reepay\Helper\Email $reepayEmail
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->logger = $logger;
@@ -83,12 +90,13 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->transactionSearchResultInterfaceFactory = $transactionSearchResultInterfaceFactory;
         $this->reepayStatus = $reepayStatus;
         $this->reepayCharge = $reepayCharge;
+        $this->reepaySurchargeFee = $reepaySurchargeFee;
+        $this->reepayEmail = $reepayEmail;
         parent::__construct($context);
 
         // CsrfAwareAction Magento2.3 compatibility
         if (interface_exists("\Magento\Framework\App\CsrfAwareActionInterface")) {
             $request = $this->getRequest();
-
 
             if ($request->isPost() && empty($request->getParam('form_key'))) {
                 $formKey = $this->_objectManager->get(\Magento\Framework\Data\Form\FormKey::class);
@@ -105,7 +113,7 @@ class Index extends \Magento\Framework\App\Action\Action
     {
         $request = $this->getRequest()->getContent();
         $receiveData = json_decode($request, true);
-       
+
         $this->logger->addDebug(__METHOD__, $receiveData);
 
         try {
@@ -163,18 +171,18 @@ class Index extends \Magento\Framework\App\Action\Action
                     break;
                 default:
                     $response['status'] = 200;
-                    $response['message'] = 'The '.$receiveData['event_type'].' event has been ignored by Magento.';
+                    $response['message'] = 'The ' . $receiveData['event_type'] . ' event has been ignored by Magento.';
                     $log['response'] = $response;
                     $this->logger->addDebug('default', $log);
 
                     break;
             }
 
-            $response['message'] = 'Magento : '.$response['message'];
+            $response['message'] = 'Magento : ' . $response['message'];
             $result = $this->resultJsonFactory->create();
             $result->setHttpResponseCode($response['status']);
             $result->setData($response);
-            
+
             return  $result;
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             $log['response_error'] = [
@@ -196,12 +204,13 @@ class Index extends \Magento\Framework\App\Action\Action
             throw new \Exception($e->getMessage(), (!empty($e->getCode()) ? (int)$e->getCode() : 500));
         }
     }
-    
+
     /**
      * Capture from Reepay
      *
      * @param array $data
-     * @return void
+     * @return array
+     * @throws \Magento\framework\Exception\PaymentException
      */
     protected function settled($data)
     {
@@ -211,17 +220,17 @@ class Index extends \Magento\Framework\App\Action\Action
 
         try {
             if (!$order->getId()) {
-                $this->logger->addError('The order #'.$order_id.' no longer exists.');
+                $this->logger->addError('The order #' . $order_id . ' no longer exists.');
 
                 return [
                     'status' => 500,
-                    'message' => 'The order #'.$order_id.' no longer exists.'
+                    'message' => 'The order #' . $order_id . ' no longer exists.'
                 ];
             }
 
             $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
             $reepayTransactionData = $this->invoiceHelper->getTransaction($apiKey, $order_id, $data['transaction']);
-            
+
             if (!empty($reepayTransactionData['id']) && $reepayTransactionData['type'] == "settle") {
                 // check the transaction has been created
                 $transactions = $this->transactionSearchResultInterfaceFactory->create()->addOrderIdFilter($order->getId());
@@ -232,11 +241,11 @@ class Index extends \Magento\Framework\App\Action\Action
                     }
                 }
                 if ($hasTxn) {
-                    $this->logger->addDebug("Magento have created the transaction '".$reepayTransactionData['id']."' already.");
+                    $this->logger->addDebug("Magento have created the transaction '" . $reepayTransactionData['id'] . "' already.");
 
                     return [
                         'status' => 200,
-                        'message' => "Magento have created the transaction '".$reepayTransactionData['id']."' already.",
+                        'message' => "Magento have created the transaction '" . $reepayTransactionData['id'] . "' already.",
                     ];
                 }
 
@@ -251,34 +260,36 @@ class Index extends \Magento\Framework\App\Action\Action
                     $this->reepayHelper->setReepayPaymentState($order->getPayment(), 'settled');
                     $order->save();
 
-                    $this->logger->addDebug('Settled order #'.$order_id." , transaction ID : ".$transactionID);
+                    $this->surchargeFee($order_id, $chargeRes);
+
+                    $this->logger->addDebug('Settled order #' . $order_id . " , transaction ID : " . $transactionID);
 
                     return [
                         'status' => 200,
-                        'message' => 'Settled order #'.$order_id." , transaction ID : ".$transactionID,
+                        'message' => 'Settled order #' . $order_id . " , transaction ID : " . $transactionID,
                     ];
                 } else {
-                    $this->logger->addError('Cannot create capture transaction for order #'.$order_id." , transaction : ".$reepayTransactionData['id']);
+                    $this->logger->addError('Cannot create capture transaction for order #' . $order_id . " , transaction : " . $reepayTransactionData['id']);
 
                     return [
                         'status' => 500,
-                        'message' => 'Cannot create capture transaction for order #'.$order_id." , transaction : ".$reepayTransactionData['id'],
+                        'message' => 'Cannot create capture transaction for order #' . $order_id . " , transaction : " . $reepayTransactionData['id'],
                     ];
                 }
             } else {
-                $this->logger->addError('Cannot get transaction data from Reepay : transaction ID = '.$data['transaction']);
+                $this->logger->addError('Cannot get transaction data from Reepay : transaction ID = ' . $data['transaction']);
 
                 return [
                     'status' => 500,
-                    'message' => 'Cannot get transaction data from Reepay : transaction ID = '.$data['transaction']
+                    'message' => 'Cannot get transaction data from Reepay : transaction ID = ' . $data['transaction']
                 ];
             }
-        } catch (Mage_Core_Exception $e) {
-            $this->logger->addError('settled webhook exception : '.$e->getMessage());
+        } catch (\Exception $e) {
+            $this->logger->addError('settled webhook exception : ' . $e->getMessage());
 
             return [
                 'status' => 500,
-                'message' => 'settled webhook exception : '.$e->getMessage()
+                'message' => 'settled webhook exception : ' . $e->getMessage()
             ];
         }
     }
@@ -294,14 +305,14 @@ class Index extends \Magento\Framework\App\Action\Action
         $order_id = $data['invoice'];
         $this->logger->addDebug(__METHOD__, [$order_id]);
         $order = $this->orderInterface->loadByIncrementId($order_id);
-        
+
         try {
             if (!$order->getId()) {
-                $this->logger->addError('The order #'.$order_id.' no longer exists.');
+                $this->logger->addError('The order #' . $order_id . ' no longer exists.');
 
                 return [
                     'status' => 500,
-                    'message' => 'The order #'.$order_id.' no longer exists.'
+                    'message' => 'The order #' . $order_id . ' no longer exists.'
                 ];
             }
 
@@ -320,10 +331,10 @@ class Index extends \Magento\Framework\App\Action\Action
                 }
 
                 if ($hasTxn) {
-                    $this->logger->addDebug("Magento have created the transaction '".$refundData['id']."' already.");
+                    $this->logger->addDebug("Magento have created the transaction '" . $refundData['id'] . "' already.");
                     return [
                         'status' => 200,
-                        'message' => "Magento have created the transaction '".$refundData['id']."' already.",
+                        'message' => "Magento have created the transaction '" . $refundData['id'] . "' already.",
                     ];
                 }
 
@@ -335,35 +346,35 @@ class Index extends \Magento\Framework\App\Action\Action
                 );
 
                 $refundAmount = $this->reepayHelper->convertAmount($refundData['amount']);
-                $transactionID = $this->reepayHelper->addRefundTransactionToOrder($order, $refundData ,$chargeRes );
+                $transactionID = $this->reepayHelper->addRefundTransactionToOrder($order, $refundData, $chargeRes);
 
                 if ($transactionID) {
                     $this->reepayHelper->setReepayPaymentState($order->getPayment(), 'refunded');
                     $order->save();
 
-                    $this->logger->addDebug('Refunded order #'.$order_id." , transaction ID : ".$transactionID);
+                    $this->logger->addDebug('Refunded order #' . $order_id . " , transaction ID : " . $transactionID);
 
                     return [
                         'status' => 200,
-                        'message' => 'Refunded order #'.$order_id." , transaction ID : ".$transactionID,
+                        'message' => 'Refunded order #' . $order_id . " , transaction ID : " . $transactionID,
                     ];
                 } else {
-                    $this->logger->addError('Cannot create refund transaction for order #'.$order_id." , transaction : ".$refundData['id']);
+                    $this->logger->addError('Cannot create refund transaction for order #' . $order_id . " , transaction : " . $refundData['id']);
 
                     return [
                         'status' => 500,
-                        'message' => 'Cannot create refund transaction for order #'.$order_id." , transaction : ".$refundData['id'],
+                        'message' => 'Cannot create refund transaction for order #' . $order_id . " , transaction : " . $refundData['id'],
                     ];
                 }
             } else {
-                $this->logger->addError('Cannot get refund transaction data from Reepay : transaction ID = '.$data['transaction']);
+                $this->logger->addError('Cannot get refund transaction data from Reepay : transaction ID = ' . $data['transaction']);
 
                 return [
                     'status' => 500,
-                    'message' => 'Cannot get refund transaction data from Reepay : transaction ID = '.$data['transaction'],
+                    'message' => 'Cannot get refund transaction data from Reepay : transaction ID = ' . $data['transaction'],
                 ];
             }
-        } catch (Mage_Core_Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->addError('refund webhook exception : ' . $e->getMessage());
 
             return [
@@ -377,7 +388,7 @@ class Index extends \Magento\Framework\App\Action\Action
      * Cancel from Reepay
      *
      * @param array $data
-     * @return void
+     * @return array
      */
     protected function cancel($data)
     {
@@ -391,7 +402,7 @@ class Index extends \Magento\Framework\App\Action\Action
 
                 return [
                     'status' => 500,
-                    'message' => 'The order #'.$order_id.' no longer exists.'
+                    'message' => 'The order #' . $order_id . ' no longer exists.'
                 ];
             }
 
@@ -412,13 +423,13 @@ class Index extends \Magento\Framework\App\Action\Action
             $this->reepayHelper->setReepayPaymentState($_payment, 'cancelled');
             $order->save();
 
-            $this->logger->addDebug('caccled order #'.$order_id);
+            $this->logger->addDebug('cancelled order #' . $order_id);
 
             return [
                 'status' => 200,
-                'message' => 'caccled order #'.$order_id
+                'message' => 'cancelled order #' . $order_id
             ];
-        } catch (Mage_Core_Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->addError('cancel webhook exception : ' . $e->getMessage());
 
             return [
@@ -432,7 +443,8 @@ class Index extends \Magento\Framework\App\Action\Action
      * Create authorize transaction if have no the transaction
      *
      * @param array $data
-     * @return void
+     * @return array
+     * @throws \Magento\framework\Exception\PaymentException
      */
     protected function authorize($data)
     {
@@ -444,11 +456,11 @@ class Index extends \Magento\Framework\App\Action\Action
             // check if has reepay status row for the order, That means the order has been authorized
             $reepayStatus = $this->reepayStatus->load($order_id, 'order_id');
             if ($reepayStatus->getStatusId()) {
-                $this->logger->addDebug('order #'.$order_id.' has been authorized already');
+                $this->logger->addDebug('order #' . $order_id . ' has been authorized already');
 
                 return [
                     'status' => 200,
-                    'message' => 'order #'.$order_id.' has been authorized already',
+                    'message' => 'order #' . $order_id . ' has been authorized already',
                 ];
             }
 
@@ -471,26 +483,45 @@ class Index extends \Magento\Framework\App\Action\Action
                 'status' => $chargeRes['state'],
             ];
 
-
             $newReepayStatus = $this->reepayStatus;
             $newReepayStatus->setData($data);
             $newReepayStatus->save();
             $this->logger->addDebug('save reepay status');
 
             $this->reepayHelper->addTransactionToOrder($order, $chargeRes);
-            $this->logger->addDebug('order #'.$order_id.' has been authorized by Reepay webhook');
-            
+            $this->logger->addDebug('order #' . $order_id . ' has been authorized by Reepay webhook');
+
+            $this->surchargeFee($order_id, $chargeRes);
             return [
                 'status' => 200,
-                'message' => 'order #'.$order_id.' has been authorized by Reepay webhook',
+                'message' => 'order #' . $order_id . ' has been authorized by Reepay webhook',
             ];
-        } catch (Exception $e) {
-            $this->logger->addError('webhook authorize exception : '.$e->getMessage());
+        } catch (\Exception $e) {
+            $this->logger->addError('webhook authorize exception : ' . $e->getMessage());
 
             return [
                 'status' => 500,
-                'message' => 'webhook authorize error : '.$e->getMessage(),
+                'message' => 'webhook authorize error : ' . $e->getMessage(),
             ];
+        }
+    }
+
+    /**
+     * @param $orderIncrementId
+     * @param $chargeRes
+     */
+    private function surchargeFee($orderIncrementId, $chargeRes)
+    {
+        $isSurchargeFeeEnable = $this->reepayHelper->isSurchargeFeeEnabled();
+        $this->_logger->addDebug(__METHOD__, ['isSurchargeFeeEnable' => $isSurchargeFeeEnable, 'orderIncrementId' => $orderIncrementId]);
+        if ($isSurchargeFeeEnable) {
+            //to test add 50.00
+//            $chargeRes['source']['surcharge_fee'] = '5100';
+            $this->_logger->addDebug('updateFeeToOrder', $chargeRes);
+            $this->reepaySurchargeFee->updateFeeToOrder($orderIncrementId, $chargeRes);
+        } else {
+            $this->_logger->addDebug('NotupdateFeeToOrder', $chargeRes);
+            $this->reepayEmail->sendEmail($orderIncrementId);
         }
     }
 }

@@ -21,21 +21,26 @@ class Accept extends \Magento\Framework\App\Action\Action
     protected $_priceHelper;
     protected $_orderSender;
     protected $_checkoutSession;
+    protected $_reepayHelperEmail;
+    protected $_reepayHelperSurchargeFee;
 
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Action\Context  $context
+     * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\App\Request\Http $request
      * @param \Magento\Sales\Api\Data\OrderInterface $orderInterface
      * @param \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
      * @param \Radarsofthouse\Reepay\Helper\Session $reepaySession
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
+     * @param \Radarsofthouse\Reepay\Helper\Email $reepayHelperEmail
+     * @param \Radarsofthouse\Reepay\Helper\SurchargeFee $reepayHelperSurchargeFee
      * @param \Radarsofthouse\Reepay\Helper\Logger $logger
      * @param \Radarsofthouse\Reepay\Model\Status $reepayStatus
      * @param \Magento\Framework\Pricing\Helper\Data $priceHelper
      * @param \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender
+     * @param \Magento\Checkout\Model\Session $checkoutSession
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -45,6 +50,8 @@ class Accept extends \Magento\Framework\App\Action\Action
         \Radarsofthouse\Reepay\Helper\Session $reepaySession,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
+        \Radarsofthouse\Reepay\Helper\Email $reepayHelperEmail,
+        \Radarsofthouse\Reepay\Helper\SurchargeFee $reepayHelperSurchargeFee,
         \Radarsofthouse\Reepay\Helper\Logger $logger,
         \Radarsofthouse\Reepay\Model\Status $reepayStatus,
         \Magento\Framework\Pricing\Helper\Data $priceHelper,
@@ -58,6 +65,8 @@ class Accept extends \Magento\Framework\App\Action\Action
         $this->_reepaySession = $reepaySession;
         $this->_resultJsonFactory = $resultJsonFactory;
         $this->_reepayHelper = $reepayHelper;
+        $this->_reepayHelperEmail = $reepayHelperEmail;
+        $this->_reepayHelperSurchargeFee = $reepayHelperSurchargeFee;
         $this->_logger = $logger;
         $this->_reepayStatus = $reepayStatus;
         $this->_priceHelper = $priceHelper;
@@ -81,7 +90,7 @@ class Accept extends \Magento\Framework\App\Action\Action
         if (isset($params['_isAjax'])) {
             $isAjax = 1;
         }
-        
+
         $this->_logger->addDebug(__METHOD__, $params);
 
         if (empty($params['invoice']) || empty($params['id'])) {
@@ -91,7 +100,6 @@ class Accept extends \Magento\Framework\App\Action\Action
         $order = $this->_orderInterface->loadByIncrementId($orderId);
         $apiKey = $this->_reepayHelper->getApiKey($order->getStoreId());
 
-
         $this->_checkoutSession->setLastOrderId($order->getId());
         $this->_checkoutSession->setLastRealOrderId($order->getIncrementId());
         $this->_checkoutSession->setLastSuccessQuoteId($order->getQuoteId());
@@ -99,29 +107,28 @@ class Accept extends \Magento\Framework\App\Action\Action
 
         $reepayStatus = $this->_reepayStatus->load($orderId, 'order_id');
         if ($reepayStatus->getStatusId()) {
-            $this->_logger->addDebug('order : '.$orderId.' has been accepted already');
-            
-            if( $this->_reepayHelper->getConfig('send_order_email_when_success', $order->getStoreId() ) ){
-                if (!$order->getEmailSent()) {
-                    try {
-                        $this->_orderSender->send($order);
-                        $order->addStatusHistoryComment(__('Sent order confirmation email to customer'))
-                            ->setIsCustomerNotified(true)
-                            ->save();
-                    } catch (\Exception $e) {
-                        $order->addStatusHistoryComment(__('Send order confirmation email failure: %s', $e->getMessage()))
-                            ->setIsCustomerNotified(false)
-                            ->save();
-                    }
-                }
-            }
+            $this->_logger->addDebug('order : ' . $orderId . ' has been accepted already');
+
+//            if( $this->_reepayHelper->getConfig('send_order_email_when_success', $order->getStoreId() ) ){
+//                if (!$order->getEmailSent()) {
+//                    try {
+//                        $this->_orderSender->send($order);
+//                        $order->addStatusHistoryComment(__('Sent order confirmation email to customer'))
+//                            ->setIsCustomerNotified(true)
+//                            ->save();
+//                    } catch (\Exception $e) {
+//                        $order->addStatusHistoryComment(__('Send order confirmation email failure: %s', $e->getMessage()))
+//                            ->setIsCustomerNotified(false)
+//                            ->save();
+//                    }
+//                }
+//            }
 
             // delete reepay session
             $sessionRes = $this->_reepaySession->delete(
                 $apiKey,
                 $id
             );
-            
 
             if ($isAjax == 1) {
                 $result = [];
@@ -146,7 +153,7 @@ class Accept extends \Magento\Framework\App\Action\Action
                 }
             }
         }
-        
+
         $chargeRes = $this->_reepayCharge->get(
             $apiKey,
             $orderId
@@ -170,21 +177,32 @@ class Accept extends \Magento\Framework\App\Action\Action
 
         $this->_reepayHelper->addTransactionToOrder($order, $chargeRes);
 
-        if ($this->_reepayHelper->getConfig('send_order_email_when_success', $order->getStoreId())) {
-            if (!$order->getEmailSent()) {
-                try {
-                    $this->_orderSender->send($order);
-                    $order->addStatusHistoryComment(__('Sent order confirmation email to customer'))
-                        ->setIsCustomerNotified(true)
-                        ->save();
-                } catch (\Exception $e) {
-                    $order->addStatusHistoryComment(__('Send order confirmation email failure: %s', $e->getMessage()))
-                        ->setIsCustomerNotified(false)
-                        ->save();
-                }
-            }
+        $isSurchargeFeeEnable = $this->_reepayHelper->isSurchargeFeeEnabled();
+        $this->_logger->addDebug(__METHOD__, ['isSurchargeFeeEnable' => $isSurchargeFeeEnable, 'orderId'=>$orderId]);
+        if ($isSurchargeFeeEnable) {
+            //to test add 50.00
+//            $chargeRes['source']['surcharge_fee'] = '5100';
+            $this->_logger->addDebug('updateFeeToOrder', $chargeRes);
+            $this->_reepayHelperSurchargeFee->updateFeeToOrder($orderId, $chargeRes);
+        } else {
+            $this->_logger->addDebug('NotupdateFeeToOrder', $chargeRes);
+            $this->_reepayHelperEmail->sendEmail($orderId);
         }
-        
+
+//        if ($this->_reepayHelper->getConfig('send_order_email_when_success', $order->getStoreId())) {
+//            if (!$order->getEmailSent()) {
+//                try {
+//                    $this->_orderSender->send($order);
+//                    $order->addStatusHistoryComment(__('Sent order confirmation email to customer'))
+//                        ->setIsCustomerNotified(true)
+//                        ->save();
+//                } catch (\Exception $e) {
+//                    $order->addStatusHistoryComment(__('Send order confirmation email failure: %s', $e->getMessage()))
+//                        ->setIsCustomerNotified(false)
+//                        ->save();
+//                }
+//            }
+//        }
 
         // delete reepay session
         $sessionRes = $this->_reepaySession->delete(

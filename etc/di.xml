@@ -5,6 +5,9 @@
 	<preference for="Radarsofthouse\Reepay\Api\Data\StatusInterface" type="Radarsofthouse\Reepay\Model\Data\Status"/>
 	<preference for="Radarsofthouse\Reepay\Api\Data\StatusSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 	<preference for="Magento\Payment\Block\Info" type="Radarsofthouse\Reepay\Block\Info"/>
+    <type name="Magento\Sales\Model\Order\CreditmemoFactory">
+        <plugin disabled="false" name="Radarsofthouse_Reepay_Plugin_Magento_Sales_Model_Order_CreditmemoFactory" sortOrder="10" type="Radarsofthouse\Reepay\Plugin\Magento\Sales\Model\Order\CreditmemoFactory"/>
+    </type>
 	<type name="Radarsofthouse\Reepay\Logger\DebugHandler">
 		<arguments>
 			<argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>

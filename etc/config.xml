@@ -12,6 +12,7 @@
 				<display_type>3</display_type>
 				<auto_capture>0</auto_capture>
                 <send_order_line>1</send_order_line>
+                <surcharge_fee>0</surcharge_fee>
 				<!-- <send_email_after_payment>0</send_email_after_payment> -->
 				<order_status_before_payment>pending</order_status_before_payment>
 				<order_status_after_payment>processing</order_status_after_payment>

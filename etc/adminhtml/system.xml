@@ -46,6 +46,10 @@
                     <label>Auto Capture</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="surcharge_fee" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="41" translate="label" type="select">
+                    <label>Surcharge Fee</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
 				<field id="order_status_after_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="select">
 					<label>Order status when the payment is made</label>
 					<comment>Suggest to use "Processing"</comment>

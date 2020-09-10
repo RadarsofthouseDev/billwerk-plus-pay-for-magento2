@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.1.0 on 10 September 2020
+- Implement surcharge fee
+- Fixed invoice issue for Swish payment.
+
 ## Version 1.0.14 on 10 August 2020
 - Add "Send order lines" option.
 - Prevent capture amount more than authorized amount.

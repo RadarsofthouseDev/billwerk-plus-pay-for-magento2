@@ -13,6 +13,18 @@ use Magento\Store\Model\ScopeInterface;
 class Data extends AbstractHelper
 {
     const CONFIG_PATH = 'payment/reepay_payment/';
+    const REEPAY_PAYMENT_METHODS = [
+        'reepay_payment',
+        'reepay_viabill',
+        'reepay_mobilepay',
+        'reepay_applepay',
+        'reepay_paypal',
+        'reepay_klarnapaynow',
+        'reepay_klarnapaylater',
+        'reepay_swish',
+        'reepay_resurs',
+        'reepay_forbrugsforeningen',
+    ];
 
     protected $_storeManager;
     protected $_resolver;
@@ -82,7 +94,7 @@ class Data extends AbstractHelper
         if ($storeId === null) {
             $storeId = $this->_storeManager->getStore()->getId();
         }
-        
+
         $apiKey = null;
         $testModeConfig = $this->getConfig('api_key_type', $storeId);
         if ($testModeConfig == 1) {
@@ -107,7 +119,7 @@ class Data extends AbstractHelper
         $_additionalInfo['raw_details_info']['state'] = $state;
         $payment->setAdditionalInformation($_additionalInfo);
         $payment->save();
-        
+
         $orderId = $payment->getOrder()->getIncrementId();
         $reepayStatus = $this->_reepayStatus->load($orderId, 'order_id');
         if ($reepayStatus->getStatusId()) {
@@ -127,34 +139,34 @@ class Data extends AbstractHelper
     {
         $reepayStatus = $this->_reepayStatus->load($orderId, 'order_id');
         if ($reepayStatus->getStatusId()) {
-            if ( isset($data['status']) && !empty($data['status'])) {
+            if (isset($data['status']) && !empty($data['status'])) {
                 $reepayStatus->setStatus($data['status']);
             }
-            if ( isset($data['first_name']) && !empty($data['first_name'])) {
+            if (isset($data['first_name']) && !empty($data['first_name'])) {
                 $reepayStatus->setFirstName($data['first_name']);
             }
-            if ( isset($data['last_name']) && !empty($data['last_name'])) {
+            if (isset($data['last_name']) && !empty($data['last_name'])) {
                 $reepayStatus->setLastName($data['last_name']);
             }
-            if ( isset($data['email']) && !empty($data['email'])) {
+            if (isset($data['email']) && !empty($data['email'])) {
                 $reepayStatus->setEmail($data['email']);
             }
-            if ( isset($data['token']) && !empty($data['token'])) {
+            if (isset($data['token']) && !empty($data['token'])) {
                 $reepayStatus->setToken($data['token']);
             }
-            if ( isset($data['masked_card_number']) && !empty($data['masked_card_number'])) {
+            if (isset($data['masked_card_number']) && !empty($data['masked_card_number'])) {
                 $reepayStatus->setMaskedCardNumber($data['masked_card_number']);
             }
-            if ( isset($data['fingerprint']) && !empty($data['fingerprint'])) {
+            if (isset($data['fingerprint']) && !empty($data['fingerprint'])) {
                 $reepayStatus->setFingerprint($data['fingerprint']);
             }
-            if ( isset($data['card_type']) && !empty($data['card_type'])) {
+            if (isset($data['card_type']) && !empty($data['card_type'])) {
                 $reepayStatus->setCardType($data['card_type']);
             }
-            if ( isset($data['error']) && !empty($data['error'])) {
+            if (isset($data['error']) && !empty($data['error'])) {
                 $reepayStatus->setError($data['error']);
             }
-            if ( isset($data['error_state']) && !empty($data['error_state'])) {
+            if (isset($data['error_state']) && !empty($data['error_state'])) {
                 $reepayStatus->setErrorState($data['error_state']);
             }
 
@@ -300,7 +312,7 @@ class Data extends AbstractHelper
 
             $total = $total + $this->toInt($amount) * $this->toInt($qty);
         }
-        
+
         /*
         // tax
         $taxAmount = ($order->getTaxAmount() * 100);
@@ -361,7 +373,6 @@ class Data extends AbstractHelper
             $orderLines[] = $line;
         }
 
-        
         return $orderLines;
     }
 
@@ -370,8 +381,9 @@ class Data extends AbstractHelper
      *
      * @return int
      */
-    public function toInt($number){
-        return (int)($number."");
+    public function toInt($number)
+    {
+        return (int)($number . "");
     }
 
     /**
@@ -433,28 +445,28 @@ class Data extends AbstractHelper
             $source = $paymentData['source'];
             unset($paymentData['source']);
 
-            if( isset($source['type']) ){
+            if (isset($source['type'])) {
                 $paymentData['source_type'] = $source['type'];
             }
-            if( isset($source['fingerprint']) ){
+            if (isset($source['fingerprint'])) {
                 $paymentData['source_fingerprint'] = $source['fingerprint'];
             }
-            if( isset($source['provider']) ){
+            if (isset($source['provider'])) {
                 $paymentData['source_provider'] = $source['provider'];
             }
-            if( isset($source['card_type']) ){
+            if (isset($source['card_type'])) {
                 $paymentData['source_card_type'] = $source['card_type'];
             }
-            if( isset($source['exp_date']) ){
+            if (isset($source['exp_date'])) {
                 $paymentData['source_exp_date'] = $source['exp_date'];
             }
-            if( isset($source['masked_card']) ){
+            if (isset($source['masked_card'])) {
                 $paymentData['source_masked_card'] = $source['masked_card'];
             }
-            if( isset($source['type']) ){
+            if (isset($source['type'])) {
                 $paymentData['source_type'] = $source['type'];
             }
-            if( isset($source['auth_transaction']) ){
+            if (isset($source['auth_transaction'])) {
                 $paymentData['source_auth_transaction'] = $source['auth_transaction'];
             }
         }
@@ -520,20 +532,19 @@ class Data extends AbstractHelper
             $order->save();
             $transaction->save();
 
-            
             $orderStatusAfterPayment = $this->getConfig('order_status_after_payment', $order->getStoreId());
             if (!empty($orderStatusAfterPayment)) {
                 $totalDue = $this->_priceHelper->currency($order->getTotalDue(), true, false);
 
                 $order->setState($orderStatusAfterPayment, true);
                 $order->setStatus($orderStatusAfterPayment);
-                $order->addStatusToHistory($order->getStatus(), 'Reepay : The authorized amount is '.$totalDue);
+                $order->addStatusToHistory($order->getStatus(), 'Reepay : The authorized amount is ' . $totalDue);
                 $order->save();
             }
 
             return  $transaction->getTransactionId();
         } catch (Exception $e) {
-            throw new \Magento\framework\Exception\PaymentException(__('addTransactionToOrder() Exception : '.$e->getMessage()));
+            throw new \Magento\framework\Exception\PaymentException(__('addTransactionToOrder() Exception : ' . $e->getMessage()));
 
             return;
         }
@@ -554,11 +565,11 @@ class Data extends AbstractHelper
         if (isset($transactionData['card_transaction'])) {
             $cardTransaction = $transactionData['card_transaction'];
             unset($transactionData['card_transaction']);
-            $transactionData['card_transaction_ref_transaction'] = $cardTransaction['ref_transaction'];
-            $transactionData['card_transaction_fingerprint'] = $cardTransaction['fingerprint'];
-            $transactionData['card_transaction_card_type'] = $cardTransaction['card_type'];
-            $transactionData['card_transaction_exp_date'] = $cardTransaction['exp_date'];
-            $transactionData['card_transaction_masked_card'] = $cardTransaction['masked_card'];
+            $transactionData['card_transaction_ref_transaction'] = array_key_exists('ref_transaction', $cardTransaction) ? $cardTransaction['ref_transaction'] : '';
+            $transactionData['card_transaction_fingerprint'] = array_key_exists('fingerprint', $cardTransaction) ? $cardTransaction['fingerprint'] : '';
+            $transactionData['card_transaction_card_type'] = array_key_exists('card_type', $cardTransaction) ? $cardTransaction['card_type'] : '';
+            $transactionData['card_transaction_exp_date'] = array_key_exists('exp_date', $cardTransaction) ? $cardTransaction['exp_date'] : '';
+            $transactionData['card_transaction_masked_card'] = array_key_exists('masked_card', $cardTransaction) ? $cardTransaction['masked_card'] : '';
         }
 
         return $transactionData;
@@ -587,19 +598,19 @@ class Data extends AbstractHelper
             $payment->setAdditionalInformation(
                 [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $paymentData]
             );
-            
+
             $formatedPrice = $order->getBaseCurrency()->formatTxt($transactionData['amount']);
             $message = __('Reepay : Captured amount of %1 by Reepay webhook.', $formatedPrice);
-            
+
             $transaction = $this->_transactionBuilder->setPayment($payment)
                 ->setOrder($order)
                 ->setTransactionId($transactionData['id'])
                 ->setAdditionalInformation(
                     [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $transactionData]
-            )
+                )
             ->setFailSafe(true)
             ->build(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE);
- 
+
             $payment->addTransactionCommentsToOrder(
                 $transaction,
                 $message
@@ -607,10 +618,10 @@ class Data extends AbstractHelper
             $payment->setParentTransactionId(null);
             $payment->save();
             $order->save();
- 
+
             return  $transaction->save()->getTransactionId();
         } catch (Exception $e) {
-            throw new \Magento\framework\Exception\PaymentException(__('addCaptureTransactionToOrder() Exception : '.$e->getMessage()));
+            throw new \Magento\framework\Exception\PaymentException(__('addCaptureTransactionToOrder() Exception : ' . $e->getMessage()));
 
             return;
         }
@@ -660,19 +671,19 @@ class Data extends AbstractHelper
             $payment->setAdditionalInformation(
                 [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $paymentData]
             );
-            
+
             $formatedPrice = $order->getBaseCurrency()->formatTxt($transactionData['amount']);
             $message = __('Reepay : Refunded amount of %1 by Reepay webhook.', $formatedPrice);
-            
+
             $transaction = $this->_transactionBuilder->setPayment($payment)
                 ->setOrder($order)
                 ->setTransactionId($transactionData['id'])
                 ->setAdditionalInformation(
                     [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $transactionData]
-            )
+                )
             ->setFailSafe(true)
             ->build(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_REFUND);
- 
+
             $payment->addTransactionCommentsToOrder(
                 $transaction,
                 $message
@@ -680,10 +691,10 @@ class Data extends AbstractHelper
             $payment->setParentTransactionId(null);
             $payment->save();
             $order->save();
- 
+
             return  $transaction->save()->getTransactionId();
         } catch (Exception $e) {
-            throw new \Magento\framework\Exception\PaymentException(__('addRefundTransactionToOrder() Exception : '.$e->getMessage()));
+            throw new \Magento\framework\Exception\PaymentException(__('addRefundTransactionToOrder() Exception : ' . $e->getMessage()));
 
             return;
         }
@@ -700,4 +711,24 @@ class Data extends AbstractHelper
         return number_format((float)($amount/100), 2, '.', '');
     }
 
+    /**
+     * Get SurchargeFee Enabled
+     * @return bool
+     */
+    public function isSurchargeFeeEnabled()
+    {
+        return $this->getConfig('surcharge_fee') == 1;
+    }
+
+    /**
+     * @param $method
+     * @return bool
+     */
+    public function isReepayPaymentMethod($method = '')
+    {
+        if (in_array($method, self::REEPAY_PAYMENT_METHODS, true)) {
+            return true;
+        }
+        return false;
+    }
 }
