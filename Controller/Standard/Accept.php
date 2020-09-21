@@ -124,11 +124,7 @@ class Accept extends \Magento\Framework\App\Action\Action
 //                }
 //            }
 
-            // delete reepay session
-            $sessionRes = $this->_reepaySession->delete(
-                $apiKey,
-                $id
-            );
+            
 
             if ($isAjax == 1) {
                 $result = [];
@@ -204,11 +200,7 @@ class Accept extends \Magento\Framework\App\Action\Action
 //            }
 //        }
 
-        // delete reepay session
-        $sessionRes = $this->_reepaySession->delete(
-            $apiKey,
-            $id
-        );
+        
 
         if ($isAjax == 1) {
             $result = [];

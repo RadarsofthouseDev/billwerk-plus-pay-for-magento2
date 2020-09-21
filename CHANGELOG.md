@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.1.1 on 21 September 2020
+- Not delete Reepay session when payment success.
+
 ## Version 1.1.0 on 10 September 2020
 - Implement surcharge fee
 - Fixed invoice issue for Swish payment.
