@@ -21,8 +21,10 @@ class Data extends AbstractHelper
         'reepay_paypal',
         'reepay_klarnapaynow',
         'reepay_klarnapaylater',
+        'reepay_klarnasliceit',
         'reepay_swish',
         'reepay_resurs',
+        'reepay_vipps',
         'reepay_forbrugsforeningen',
     ];
 
@@ -395,27 +397,44 @@ class Data extends AbstractHelper
     public function getPaymentMethods($order)
     {
         $paymentMethods = [];
-        if ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_viabill') {
-            $paymentMethods[] = 'viabill';
-        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_mobilepay') {
-            $paymentMethods[] = 'mobilepay';
-        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_applepay') {
-            $paymentMethods[] = 'applepay';
-        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_paypal') {
-            $paymentMethods[] = 'paypal';
-        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_klarnapaynow') {
-            $paymentMethods[] = 'klarna_pay_now';
-        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_klarnapaylater') {
-            $paymentMethods[] = 'klarna_pay_later';
-        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_swish') {
-            $paymentMethods[] = 'swish';
-        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_resurs') {
-            $paymentMethods[] = 'resurs';
-        } elseif ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_forbrugsforeningen') {
-            $paymentMethods[] = 'ffk';
-        } else {
-            $allowwedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());
-            $paymentMethods = explode(',', $allowwedPaymentConfig);
+        $orderPaymentMethod = $order->getPayment()->getMethodInstance()->getCode();
+        switch ($orderPaymentMethod) {
+            case 'reepay_viabill':
+                $paymentMethods[] = 'viabill';
+                break;
+            case 'reepay_mobilepay':
+                $paymentMethods[] = 'mobilepay';
+                break;
+            case 'reepay_applepay':
+                $paymentMethods[] = 'applepay';
+                break;
+            case 'reepay_paypal':
+                $paymentMethods[] = 'paypal';
+                break;
+            case 'reepay_klarnapaynow':
+                $paymentMethods[] = 'klarna_pay_now';
+                break;
+            case 'reepay_klarnapaylater':
+                $paymentMethods[] = 'klarna_pay_later';
+                break;
+            case 'reepay_klarnasliceit':
+                $paymentMethods[] = 'klarna_slice_it';
+                break;
+            case 'reepay_swish':
+                $paymentMethods[] = 'swish';
+                break;
+            case 'reepay_resurs':
+                $paymentMethods[] = 'resurs';
+                break;
+            case 'reepay_vipps':
+                $paymentMethods[] = 'vipps';
+                break;
+            case 'reepay_forbrugsforeningen':
+                $paymentMethods[] = 'ffk';
+                break;
+            default:
+                $allowedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());
+                $paymentMethods = explode(',', $allowedPaymentConfig);
         }
 
         return $paymentMethods;

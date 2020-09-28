@@ -345,7 +345,7 @@ class Index extends \Magento\Framework\App\Action\Action
                     $order_id
                 );
 
-                $refundAmount = $this->reepayHelper->convertAmount($refundData['amount']);
+//                $refundAmount = $this->reepayHelper->convertAmount($refundData['amount']);
                 $transactionID = $this->reepayHelper->addRefundTransactionToOrder($order, $refundData, $chargeRes);
 
                 if ($transactionID) {
@@ -398,7 +398,7 @@ class Index extends \Magento\Framework\App\Action\Action
 
         try {
             if (!$order->getId()) {
-                $this->logger->addError('refund webhook exception : ' . $e->getMessage());
+                $this->logger->addError('The order #' . $order_id . ' no longer exists.');
 
                 return [
                     'status' => 500,
@@ -513,14 +513,14 @@ class Index extends \Magento\Framework\App\Action\Action
     private function surchargeFee($orderIncrementId, $chargeRes)
     {
         $isSurchargeFeeEnable = $this->reepayHelper->isSurchargeFeeEnabled();
-        $this->_logger->addDebug(__METHOD__, ['isSurchargeFeeEnable' => $isSurchargeFeeEnable, 'orderIncrementId' => $orderIncrementId]);
+        $this->logger->addDebug(__METHOD__, ['isSurchargeFeeEnable' => $isSurchargeFeeEnable, 'orderIncrementId' => $orderIncrementId]);
         if ($isSurchargeFeeEnable) {
             //to test add 50.00
 //            $chargeRes['source']['surcharge_fee'] = '5100';
-            $this->_logger->addDebug('updateFeeToOrder', $chargeRes);
+            $this->logger->addDebug('updateFeeToOrder', $chargeRes);
             $this->reepaySurchargeFee->updateFeeToOrder($orderIncrementId, $chargeRes);
         } else {
-            $this->_logger->addDebug('NotupdateFeeToOrder', $chargeRes);
+            $this->logger->addDebug('NotupdateFeeToOrder', $chargeRes);
             $this->reepayEmail->sendEmail($orderIncrementId);
         }
     }

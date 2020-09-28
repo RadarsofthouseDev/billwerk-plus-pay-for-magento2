@@ -76,6 +76,14 @@
 																		</item>
 																	</item>
 																</item>
+                                                                <item name="reepay_klarnasliceit" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_klarnasliceit</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="reepay_klarnasliceit" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
                                                                 <item name="reepay_swish" xsi:type="array">
 																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_swish</item>
 																	<item name="methods" xsi:type="array">
@@ -92,6 +100,14 @@
 																		</item>
 																	</item>
 																</item>
+                                                                <item name="reepay_vipps" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_vipps</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="reepay_vipps" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
                                                                 <item name="reepay_forbrugsforeningen" xsi:type="array">
 																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_forbrugsforeningen</item>
 																	<item name="methods" xsi:type="array">

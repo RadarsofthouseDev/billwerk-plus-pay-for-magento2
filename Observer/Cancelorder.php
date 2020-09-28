@@ -13,7 +13,7 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
     private $reepaySession;
     protected $scopeConfig;
     protected $reepayHelper;
-    
+
     /**
      * Constructor
      *
@@ -46,17 +46,7 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
         $order = $observer->getData('order');
 
         $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
-        if( $paymentMethod == "reepay_payment" ||
-            $paymentMethod == "reepay_mobilepay" ||
-            $paymentMethod == "reepay_viabill" ||
-            $paymentMethod == "reepay_applepay" ||
-            $paymentMethod == "reepay_paypal" ||
-            $paymentMethod == "reepay_klarnapaynow" ||
-            $paymentMethod == "reepay_klarnapaylater" ||
-            $paymentMethod == "reepay_swish" ||
-            $paymentMethod == "reepay_resurs" ||
-            $paymentMethod == "reepay_forbrugsforeningen"
-        ) {
+        if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
 
             $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
 
@@ -67,7 +57,6 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
 
             if (!empty($cancelRes)) {
                 if ($cancelRes['state'] == 'cancelled') {
-                    $_payment = $order->getPayment();
                     $_payment = $order->getPayment();
                     $this->reepayHelper->setReepayPaymentState($_payment, 'cancelled');
 

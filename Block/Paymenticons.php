@@ -66,7 +66,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_mobilepay/show_icon', $storeScope);
-        
+
         $paymentIcon = [];
         if ($showIcon) {
             $paymentIcon = ['mobilepay'];
@@ -84,7 +84,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_applepay/show_icon', $storeScope);
-        
+
         $paymentIcon = [];
         if ($showIcon) {
             $paymentIcon = ['applepay'];
@@ -102,7 +102,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_paypal/show_icon', $storeScope);
-        
+
         $paymentIcon = [];
         if ($showIcon) {
             $paymentIcon = ['paypal'];
@@ -121,7 +121,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_klarnapaynow/show_icon', $storeScope);
-        
+
         $paymentIcon = [];
         if ($showIcon) {
             $paymentIcon = ['klarna-pay-now'];
@@ -140,10 +140,29 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_klarnapaylater/show_icon', $storeScope);
-        
+
         $paymentIcon = [];
         if ($showIcon) {
             $paymentIcon = ['klarna-pay-later'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * get Klarna Slice It payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getKlarnaSliceItPaymentIcon()
+    {
+
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_klarnasliceit/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['klarna-slice-it'];
         }
 
         return $paymentIcon;
@@ -158,7 +177,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_swish/show_icon', $storeScope);
-        
+
         $paymentIcon = [];
         if ($showIcon) {
             $paymentIcon = ['swish'];
@@ -176,10 +195,28 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_resurs/show_icon', $storeScope);
-        
+
         $paymentIcon = [];
         if ($showIcon) {
             $paymentIcon = ['resurs'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * get Resurs payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getVippsPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_vipps/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['vipps'];
         }
 
         return $paymentIcon;
@@ -194,7 +231,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_forbrugsforeningen/show_icon', $storeScope);
-        
+
         $paymentIcon = [];
         if ($showIcon) {
             $paymentIcon = ['forbrugsforeningen'];

@@ -28,6 +28,7 @@ class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'viabill', 'label' => __('ViaBill')],
             ['value' => 'klarna_pay_later', 'label' => __('Klarna Pay Later')],
             ['value' => 'klarna_pay_now', 'label' => __('Klarna Pay Now')],
+            ['value' => 'klarna_slice_it', 'label' => __('Klarna Slice It')],
             ['value' => 'diners', 'label' => __('Diners Club')],
             ['value' => 'maestro', 'label' => __('Maestro')],
             ['value' => 'laser', 'label' => __('Laser')],
@@ -37,7 +38,8 @@ class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'ffk', 'label' => __('Forbrugsforeningen')],
             ['value' => 'applepay', 'label' => __('Apple Pay')],
             ['value' => 'paypal', 'label' => __('PayPal')],
-            ['value' => 'resurs', 'label' => __('Resurs Bank')]
+            ['value' => 'resurs', 'label' => __('Resurs Bank')],
+            ['value' => 'vipps', 'label' => __('Vipps')],
         ];
     }
 }

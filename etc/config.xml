@@ -84,6 +84,16 @@
 				<sort_order>2</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepayklarnapaylater</model>
 			</reepay_klarnapaylater>
+            <reepay_klarnasliceit>
+                <active>0</active>
+                <title>Klarna Slice It payment by Reepay</title>
+                <instructions>Klarna Slice It payment</instructions>
+                <show_icon>0</show_icon>
+                <allowspecific>0</allowspecific>
+                <specificcountry>0</specificcountry>
+                <sort_order>2</sort_order>
+                <model>Radarsofthouse\Reepay\Model\Reepayklarnasliceit</model>
+            </reepay_klarnasliceit>
             <reepay_swish>
 				<active>0</active>
 				<title>Swish payment by Reepay</title>
@@ -104,6 +114,16 @@
 				<sort_order>2</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepayresurs</model>
 			</reepay_resurs>
+            <reepay_vipps>
+                <active>0</active>
+                <title>Vipps payment by Reepay</title>
+                <instructions>Vipps payment</instructions>
+                <show_icon>0</show_icon>
+                <allowspecific>0</allowspecific>
+                <specificcountry>0</specificcountry>
+                <sort_order>2</sort_order>
+                <model>Radarsofthouse\Reepay\Model\Reepayvipps</model>
+            </reepay_vipps>
             <reepay_forbrugsforeningen>
 				<active>0</active>
 				<title>Forbrugsforeningen payment by Reepay</title>

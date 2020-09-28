@@ -9,7 +9,6 @@ namespace Radarsofthouse\Reepay\Observer;
  */
 class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterface
 {
-
     protected $reepayHelper;
     protected $logger;
     protected $messageManager;
@@ -32,28 +31,18 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $payment = $observer->getPayment();
         $creditmemo = $observer->getCreditmemo();
-        
-        if ( $payment->getMethod() == 'reepay_payment' 
-            || $payment->getMethod() == 'reepay_viabill'
-            || $payment->getMethod() == 'reepay_mobilepay'
-            || $payment->getMethod() == 'reepay_applepay'
-            || $payment->getMethod() == 'reepay_paypal'
-            || $payment->getMethod() == 'reepay_klarnapaynow'
-            || $payment->getMethod() == 'reepay_klarnapaylater'
-            || $payment->getMethod() == 'reepay_swish'
-            || $payment->getMethod() == 'reepay_resurs'
-            || $payment->getMethod() == 'reepay_forbrugsforeningen'
-        ) {
-            
+        $paymentMethod = $payment->getMethod();
+        if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
             $order = $payment->getOrder();
             $amount = $creditmemo->getGrandTotal();
 
-            $this->logger->addDebug(__METHOD__, ['refund : '.$order->getIncrementId().', amount : '.$amount]);
+            $this->logger->addDebug(__METHOD__, ['refund : ' . $order->getIncrementId() . ', amount : ' . $amount]);
 
             $creditmemos = $order->getCreditmemosCollection();
 
@@ -71,9 +60,8 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
             );
 
             if (!empty($refund)) {
-
-                if( isset($refund["error"]) ){
-                    $this->logger->addDebug("refund error : ",$refund);
+                if (isset($refund["error"])) {
+                    $this->logger->addDebug("refund error : ", $refund);
                     $this->messageManager->addError($refund["error"]);
                     throw new \Magento\Framework\Exception\LocalizedException($refund["error"]);
                     return;
@@ -104,13 +92,12 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
 
                     $this->logger->addDebug("set refund transaction data");
                 }
-            }else{
+            } else {
                 $this->logger->addDebug("Empty refund response from Reepay");
                 $this->messageManager->addError("Empty refund response from Reepay");
                 throw new \Magento\Framework\Exception\LocalizedException("Empty refund response from Reepay");
                 return;
             }
-
         }
     }
 }

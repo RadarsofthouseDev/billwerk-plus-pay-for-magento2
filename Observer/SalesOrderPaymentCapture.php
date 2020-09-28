@@ -37,19 +37,9 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
     {
         $payment = $observer->getPayment();
         $invoice = $observer->getInvoice();
-
-        if ($payment->getMethod() == 'reepay_payment'
-            || $payment->getMethod() == 'reepay_viabill'
-            || $payment->getMethod() == 'reepay_mobilepay'
-            || $payment->getMethod() == 'reepay_applepay'
-            || $payment->getMethod() == 'reepay_paypal'
-            || $payment->getMethod() == 'reepay_klarnapaynow'
-            || $payment->getMethod() == 'reepay_klarnapaylater'
-            || $payment->getMethod() == 'reepay_swish'
-            || $payment->getMethod() == 'reepay_resurs'
-            || $payment->getMethod() == 'reepay_forbrugsforeningen'
-        ) {
-            if($payment->getMethod() == 'reepay_swish'){
+        $paymentMethod = $payment->getMethod();
+        if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
+            if ($paymentMethod === 'reepay_swish') {
                 return;
             }
             $order = $payment->getOrder();

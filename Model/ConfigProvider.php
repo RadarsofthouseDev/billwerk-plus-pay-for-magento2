@@ -35,8 +35,10 @@ class ConfigProvider implements ConfigProviderInterface
             'paypal_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::paypal_payment_icons.phtml')->toHtml(),
             'klarnapaynow_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::klarnapaynow_payment_icons.phtml')->toHtml(),
             'klarnapaylater_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::klarnapaylater_payment_icons.phtml')->toHtml(),
+            'klarnasliceit_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::klarnasliceit_payment_icons.phtml')->toHtml(),
             'swish_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::swish_payment_icons.phtml')->toHtml(),
             'resurs_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::resurs_payment_icons.phtml')->toHtml(),
+            'vipps_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::vipps_payment_icons.phtml')->toHtml(),
             'forbrugsforeningen_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::forbrugsforeningen_payment_icons.phtml')->toHtml(),
         ];
     }
