@@ -333,7 +333,7 @@ class Data extends AbstractHelper
         $shippingAmount = ($order->getShippingInclTax() * 100);
         if ($shippingAmount != 0) {
             $line = [
-                'ordertext' => $order->getShippingDescription(),
+                'ordertext' => !empty($order->getShippingDescription()) ? $order->getShippingDescription():  __('Shipping')->render(),
                 'amount' => $this->toInt($shippingAmount),
                 'quantity' => 1,
             ];
@@ -352,7 +352,7 @@ class Data extends AbstractHelper
         $discountAmount = ($order->getDiscountAmount() * 100);
         if ($discountAmount != 0) {
             $line = [
-                'ordertext' => $order->getDiscountDescription(),
+                'ordertext' => !empty($order->getDiscountDescription())? __('Discount: %1',$order->getDiscountDescription())->render() :  __('Discount')->render(),
                 'amount' => $this->toInt($discountAmount),
                 'quantity' => 1,
                 'vat' => 0,
@@ -366,7 +366,7 @@ class Data extends AbstractHelper
         if ($total != $orderTotalDue) {
             $amount = $orderTotalDue - $total;
             $line = [
-                'ordertext' => __('Other'),
+                'ordertext' => __('Other')->render(),
                 'amount' => $this->toInt($amount),
                 'quantity' => 1,
                 'vat' => 0,

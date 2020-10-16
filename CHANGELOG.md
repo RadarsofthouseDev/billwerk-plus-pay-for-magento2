@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.1.3 on 16 October 2020
+- Fix 'ordertext' blank issue.
+
 ## Version 1.1.2 on 28 September 2020
 - add "Klarna Slice It" and "Vipps" payment options.
 
