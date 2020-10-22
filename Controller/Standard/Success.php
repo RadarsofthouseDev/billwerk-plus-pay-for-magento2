@@ -29,6 +29,8 @@ class Success extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        return $this->resultPageFactory->create();
+        $page = $this->resultPageFactory->create();
+        $page->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+        return $page;
     }
 }

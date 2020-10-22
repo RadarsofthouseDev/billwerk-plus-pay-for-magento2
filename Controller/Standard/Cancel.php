@@ -24,7 +24,7 @@ class Cancel extends \Magento\Framework\App\Action\Action
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Action\Context  $context
+     * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Framework\App\Request\Http $request
      * @param \Magento\Sales\Api\Data\OrderInterface $orderInterface
@@ -46,7 +46,8 @@ class Cancel extends \Magento\Framework\App\Action\Action
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Radarsofthouse\Reepay\Helper\Logger $logger
-    ) {
+    )
+    {
         $this->resultPageFactory = $resultPageFactory;
         $this->request = $request;
         $this->orderInterface = $orderInterface;
@@ -68,18 +69,15 @@ class Cancel extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        $params = $this->request->getParams('');
-        
+        $params = $this->request->getParams();
         $this->logger->addDebug(__METHOD__, $params);
-
         if (!empty($params['error'])) {
-            if ($params['error'] == "error.session.SESSION_DELETED") {
-                return $this->resultRedirectFactory->create()->setPath('checkout/cart');
+            if ($params['error'] === "error.session.SESSION_DELETED") {
+                return $this->redirect('checkout/cart');
             }
         }
-
         if (empty($params['invoice']) || empty($params['id'])) {
-            return $this->resultRedirectFactory->create()->setPath('checkout/cart');
+            return $this->redirect('checkout/cart');
         }
 
         $orderId = $params['invoice'];
@@ -89,29 +87,22 @@ class Cancel extends \Magento\Framework\App\Action\Action
             $isAjax = 1;
         }
 
-
         $order = $this->orderInterface->loadByIncrementId($orderId);
 
         if ($order->canCancel()) {
             $order->cancel();
             $order->addStatusHistoryComment('Reepay : order have been cancelled by payment page');
             $order->save();
-            $this->logger->addDebug('Cancelled order : '.$orderId);
-
+            $this->logger->addDebug('Cancelled order : ' . $orderId);
             $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
-
             $payment = $order->getPayment();
             $this->reepayHelper->setReepayPaymentState($payment, 'cancelled');
-
             // delete reepay session
             $sessionRes = $this->reepaySession->delete(
                 $apiKey,
                 $id
             );
-
-
             $this->checkoutSession->restoreQuote();
-
             $this->checkoutSession->unsLastQuoteId()
                 ->unsLastSuccessQuoteId()
                 ->unsLastOrderId()
@@ -126,15 +117,25 @@ class Cancel extends \Magento\Framework\App\Action\Action
         }
         */
 
-        if ($isAjax == 1) {
+        if ($isAjax === 1) {
             $result = [
                 'status' => 'success',
                 'redirect_url' => $this->url->getUrl('checkout/cart'),
             ];
-
-            return  $this->resultJsonFactory->create()->setData($result);
-        } else {
-            return $this->resultRedirectFactory->create()->setPath('checkout/cart');
+            return $this->resultJsonFactory->create()
+                ->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true)
+                ->setData($result);
         }
+        return $this->redirect('checkout/cart');
+    }
+
+    /**
+     * @return \Magento\Framework\Controller\Result\Redirect
+     */
+    private function redirect($path)
+    {
+        $resultPage = $this->resultRedirectFactory->create()->setPath($path);
+        $resultPage->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+        return $resultPage;
     }
 }

@@ -35,7 +35,7 @@
 				</field>
 				<field id="display_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
 					<label>Display type</label>
-					<comment/>
+					<comment>Note: ViaBill, Vipps, Resurs Bank and Apple Pay will be opened in "Window" display type.</comment>
 					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Displaytype</source_model>
 				</field>
 				<field id="send_order_line" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">

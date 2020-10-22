@@ -2,6 +2,10 @@
 
 namespace Radarsofthouse\Reepay\Controller\Standard;
 
+use Magento\Checkout\Model\Session\SuccessValidator;
+use Magento\Checkout\Model\Type\Onepage;
+use Magento\Sales\Model\Order;
+
 /**
  * Class Redirect
  *
@@ -9,9 +13,9 @@ namespace Radarsofthouse\Reepay\Controller\Standard;
  */
 class Redirect extends \Magento\Framework\App\Action\Action
 {
-    const DISPLAY_EMBEDDED = 1;
-    const DISPLAY_OVERLAY = 2;
-    const DISPLAY_WINDOW = 3;
+    public const DISPLAY_EMBEDDED = '1';
+    public const DISPLAY_OVERLAY = '2';
+    public const DISPLAY_WINDOW = '3';
 
     protected $_resultPageFactory;
     protected $_reepayHelper;
@@ -19,26 +23,34 @@ class Redirect extends \Magento\Framework\App\Action\Action
     protected $_messageManager;
     protected $_logger;
     protected $_reepayStatus;
+    /**
+     * @var \Magento\Framework\Controller\Result\RedirectFactory
+     */
+    private $_resultRedirectFactory;
 
     /**
-     * Constructor
-     *
-     * @param \Magento\Framework\App\Action\Context  $context
+     * Redirect constructor.
+     * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Magento\Framework\Controller\Result\RedirectFactory $resultRedirectFactory
      * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
+     * @param \Radarsofthouse\Reepay\Helper\Payment $reepayPayment
      * @param \Radarsofthouse\Reepay\Helper\Logger $logger
      * @param \Radarsofthouse\Reepay\Model\Status $reepayStatus
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
+        \Magento\Framework\Controller\Result\RedirectFactory $resultRedirectFactory,
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Radarsofthouse\Reepay\Helper\Payment $reepayPayment,
         \Radarsofthouse\Reepay\Helper\Logger $logger,
         \Radarsofthouse\Reepay\Model\Status $reepayStatus
-    ) {
+    )
+    {
         parent::__construct($context);
         $this->_resultPageFactory = $resultPageFactory;
+        $this->_resultRedirectFactory = $resultRedirectFactory;
         $this->_reepayHelper = $reepayHelper;
         $this->_reepayPayment = $reepayPayment;
         $this->_messageManager = $context->getMessageManager();
@@ -47,79 +59,75 @@ class Redirect extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * Execute view action
-     *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface|\Magento\Framework\View\Result\Page
      */
     public function execute()
     {
+        $resultPage = $this->_resultPageFactory->create();
         try {
             $this->_logger->addDebug(__METHOD__, []);
-
-            if (!$this->_objectManager->get(\Magento\Checkout\Model\Session\SuccessValidator::class)->isValid()) {
-                return $this->_resultPageFactory->create()->setPath('checkout/cart');
+            if (!$this->_objectManager->get(SuccessValidator::class)->isValid()) {
+                return $this->redirect();
             }
 
             // get order ID from onepage checkout session
-            $checkoutOnepageSession = $this->_objectManager->get(\Magento\Checkout\Model\Type\Onepage::class)->getCheckout();
-            $orderId = $checkoutOnepageSession->getLastOrderId();
-            $order = $this->_objectManager->create('\Magento\Sales\Model\Order')->load($orderId);
+            $checkoutOnePageSession = $this->_objectManager->get(Onepage::class)->getCheckout();
+            $orderId = $checkoutOnePageSession->getLastOrderId();
+            $order = $this->_objectManager->create(Order::class)->load($orderId);
 
             if (!$order->getId()) {
-                return $this->_resultPageFactory->create()->setPath('checkout/cart');
+                return $this->redirect();
             }
 
             $paymentTransactionId = null;
             $paymentTransactionId = $this->_reepayPayment->createReepaySession($order);
 
-            $this->_logger->addDebug('$paymentTransactionId : '.$paymentTransactionId);
+            $this->_logger->addDebug('$paymentTransactionId : ' . $paymentTransactionId);
 
             // render reepay/standard/redirect
             $pageTitleConfig = $this->_reepayHelper->getConfig('title', $order->getStoreId());
-            $resultPage = $this->_resultPageFactory->create();
             $resultPage->getConfig()
                 ->getTitle()
                 ->set($pageTitleConfig);
             
-            $displayTypeConfig = $this->_reepayHelper->getConfig('display_type', $order->getStoreId());
-            
-            if ($order->getPayment()->getMethodInstance()->getCode() == 'reepay_viabill') {
-                $this->_logger->addDebug('reepay_viabill : DISPLAY_WINDOW');
+            $displayTypeConfig = (string)$this->_reepayHelper->getConfig('display_type', $order->getStoreId());
 
+            if ( in_array($order->getPayment()->getMethodInstance()->getCode(), array('reepay_viabill','reepay_vipps','reepay_resurs','reepay_applepay'))) {
                 // force viabill into payment window always
-                $resultPage->getLayout()
-                    ->getBlock('reepay_standard_redirect')
-                    ->setTemplate('Radarsofthouse_Reepay::standard/window.phtml')
-                    ->setPaymentTransactionId($paymentTransactionId);
-            } elseif ($displayTypeConfig == SELF::DISPLAY_EMBEDDED) {
+                $this->_logger->addDebug('Payments : DISPLAY_WINDOW');
+                $template = 'Radarsofthouse_Reepay::standard/window.phtml';
+            } elseif ($displayTypeConfig === self::DISPLAY_EMBEDDED) {
                 $this->_logger->addDebug('DISPLAY_EMBEDDED');
-
-                $resultPage->getLayout()
-                    ->getBlock('reepay_standard_redirect')
-                    ->setTemplate('Radarsofthouse_Reepay::standard/embedded.phtml')
-                    ->setPaymentTransactionId($paymentTransactionId);
-            } elseif ($displayTypeConfig == SELF::DISPLAY_OVERLAY) {
+                $template = 'Radarsofthouse_Reepay::standard/embedded.phtml';
+            } elseif ($displayTypeConfig === self::DISPLAY_OVERLAY) {
                 $this->_logger->addDebug('DISPLAY_OVERLAY');
-
-                $resultPage->getLayout()
-                    ->getBlock('reepay_standard_redirect')
-                    ->setTemplate('Radarsofthouse_Reepay::standard/overlay.phtml')
-                    ->setPaymentTransactionId($paymentTransactionId);
-            } elseif ($displayTypeConfig == SELF::DISPLAY_WINDOW) {
+                $template = 'Radarsofthouse_Reepay::standard/overlay.phtml';
+            } elseif ($displayTypeConfig === self::DISPLAY_WINDOW) {
                 $this->_logger->addDebug('DISPLAY_WINDOW');
-
+                $template = 'Radarsofthouse_Reepay::standard/window.phtml';
+            }
+            if (!empty($template)) {
                 $resultPage->getLayout()
                     ->getBlock('reepay_standard_redirect')
-                    ->setTemplate('Radarsofthouse_Reepay::standard/window.phtml')
+                    ->setTemplate($template)
                     ->setPaymentTransactionId($paymentTransactionId);
             }
-            
-            return $resultPage;
         } catch (\Exception $e) {
-            $this->_logger->addError(__METHOD__." Exception : ".$e->getMessage());
-
-            $this->_messageManager->addException($e, __('Something went wrong, please try again later'));
-            $this->_redirect('checkout/cart');
+            $this->_logger->addError(__METHOD__ . " Exception : " . $e->getMessage());
+            $this->_messageManager->addExceptionMessage($e, __('Something went wrong, please try again later'));
+            return $this->redirect();
         }
+        $resultPage->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+        return $resultPage;
+    }
+
+    /**
+     * @return \Magento\Framework\Controller\Result\Redirect
+     */
+    private function redirect()
+    {
+        $resultPage = $this->_resultRedirectFactory->create()->setPath('checkout/cart');
+        $resultPage->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+        return $resultPage;
     }
 }

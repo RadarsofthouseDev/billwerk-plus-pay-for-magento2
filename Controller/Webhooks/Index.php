@@ -180,6 +180,7 @@ class Index extends \Magento\Framework\App\Action\Action
 
             $response['message'] = 'Magento : ' . $response['message'];
             $result = $this->resultJsonFactory->create();
+            $result->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
             $result->setHttpResponseCode($response['status']);
             $result->setData($response);
 

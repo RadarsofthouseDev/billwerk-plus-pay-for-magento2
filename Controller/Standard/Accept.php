@@ -2,6 +2,8 @@
 
 namespace Radarsofthouse\Reepay\Controller\Standard;
 
+use Magento\Framework\App\ResponseInterface;
+
 /**
  * Class Accept
  *
@@ -23,6 +25,10 @@ class Accept extends \Magento\Framework\App\Action\Action
     protected $_checkoutSession;
     protected $_reepayHelperEmail;
     protected $_reepayHelperSurchargeFee;
+    /**
+     * @var \Magento\Framework\Controller\Result\RedirectFactory
+     */
+    private $_resultRedirectFactory;
 
     /**
      * Constructor
@@ -33,6 +39,7 @@ class Accept extends \Magento\Framework\App\Action\Action
      * @param \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
      * @param \Radarsofthouse\Reepay\Helper\Session $reepaySession
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param \Magento\Framework\Controller\Result\RedirectFactory $resultRedirectFactory
      * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
      * @param \Radarsofthouse\Reepay\Helper\Email $reepayHelperEmail
      * @param \Radarsofthouse\Reepay\Helper\SurchargeFee $reepayHelperSurchargeFee
@@ -49,6 +56,7 @@ class Accept extends \Magento\Framework\App\Action\Action
         \Radarsofthouse\Reepay\Helper\Charge $reepayCharge,
         \Radarsofthouse\Reepay\Helper\Session $reepaySession,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Magento\Framework\Controller\Result\RedirectFactory $resultRedirectFactory,
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Radarsofthouse\Reepay\Helper\Email $reepayHelperEmail,
         \Radarsofthouse\Reepay\Helper\SurchargeFee $reepayHelperSurchargeFee,
@@ -57,13 +65,15 @@ class Accept extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Pricing\Helper\Data $priceHelper,
         \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender,
         \Magento\Checkout\Model\Session $checkoutSession
-    ) {
+    )
+    {
         $this->_request = $request;
         $this->_orderInterface = $orderInterface;
         $this->_url = $context->getUrl();
         $this->_reepayCharge = $reepayCharge;
         $this->_reepaySession = $reepaySession;
         $this->_resultJsonFactory = $resultJsonFactory;
+        $this->_resultRedirectFactory = $resultRedirectFactory;
         $this->_reepayHelper = $reepayHelper;
         $this->_reepayHelperEmail = $reepayHelperEmail;
         $this->_reepayHelperSurchargeFee = $reepayHelperSurchargeFee;
@@ -77,13 +87,12 @@ class Accept extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * Execute view action
-     *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface|void
+     * @throws \Magento\framework\Exception\PaymentException
      */
     public function execute()
     {
-        $params = $this->_request->getParams('');
+        $params = $this->_request->getParams();
         $orderId = $params['invoice'];
         $id = $params['id'];
         $isAjax = 0;
@@ -108,25 +117,7 @@ class Accept extends \Magento\Framework\App\Action\Action
         $reepayStatus = $this->_reepayStatus->load($orderId, 'order_id');
         if ($reepayStatus->getStatusId()) {
             $this->_logger->addDebug('order : ' . $orderId . ' has been accepted already');
-
-//            if( $this->_reepayHelper->getConfig('send_order_email_when_success', $order->getStoreId() ) ){
-//                if (!$order->getEmailSent()) {
-//                    try {
-//                        $this->_orderSender->send($order);
-//                        $order->addStatusHistoryComment(__('Sent order confirmation email to customer'))
-//                            ->setIsCustomerNotified(true)
-//                            ->save();
-//                    } catch (\Exception $e) {
-//                        $order->addStatusHistoryComment(__('Send order confirmation email failure: %s', $e->getMessage()))
-//                            ->setIsCustomerNotified(false)
-//                            ->save();
-//                    }
-//                }
-//            }
-
-            
-
-            if ($isAjax == 1) {
+            if ($isAjax === 1) {
                 $result = [];
                 $result['status'] = 'success';
                 if (!empty($order->getRemoteIp())) {
@@ -136,18 +127,17 @@ class Accept extends \Magento\Framework\App\Action\Action
                     // place by admin
                     $result['redirect_url'] = $this->_url->getUrl('reepay/standard/success');
                 }
-
-                return  $this->_resultJsonFactory->create()->setData($result);
-            } else {
-                $this->_logger->addDebug('Redirect to checkout/onepage/success');
-                if (!empty($order->getRemoteIp())) {
-                    // place online
-                    $this->_redirect('checkout/onepage/success');
-                } else {
-                    // place by admin
-                    $this->_redirect('reepay/standard/success');
-                }
+                return $this->_resultJsonFactory->create()
+                    ->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true)
+                    ->setData($result);
             }
+            $this->_logger->addDebug('Redirect to checkout/onepage/success');
+            if (!empty($order->getRemoteIp())) {
+                // place online
+                return $this->redirect('checkout/onepage/success');
+            }
+            // place by admin
+            return $this->redirect('reepay/standard/success');
         }
 
         $chargeRes = $this->_reepayCharge->get(
@@ -174,7 +164,7 @@ class Accept extends \Magento\Framework\App\Action\Action
         $this->_reepayHelper->addTransactionToOrder($order, $chargeRes);
 
         $isSurchargeFeeEnable = $this->_reepayHelper->isSurchargeFeeEnabled();
-        $this->_logger->addDebug(__METHOD__, ['isSurchargeFeeEnable' => $isSurchargeFeeEnable, 'orderId'=>$orderId]);
+        $this->_logger->addDebug(__METHOD__, ['isSurchargeFeeEnable' => $isSurchargeFeeEnable, 'orderId' => $orderId]);
         if ($isSurchargeFeeEnable) {
             //to test add 50.00
 //            $chargeRes['source']['surcharge_fee'] = '5100';
@@ -185,24 +175,7 @@ class Accept extends \Magento\Framework\App\Action\Action
             $this->_reepayHelperEmail->sendEmail($orderId);
         }
 
-//        if ($this->_reepayHelper->getConfig('send_order_email_when_success', $order->getStoreId())) {
-//            if (!$order->getEmailSent()) {
-//                try {
-//                    $this->_orderSender->send($order);
-//                    $order->addStatusHistoryComment(__('Sent order confirmation email to customer'))
-//                        ->setIsCustomerNotified(true)
-//                        ->save();
-//                } catch (\Exception $e) {
-//                    $order->addStatusHistoryComment(__('Send order confirmation email failure: %s', $e->getMessage()))
-//                        ->setIsCustomerNotified(false)
-//                        ->save();
-//                }
-//            }
-//        }
-
-        
-
-        if ($isAjax == 1) {
+        if ($isAjax === 1) {
             $result = [];
             $result['status'] = 'success';
             if (!empty($order->getRemoteIp())) {
@@ -212,17 +185,24 @@ class Accept extends \Magento\Framework\App\Action\Action
                 // place by admin
                 $result['redirect_url'] = $this->_url->getUrl('reepay/standard/success');
             }
-
-            return  $this->_resultJsonFactory->create()->setData($result);
-        } else {
-            $this->_logger->addDebug('Redirect to checkout/onepage/success');
-            if (!empty($order->getRemoteIp())) {
-                // place online
-                $this->_redirect('checkout/onepage/success');
-            } else {
-                // place by admin
-                $this->_redirect('reepay/standard/success');
-            }
+            return $this->_resultJsonFactory->create()->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true)->setData($result);
         }
+        $this->_logger->addDebug('Redirect to checkout/onepage/success');
+        if (!empty($order->getRemoteIp())) {
+            // place online
+            return $this->redirect('checkout/onepage/success');
+        }// place by admin
+        return $this->redirect('reepay/standard/success');
+
+    }
+
+    /**
+     * @return \Magento\Framework\Controller\Result\Redirect
+     */
+    private function redirect($path)
+    {
+        $resultPage = $this->_resultRedirectFactory->create()->setPath($path);
+        $resultPage->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+        return $resultPage;
     }
 }
