@@ -1,6 +1,6 @@
 
 # Changelog
-## Version 1.1.3 on 22 October 2020
+## Version 1.1.4 on 22 October 2020
 - Force Vipps, Resurs Bank and Apple Pay to be opened in "Window" display type.
 - Disable cache for Reepay block
 
