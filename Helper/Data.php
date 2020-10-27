@@ -224,28 +224,45 @@ class Data extends AbstractHelper
      */
     public function getOrderBillingAddress($order)
     {
-        $address1 = $order->getBillingAddress()->getStreet(1);
-        $address2 = $order->getBillingAddress()->getStreet(2);
+        if (null !== $order->getBillingAddress()) {
+            $address1 = $order->getBillingAddress()->getStreetLine(1);
+            $address2 = $order->getBillingAddress()->getStreetLine(2);
 
-        $vatId = '';
-        if (!empty($order->getBillingAddress()->getVatId())) {
-            $vatId = $order->getBillingAddress()->getVatId();
+            $vatId = '';
+            if (!empty($order->getBillingAddress()->getVatId())) {
+                $vatId = $order->getBillingAddress()->getVatId();
+            }
+
+            return [
+                'company' => $order->getBillingAddress()->getCompany(),
+                'vat' => $vatId,
+                'attention' => '',
+                'address' => $address1,
+                'address2' => $address2,
+                'city' => $order->getBillingAddress()->getCity(),
+                'country' => $order->getBillingAddress()->getCountryId(),
+                'email' => $order->getBillingAddress()->getEmail(),
+                'phone' => $order->getBillingAddress()->getTelephone(),
+                'first_name' => $order->getBillingAddress()->getFirstname(),
+                'last_name' => $order->getBillingAddress()->getLastname(),
+                'postal_code' => $order->getBillingAddress()->getPostcode(),
+                'state_or_province' => $order->getBillingAddress()->getRegion(),
+            ];
         }
-
         return [
-            'company' => $order->getBillingAddress()->getCompany(),
-            'vat' => $vatId,
+            'company' => '',
+            'vat' => '',
             'attention' => '',
-            'address' => $address1[0],
-            'address2' => $address2[0],
-            'city' => $order->getBillingAddress()->getCity(),
-            'country' => $order->getBillingAddress()->getCountryId(),
-            'email' => $order->getBillingAddress()->getEmail(),
-            'phone' => $order->getBillingAddress()->getTelephone(),
-            'first_name' => $order->getBillingAddress()->getFirstname(),
-            'last_name' => $order->getBillingAddress()->getLastname(),
-            'postal_code' => $order->getBillingAddress()->getPostcode(),
-            'state_or_province' => $order->getBillingAddress()->getRegion(),
+            'address' => '',
+            'address2' => '',
+            'city' => '',
+            'country' => '',
+            'email' => '',
+            'phone' => '',
+            'first_name' => '',
+            'last_name' => '',
+            'postal_code' => '',
+            'state_or_province' => '',
         ];
     }
 
@@ -257,8 +274,12 @@ class Data extends AbstractHelper
      */
     public function getOrderShippingAddress($order)
     {
-        $address1 = $order->getShippingAddress()->getStreet(1);
-        $address2 = $order->getShippingAddress()->getStreet(2);
+        if(null === $order->getShippingAddress()){
+            return $this->getOrderBillingAddress($order);
+        }
+
+        $address1 = $order->getShippingAddress()->getStreetLine(1);
+        $address2 = $order->getShippingAddress()->getStreetLine(2);
 
         $vatId = '';
         if (!empty($order->getShippingAddress()->getVatId())) {
@@ -269,8 +290,8 @@ class Data extends AbstractHelper
             'company' => $order->getShippingAddress()->getCompany(),
             'vat' => $vatId,
             'attention' => '',
-            'address' => $address1[0],
-            'address2' => $address2[0],
+            'address' => $address1,
+            'address2' => $address2,
             'city' => $order->getShippingAddress()->getCity(),
             'country' => $order->getShippingAddress()->getCountryId(),
             'email' => $order->getShippingAddress()->getEmail(),
