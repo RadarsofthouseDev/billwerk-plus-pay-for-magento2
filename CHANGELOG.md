@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.1.6 on 27 November 2020
+- block refund request for offline refund
+
 ## Version 1.1.5 on 27 October 2020
 - Fix shipping address error for virtual product.
 

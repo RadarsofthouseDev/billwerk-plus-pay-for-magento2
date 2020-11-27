@@ -35,14 +35,24 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
+        /** @var \Magento\Sales\Model\Order\Payment $payment */
         $payment = $observer->getPayment();
+        /** @var \Magento\Sales\Model\Order\Creditmemo $creditmemo */
         $creditmemo = $observer->getCreditmemo();
         $paymentMethod = $payment->getMethod();
+
+        $isOnline = $creditmemo->getDoTransaction();
+
         if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
             $order = $payment->getOrder();
             $amount = $creditmemo->getGrandTotal();
 
-            $this->logger->addDebug(__METHOD__, ['refund : ' . $order->getIncrementId() . ', amount : ' . $amount]);
+            if(!$isOnline){
+                $this->logger->addDebug(__METHOD__, ['offline_refund : ' . $order->getIncrementId() . ', amount : ' . $amount]);
+                return;
+            }
+
+            $this->logger->addDebug(__METHOD__, ['online_refund : ' . $order->getIncrementId() . ', amount : ' . $amount]);
 
             $creditmemos = $order->getCreditmemosCollection();
 
@@ -64,7 +74,6 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
                     $this->logger->addDebug("refund error : ", $refund);
                     $this->messageManager->addError($refund["error"]);
                     throw new \Magento\Framework\Exception\LocalizedException($refund["error"]);
-                    return;
                 }
 
                 if ($refund['state'] == 'refunded') {
@@ -94,9 +103,8 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
                 }
             } else {
                 $this->logger->addDebug("Empty refund response from Reepay");
-                $this->messageManager->addError("Empty refund response from Reepay");
-                throw new \Magento\Framework\Exception\LocalizedException("Empty refund response from Reepay");
-                return;
+                $this->messageManager->addErrorMessage("Empty refund response from Reepay");
+                throw new \Magento\Framework\Exception\LocalizedException(__('Empty refund response from Reepay'));
             }
         }
     }
