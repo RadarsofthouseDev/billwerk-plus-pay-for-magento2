@@ -126,6 +126,7 @@ class Index extends \Magento\Framework\App\Action\Action
                         $response['status'] = 200;
                         $response['message'] = 'This request is not charge invoice.';
                     } else {
+                        sleep(5);
                         $response = $this->refund($receiveData);
                     }
                     $log['response'] = $response;
@@ -138,6 +139,7 @@ class Index extends \Magento\Framework\App\Action\Action
                         $response['status'] = 200;
                         $response['message'] = 'This request is not charge invoice.';
                     } else {
+                        sleep(5);
                         $response = $this->settled($receiveData);
                     }
                     $log['response'] = $response;
@@ -150,6 +152,7 @@ class Index extends \Magento\Framework\App\Action\Action
                         $response['status'] = 200;
                         $response['message'] = 'This request is not charge invoice.';
                     } else {
+                        sleep(5);
                         $response = $this->cancel($receiveData);
                     }
                     $log['response'] = $response;
@@ -162,6 +165,7 @@ class Index extends \Magento\Framework\App\Action\Action
                         $response['status'] = 200;
                         $response['message'] = 'This request is not charge invoice.';
                     } else {
+                        sleep(5);
                         $response = $this->authorize($receiveData);
                     }
                     $log['response'] = $response;

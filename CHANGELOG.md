@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.1.7 on 3 December 2020
+- Add delay to webhooks to avoid immediately call back
+
 ## Version 1.1.6 on 27 November 2020
 - block refund request for offline refund
 
