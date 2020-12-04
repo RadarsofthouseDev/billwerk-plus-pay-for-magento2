@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.1.8 on 4 December 2020
+- Fixed double order comments history
+
 ## Version 1.1.7 on 3 December 2020
 - Add delay to webhooks to avoid immediately call back
 

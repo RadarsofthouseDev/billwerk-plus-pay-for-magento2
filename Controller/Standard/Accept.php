@@ -114,67 +114,6 @@ class Accept extends \Magento\Framework\App\Action\Action
         $this->_checkoutSession->setLastSuccessQuoteId($order->getQuoteId());
         $this->_checkoutSession->setLastQuoteId($order->getQuoteId());
 
-        $reepayStatus = $this->_reepayStatus->load($orderId, 'order_id');
-        if ($reepayStatus->getStatusId()) {
-            $this->_logger->addDebug('order : ' . $orderId . ' has been accepted already');
-            if ($isAjax === 1) {
-                $result = [];
-                $result['status'] = 'success';
-                if (!empty($order->getRemoteIp())) {
-                    // place online
-                    $result['redirect_url'] = $this->_url->getUrl('checkout/onepage/success');
-                } else {
-                    // place by admin
-                    $result['redirect_url'] = $this->_url->getUrl('reepay/standard/success');
-                }
-                return $this->_resultJsonFactory->create()
-                    ->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true)
-                    ->setData($result);
-            }
-            $this->_logger->addDebug('Redirect to checkout/onepage/success');
-            if (!empty($order->getRemoteIp())) {
-                // place online
-                return $this->redirect('checkout/onepage/success');
-            }
-            // place by admin
-            return $this->redirect('reepay/standard/success');
-        }
-
-        $chargeRes = $this->_reepayCharge->get(
-            $apiKey,
-            $orderId
-        );
-
-        // add Reepay payment data
-        $data = [
-            'order_id' => $orderId,
-            'first_name' => $order->getBillingAddress()->getFirstname(),
-            'last_name' => $order->getBillingAddress()->getLastname(),
-            'email' => $order->getCustomerEmail(),
-            'token' => $params['id'],
-            'masked_card_number' => isset($chargeRes['source']['masked_card']) ? $chargeRes['source']['masked_card'] : '',
-            'fingerprint' => isset($chargeRes['source']['fingerprint']) ? $chargeRes['source']['fingerprint'] : '',
-            'card_type' => isset($chargeRes['source']['card_type']) ? $chargeRes['source']['card_type'] : '',
-            'status' => $chargeRes['state'],
-        ];
-        $newReepayStatus = $this->_reepayStatus;
-        $newReepayStatus->setData($data);
-        $newReepayStatus->save();
-
-        $this->_reepayHelper->addTransactionToOrder($order, $chargeRes);
-
-        $isSurchargeFeeEnable = $this->_reepayHelper->isSurchargeFeeEnabled();
-        $this->_logger->addDebug(__METHOD__, ['isSurchargeFeeEnable' => $isSurchargeFeeEnable, 'orderId' => $orderId]);
-        if ($isSurchargeFeeEnable) {
-            //to test add 50.00
-//            $chargeRes['source']['surcharge_fee'] = '5100';
-            $this->_logger->addDebug('updateFeeToOrder', $chargeRes);
-            $this->_reepayHelperSurchargeFee->updateFeeToOrder($orderId, $chargeRes);
-        } else {
-            $this->_logger->addDebug('NotupdateFeeToOrder', $chargeRes);
-            $this->_reepayHelperEmail->sendEmail($orderId);
-        }
-
         if ($isAjax === 1) {
             $result = [];
             $result['status'] = 'success';
