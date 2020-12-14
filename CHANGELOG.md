@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.1.9 on 14 December 2020
+- Change admin label and set default "send_order_email_when_success"
+
 ## Version 1.1.8 on 4 December 2020
 - Fixed double order comments history
 

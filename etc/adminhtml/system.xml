@@ -56,7 +56,7 @@
 					<source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
 				</field>
 				<field id="send_order_email_when_success" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="62" translate="label" type="select">
-					<label>Send order confirmation email on successful payment</label>
+					<label>Send order confirmation email after payment has been made</label>
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
