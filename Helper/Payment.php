@@ -16,13 +16,15 @@ class Payment extends AbstractHelper
     protected $_reepaySessionHelper;
     protected $_reepayHelper;
     protected $_storeManager;
+    private $_reepayCustomerHelper;
 
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Helper\Context  $context
+     * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Framework\Locale\Resolver $resolver
      * @param \Radarsofthouse\Reepay\Helper\Session $reepaySessionHelper
+     * @param \Radarsofthouse\Reepay\Helper\Customer $reepayCustomerHelper
      * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
      * @param \Magento\Framework\UrlInterface $urlInterface
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
@@ -31,6 +33,7 @@ class Payment extends AbstractHelper
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Framework\Locale\Resolver $resolver,
         \Radarsofthouse\Reepay\Helper\Session $reepaySessionHelper,
+        \Radarsofthouse\Reepay\Helper\Customer $reepayCustomerHelper,
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Magento\Framework\UrlInterface $urlInterface,
         \Magento\Store\Model\StoreManagerInterface $storeManager
@@ -39,6 +42,7 @@ class Payment extends AbstractHelper
         $this->_resolver = $resolver;
         $this->_urlInterface = $urlInterface;
         $this->_reepaySessionHelper = $reepaySessionHelper;
+        $this->_reepayCustomerHelper = $reepayCustomerHelper;
         $this->_reepayHelper = $reepayHelper;
         $this->_storeManager = $storeManager;
     }
@@ -52,6 +56,8 @@ class Payment extends AbstractHelper
     public function createReepaySession($order)
     {
         $apiKey = $this->_reepayHelper->getApiKey($order->getStoreId());
+        $customerEmail = $order->getCustomerEmail();
+        $customerHandle = $this->_reepayCustomerHelper->search($apiKey,$customerEmail);
         $customer = $this->_reepayHelper->getCustomerData($order);
         $billingAddress = $this->_reepayHelper->getOrderBillingAddress($order);
         $shippingAddress = $this->_reepayHelper->getOrderShippingAddress($order);
@@ -115,14 +121,27 @@ class Payment extends AbstractHelper
         $options['accept_url'] = $this->_storeManager->getStore($order->getStoreId())->getBaseUrl() . 'reepay/standard/accept';
         $options['cancel_url'] = $this->_storeManager->getStore($order->getStoreId())->getBaseUrl() . 'reepay/standard/cancel';
 
-        $res = $this->_reepaySessionHelper->chargeCreateWithNewCustomer(
-            $apiKey,
-            $customer,
-            $orderData,
-            $paymentMethods,
-            $settle,
-            $options
-        );
+        if($customerHandle !== false){
+            $res = $this->_reepaySessionHelper->chargeCreateWithExistCustomer(
+                $apiKey,
+                $customerHandle,
+                $orderData,
+                $paymentMethods,
+                $settle,
+                $options
+            );
+        }else {
+            $res = $this->_reepaySessionHelper->chargeCreateWithNewCustomer(
+                $apiKey,
+                $customer,
+                $orderData,
+                $paymentMethods,
+                $settle,
+                $options
+            );
+        }
+
+
 
         $paymentTransactionId = $res['id'];
 

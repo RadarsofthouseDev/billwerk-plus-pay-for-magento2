@@ -33,6 +33,11 @@
 					<comment/>
 					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Keytype</source_model>
 				</field>
+                <field id="webhook" translate="label comment" type="button" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <frontend_model>Radarsofthouse\Reepay\Block\System\Config\Webhook</frontend_model>
+                    <label>Update webhook URL in Reepay</label>
+                    <comment>Note: Save config before updating the webhook URL.</comment>
+                </field>
 				<field id="display_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
 					<label>Display type</label>
 					<comment>Note: ViaBill, Vipps, Resurs Bank and Apple Pay will be opened in "Window" display type.</comment>

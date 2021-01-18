@@ -199,7 +199,7 @@ class Data extends AbstractHelper
         }
 
         return [
-            'handle' => $order->getBillingAddress()->getEmail(),
+//            'handle' => $order->getBillingAddress()->getEmail(),
             'email' => $order->getBillingAddress()->getEmail(),
             'first_name' => $order->getBillingAddress()->getFirstname(),
             'last_name' => $order->getBillingAddress()->getLastname(),
@@ -212,7 +212,7 @@ class Data extends AbstractHelper
             'postal_code' => $order->getBillingAddress()->getPostcode(),
             'vat' => $vatId,
             'test' => $testMode,
-            'generate_handle' => false,
+            'generate_handle' => true,
         ];
     }
 
@@ -659,7 +659,20 @@ class Data extends AbstractHelper
             $payment->save();
             $order->save();
 
-            return  $transaction->save()->getTransactionId();
+            $transactionId = $transaction->save()->getTransactionId();
+
+            $orderStatusAfterPayment = $this->getConfig('order_status_after_payment', $order->getStoreId());
+            $autoCapture = $this->getConfig('auto_capture', $order->getStoreId());
+            if (!empty($orderStatusAfterPayment) && $autoCapture) {
+                $totalDue = $this->_priceHelper->currency($order->getTotalDue(), true, false);
+
+                $order->setState($orderStatusAfterPayment, true);
+                $order->setStatus($orderStatusAfterPayment);
+                $order->addStatusToHistory($order->getStatus(), 'Reepay: Captured amount of ' . $totalDue .'by Reepay webhook. Transaction ID: ' .$transactionData['id']);
+                $order->save();
+            }
+
+            return  $transactionId;
         } catch (Exception $e) {
             throw new \Magento\framework\Exception\PaymentException(__('addCaptureTransactionToOrder() Exception : ' . $e->getMessage()));
 

@@ -1,5 +1,10 @@
 
 # Changelog
+## Version 1.1.10 on 18 January 2021
+- Implement customer handle solution.
+- Implement webhook setting button in Magento backend.
+- Fix order status for auto capture mode.
+
 ## Version 1.1.9 on 14 December 2020
 - Change admin label and set default "send_order_email_when_success"
 

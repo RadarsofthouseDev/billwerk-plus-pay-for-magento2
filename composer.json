@@ -2,7 +2,7 @@
     "name": "radarsofthouse/reepay",
     "description": "Reepay payment for Magento 2",
     "type": "magento2-module",
-    "version": "1.1.9",
+    "version": "1.1.10",
     "authors": [
         {
             "email": "info@radarsofthouse.dk",
@@ -11,7 +11,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "ext-intl": "*"
     },
     "autoload": {
         "psr-4": {
