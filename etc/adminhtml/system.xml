@@ -60,6 +60,10 @@
 					<comment>Suggest to use "Processing"</comment>
 					<source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
 				</field>
+                <field id="cancel_order_after_payment_cancel" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="select">
+                    <label>Change order status to cancelled if the customer is redirected to the cancel_url</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
 				<field id="send_order_email_when_success" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="62" translate="label" type="select">
 					<label>Send order confirmation email after payment has been made</label>
 					<comment/>

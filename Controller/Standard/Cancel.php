@@ -86,10 +86,10 @@ class Cancel extends \Magento\Framework\App\Action\Action
         if (isset($params['_isAjax'])) {
             $isAjax = 1;
         }
-
         $order = $this->orderInterface->loadByIncrementId($orderId);
+        $cancelConfig = $this->reepayHelper->getConfig('cancel_order_after_payment_cancel', $order->getStoreId());
 
-        if ($order->canCancel()) {
+        if ($cancelConfig && $order->canCancel()) {
             $order->cancel();
             $order->addStatusHistoryComment('Reepay : order have been cancelled by payment page');
             $order->save();
@@ -109,6 +109,7 @@ class Cancel extends \Magento\Framework\App\Action\Action
                 ->unsLastRealOrderId();
         }
 
+
         // unset reepay session id on checkout session
         /*
         if ($this->checkoutSession->getReepaySessionID() && $this->checkoutSession->getReepaySessionOrder()) {
@@ -125,6 +126,9 @@ class Cancel extends \Magento\Framework\App\Action\Action
             return $this->resultJsonFactory->create()
                 ->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true)
                 ->setData($result);
+        }
+        if (!$cancelConfig) {
+            return $this->redirect('/');
         }
         return $this->redirect('checkout/cart');
     }
