@@ -17,6 +17,9 @@ class Payment extends AbstractHelper
     protected $_reepayHelper;
     protected $_storeManager;
     private $_reepayCustomerHelper;
+    protected $_reepayChargeHelper;
+    protected $_customerRepository;
+    protected $_customerSession;
 
     /**
      * Constructor
@@ -28,6 +31,8 @@ class Payment extends AbstractHelper
      * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
      * @param \Magento\Framework\UrlInterface $urlInterface
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Radarsofthouse\Reepay\Helper\Charge $reepayChargeHelper
+     * @param \Radarsofthouse\Reepay\Api\CustomerRepositoryInterface $customerRepository
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -36,7 +41,10 @@ class Payment extends AbstractHelper
         \Radarsofthouse\Reepay\Helper\Customer $reepayCustomerHelper,
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Magento\Framework\UrlInterface $urlInterface,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Radarsofthouse\Reepay\Helper\Charge $reepayChargeHelper,
+        \Radarsofthouse\Reepay\Api\CustomerRepositoryInterface $customerRepository,
+        \Magento\Customer\Model\Session $customerSession
     ) {
         parent::__construct($context);
         $this->_resolver = $resolver;
@@ -45,15 +53,19 @@ class Payment extends AbstractHelper
         $this->_reepayCustomerHelper = $reepayCustomerHelper;
         $this->_reepayHelper = $reepayHelper;
         $this->_storeManager = $storeManager;
+        $this->_reepayChargeHelper = $reepayChargeHelper;
+        $this->_customerRepository = $customerRepository;
+        $this->_customerSession = $customerSession;
     }
 
     /**
      * create reepay session
      *
      * @param \Magento\Sales\Model\Order $order
+     * @param $reepayCreditCard
      * @return string $paymentTransactionId
      */
-    public function createReepaySession($order)
+    public function createReepaySession($order, $reepayCreditCard = null)
     {
         $apiKey = $this->_reepayHelper->getApiKey($order->getStoreId());
         $customerEmail = $order->getCustomerEmail();
@@ -121,6 +133,15 @@ class Payment extends AbstractHelper
         $options['accept_url'] = $this->_storeManager->getStore($order->getStoreId())->getBaseUrl() . 'reepay/standard/accept';
         $options['cancel_url'] = $this->_storeManager->getStore($order->getStoreId())->getBaseUrl() . 'reepay/standard/cancel';
 
+        $save_card_enable = $this->_reepayHelper->getConfig('save_card_enable', $order->getStoreId());
+        if( $save_card_enable && $this->_customerSession->isLoggedIn() ){
+            $options['recurring_optional'] = true;
+        }
+
+        if($reepayCreditCard !== null){
+            $options['card_on_file'] = $reepayCreditCard;
+        }
+
         if($customerHandle !== false){
             $res = $this->_reepaySessionHelper->chargeCreateWithExistCustomer(
                 $apiKey,
@@ -141,10 +162,52 @@ class Payment extends AbstractHelper
             );
         }
 
-
-
         $paymentTransactionId = $res['id'];
 
         return $paymentTransactionId;
+    }
+
+
+    /**
+     * create charge
+     *
+     * @param \Magento\Sales\Model\Order $order
+     * @param $reepayCreditCard
+     * @return
+     */
+    public function createChargeWithExistCustomer($order, $reepayCreditCard)
+    {
+        $apiKey = $this->_reepayHelper->getApiKey($order->getStoreId());
+        $handle = $order->getIncrementId();
+        $source = $reepayCreditCard;
+        $customerEmail = $order->getCustomerEmail();
+        $reepayCustomer = $this->_customerRepository->getByMagentoCustomerEmail($customerEmail);
+        $customerHandle = $reepayCustomer->getHandle();
+        $options = [];
+
+        if ($this->_reepayHelper->getConfig('send_order_line') == '1') {
+            $options['order_lines'] = $this->_reepayHelper->getOrderLines($order);
+        } else {
+            $grandTotal = $order->getGrandTotal() * 100;
+            $options['amount'] = (int)$grandTotal;
+        }
+
+        $billingAddress = $this->_reepayHelper->getOrderBillingAddress($order);
+        $shippingAddress = $this->_reepayHelper->getOrderShippingAddress($order);
+        $options['billing_address'] = $billingAddress;
+        $options['shipping_address'] = $shippingAddress;
+
+        $options['currency'] = $order->getOrderCurrencyCode();
+
+        $settle = false;
+        $autoCaptureConfig = $this->_reepayHelper->getConfig('auto_capture', $order->getStoreId());
+        if ( $autoCaptureConfig == 1 ) {
+            $settle = true;
+        }
+        $options['settle'] = $settle;
+        
+        $createCharge = $this->_reepayChargeHelper->createWithExistCustomer($apiKey, $handle, $source, $customerHandle, $options);
+
+        return $createCharge;
     }
 }

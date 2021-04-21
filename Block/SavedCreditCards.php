@@ -1,0 +1,130 @@
+<?php
+
+namespace Radarsofthouse\Reepay\Block;
+
+/**
+ * Class SavedCreditCards
+ *
+ * @package Radarsofthouse\Reepay\Block
+ */
+class SavedCreditCards extends \Magento\Framework\View\Element\Template
+{
+    protected $_scopeConfig;
+    protected $_customerHelper;
+    protected $_customerSession;
+    protected $_reepayHelper;
+    protected $_storeManager;
+    protected $_logger;
+    protected $_urlInterface;
+    protected $_checkoutSession;
+    protected $_allowwedpayment;
+
+    /**
+     * Index constructor.
+     *
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Radarsofthouse\Reepay\Helper\Customer $customerHelper
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Radarsofthouse\Reepay\Helper\Logger $logger
+     * @param \Magento\Framework\UrlInterface $urlInterface
+     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param \Radarsofthouse\Reepay\Model\Config\Source\Allowwedpayment $allowwedpayment
+     * @param array $data
+     */
+    public function __construct(
+        \Magento\Framework\View\Element\Template\Context $context,
+        \Radarsofthouse\Reepay\Helper\Customer $customerHelper,
+        \Magento\Customer\Model\Session $customerSession,
+        \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Radarsofthouse\Reepay\Helper\Logger $logger,
+        \Magento\Framework\UrlInterface $urlInterface,
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Radarsofthouse\Reepay\Model\Config\Source\Allowwedpayment $allowwedpayment,
+        array $data = []
+    ) {
+        $this->_scopeConfig = $context->getScopeConfig();
+        parent::__construct($context, $data);
+        $this->_customerHelper = $customerHelper;
+        $this->_customerSession = $customerSession;
+        $this->_reepayHelper = $reepayHelper;
+        $this->_storeManager = $storeManager;
+        $this->_logger = $logger;
+        $this->_urlInterface = $urlInterface;
+        $this->_checkoutSession = $checkoutSession;
+        $this->_allowwedpayment = $allowwedpayment;
+    }
+    
+    /**
+     * get saved credit card
+     *
+     * @return array $SavedCreditCards
+     */
+    public function getSavedCreditCards()
+    {
+        $savedCreditCards = [];
+
+        $save_card_enable = $this->_reepayHelper->getConfig('save_card_enable',$this->_storeManager->getStore()->getId());
+        if( $save_card_enable ){
+            if ($this->_customerSession->isLoggedIn()) {
+                $apiKey = $this->_reepayHelper->getApiKey($this->_storeManager->getStore()->getId());
+                $savedCreditCards = $this->_customerHelper->getPaymentCardsByCustomer($apiKey,$this->_customerSession->getCustomer());
+            }
+        }
+
+        return $savedCreditCards;
+    }
+
+    /**
+     * get saved credit card from quote
+     *
+     * @return array $SavedCreditCards
+     */
+    public function getSavedCreditCardFromQuote()
+    {
+        $quote = $this->_checkoutSession->getQuote();
+        return $quote->getReepayCreditCard();
+    }
+
+    /**
+     * get Allowwedpayments
+     *
+     * @return array $_allowwedpayments
+     */
+    public function getAllowwedpayments()
+    {
+        $allowwedpayments = $this->_allowwedpayment->toOptionArray();
+        $_allowwedpayments = [];
+        foreach($allowwedpayments as $allowwedpayment){
+            if($allowwedpayment['value'] == 'card'){
+                $_allowwedpayments[$allowwedpayment['value']] = __('Debit/Credit card');
+            }else{
+                $_allowwedpayments[$allowwedpayment['value']] = $allowwedpayment['label'];
+            }
+        }
+        return $_allowwedpayments;
+    }
+
+    /**
+     * get Remove Card URL
+     *
+     * @return string 
+     */
+    public function getRemoveCardUrl()
+    {
+        return $this->_urlInterface->getUrl('reepay/standard/removeCard');
+    }
+
+    /**
+     * get Set Credit Card URL
+     *
+     * @return string 
+     */
+    public function getSetCreditCardUrl()
+    {
+        return $this->_urlInterface->getUrl('reepay/standard/setCreditCard');
+    }
+    
+}

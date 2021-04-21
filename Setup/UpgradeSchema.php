@@ -17,13 +17,13 @@ class UpgradeSchema implements UpgradeSchemaInterface
      */
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
+        $quoteTable = 'quote';
+        $orderTable = 'sales_order';
+        $invoiceTable = 'sales_invoice';
+        $creditmemoTable = 'sales_creditmemo';
+
         if (version_compare($context->getVersion(), "1.0.14", "<")) {
             $setup->startSetup();
-
-            $quoteTable = 'quote';
-            $orderTable = 'sales_order';
-            $invoiceTable = 'sales_invoice';
-            $creditmemoTable = 'sales_creditmemo';
 
             //Setup two columns for quote and order
 
@@ -86,6 +86,73 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     ]
                 );
             $setup->endSetup();
+        }
+
+        if (version_compare($context->getVersion(), "1.2.0", "<")) {
+
+            //quote table
+            $setup->getConnection()
+                ->addColumn(
+                    $setup->getTable($quoteTable),
+                    'reepay_credit_card',
+                    [
+                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'length' => 255,
+                        'default' => null,
+                        'nullable' => true,
+                        'comment' => 'Reepay credit card'
+                    ]
+                );
+
+            //order tables
+            $setup->getConnection()
+                ->addColumn(
+                    $setup->getTable($orderTable),
+                    'reepay_credit_card',
+                    [
+                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'length' => 255,
+                        'default' => null,
+                        'nullable' => true,
+                        'comment' => 'Reepay credit card'
+                    ]
+                );
+
+            $table_radarsofthouse_reepay_customer = $setup->getConnection()->newTable($setup->getTable('radarsofthouse_reepay_customer'));
+
+            $table_radarsofthouse_reepay_customer->addColumn(
+                'customer_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
+                ['identity' => true,'nullable' => false,'primary' => true,'unsigned' => true,],
+                'Entity ID'
+            );
+
+            $table_radarsofthouse_reepay_customer->addColumn(
+                'magento_customer_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
+                ['unsigned' => true],
+                'customer id'
+            );
+
+            $table_radarsofthouse_reepay_customer->addColumn(
+                'magento_email',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                255,
+                [],
+                'customer email'
+            );
+
+            $table_radarsofthouse_reepay_customer->addColumn(
+                'handle',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                255,
+                ['nullable' => false],
+                'reepay customer handle'
+            );
+
+            $setup->getConnection()->createTable($table_radarsofthouse_reepay_customer);
         }
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/radarsofthouse-reepay/customer" method="POST">
+        <service class="Radarsofthouse\Reepay\Api\CustomerRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Radarsofthouse_Reepay::Customer_save"/>
+        </resources>
+    </route>
+    <route url="/V1/radarsofthouse-reepay/customer/search" method="GET">
+        <service class="Radarsofthouse\Reepay\Api\CustomerRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Radarsofthouse_Reepay::Customer_view"/>
+        </resources>
+    </route>
+    <route url="/V1/radarsofthouse-reepay/customer/:customerId" method="GET">
+        <service class="Radarsofthouse\Reepay\Api\CustomerRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Radarsofthouse_Reepay::Customer_view"/>
+        </resources>
+    </route>
+    <route url="/V1/radarsofthouse-reepay/customer/:customerId" method="PUT">
+        <service class="Radarsofthouse\Reepay\Api\CustomerRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Radarsofthouse_Reepay::Customer_update"/>
+        </resources>
+    </route>
+    <route url="/V1/radarsofthouse-reepay/customer/:customerId" method="DELETE">
+        <service class="Radarsofthouse\Reepay\Api\CustomerRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Radarsofthouse_Reepay::Customer_delete"/>
+        </resources>
+    </route>
+</routes>

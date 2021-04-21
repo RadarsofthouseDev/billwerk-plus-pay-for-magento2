@@ -13,6 +13,10 @@
 
         </div>
 
+        <div class="select-saved-credit-card" data-bind="html: window.checkoutConfig.saved_credit_cards">
+            
+        </div>
+
         <div class="payment-method-billing-address">
             <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
             <!-- ko template: getTemplate() -->

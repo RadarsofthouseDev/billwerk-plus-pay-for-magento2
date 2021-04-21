@@ -69,3 +69,73 @@
 .reepay-overlay .pay-btn:hover{
     cursor: pointer;
 }
+.select-credit-card{
+    width: 100%;
+    max-width: 380px;
+}
+.credit-card-container{
+    position: relative;
+}
+.credit-card {
+    display: block;
+    position: relative;
+    margin-bottom: 15px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 2px solid #dd636b;
+    padding: 15px;
+    padding-left: 50px;
+    border-radius: 4px;
+}
+.credit-card-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.credit-card-container .checkmark {
+    position: absolute;
+    top: 16px;
+    left: 15px;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+.credit-card-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+.credit-card-container input:checked ~ .checkmark {
+    background-color: #14a16f;
+}
+.credit-card-container .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.credit-card-container input:checked ~ .checkmark:after {
+    display: block;
+}
+.credit-card-container .checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+}
+.credit-card-container .remove-credit-card-btn{
+    position: absolute;
+    background-image: url(../img/remove-icon.svg);
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    right: 15px;
+    top: 17px;
+}
+.credit-card-container .remove-credit-card-btn:hover{
+    cursor: pointer;
+}

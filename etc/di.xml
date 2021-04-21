@@ -47,4 +47,7 @@
 			</argument>
 		</arguments>
 	</type>
+    <preference for="Radarsofthouse\Reepay\Api\CustomerRepositoryInterface" type="Radarsofthouse\Reepay\Model\CustomerRepository"/>
+    <preference for="Radarsofthouse\Reepay\Api\Data\CustomerInterface" type="Radarsofthouse\Reepay\Model\Data\Customer"/>
+    <preference for="Radarsofthouse\Reepay\Api\Data\CustomerSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 </config>

@@ -23,6 +23,8 @@ class Redirect extends \Magento\Framework\App\Action\Action
     protected $_messageManager;
     protected $_logger;
     protected $_reepayStatus;
+    protected $_customerSession;
+    protected $_checkoutSession;
     /**
      * @var \Magento\Framework\Controller\Result\RedirectFactory
      */
@@ -37,6 +39,8 @@ class Redirect extends \Magento\Framework\App\Action\Action
      * @param \Radarsofthouse\Reepay\Helper\Payment $reepayPayment
      * @param \Radarsofthouse\Reepay\Helper\Logger $logger
      * @param \Radarsofthouse\Reepay\Model\Status $reepayStatus
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Magento\Checkout\Model\Session $checkoutSession
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -45,7 +49,9 @@ class Redirect extends \Magento\Framework\App\Action\Action
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Radarsofthouse\Reepay\Helper\Payment $reepayPayment,
         \Radarsofthouse\Reepay\Helper\Logger $logger,
-        \Radarsofthouse\Reepay\Model\Status $reepayStatus
+        \Radarsofthouse\Reepay\Model\Status $reepayStatus,
+        \Magento\Customer\Model\Session $customerSession,
+        \Magento\Checkout\Model\Session $checkoutSession
     )
     {
         parent::__construct($context);
@@ -56,6 +62,8 @@ class Redirect extends \Magento\Framework\App\Action\Action
         $this->_messageManager = $context->getMessageManager();
         $this->_logger = $logger;
         $this->_reepayStatus = $reepayStatus;
+        $this->_customerSession = $customerSession;
+        $this->_checkoutSession = $checkoutSession;
     }
 
     /**
@@ -77,6 +85,58 @@ class Redirect extends \Magento\Framework\App\Action\Action
 
             if (!$order->getId()) {
                 return $this->redirect();
+            }
+
+            // check using saved credit card
+            if($order->getPayment()->getMethodInstance()->getCode() == "reepay_payment"){
+                if( !empty($order->getReepayCreditCard()) && $order->getReepayCreditCard() != 'new' ){
+                    
+                    $save_card_type = $this->_reepayHelper->getConfig('save_card_type', $order->getStoreId());
+                    if($save_card_type == 0){
+                        // CIT (Customer Initiated Transaction)
+
+                        $this->_logger->addDebug('use saved credit card : CIT :' . $order->getReepayCreditCard());
+
+                        $paymentTransactionId = null;
+                        $paymentTransactionId = $this->_reepayPayment->createReepaySession($order,$order->getReepayCreditCard());
+                        $this->_logger->addDebug('$paymentTransactionId : ' . $paymentTransactionId);
+
+                        $pageTitleConfig = $this->_reepayHelper->getConfig('title', $order->getStoreId());
+                        $resultPage->getConfig()
+                            ->getTitle()
+                            ->set($pageTitleConfig);
+                        $template = 'Radarsofthouse_Reepay::standard/window.phtml';
+                        $resultPage->getLayout()
+                            ->getBlock('reepay_standard_redirect')
+                            ->setTemplate($template)
+                            ->setPaymentTransactionId($paymentTransactionId);
+                        $resultPage->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+
+                        return $resultPage;
+                    }else{
+                        // MIT (Merchant Initiated Transaction)
+
+                        $this->_logger->addDebug('use saved credit card : MIT :' . $order->getReepayCreditCard());
+
+                        $createCharge = $this->_reepayPayment->createChargeWithExistCustomer($order,$order->getReepayCreditCard());
+                        if($createCharge){
+                            
+                            $this->_checkoutSession->setLastOrderId($order->getId());
+                            $this->_checkoutSession->setLastRealOrderId($order->getIncrementId());
+                            $this->_checkoutSession->setLastSuccessQuoteId($order->getQuoteId());
+                            $this->_checkoutSession->setLastQuoteId($order->getQuoteId());
+
+                            $resultPage = $this->_resultRedirectFactory->create()->setPath('checkout/onepage/success');
+                            $resultPage->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+                            return $resultPage;
+
+                        }else{
+                            $this->_messageManager->addError(__('Payment failure. Please try again later.'));
+                            return $this->redirect();
+                        }
+                    }
+
+                }
             }
 
             $paymentTransactionId = null;

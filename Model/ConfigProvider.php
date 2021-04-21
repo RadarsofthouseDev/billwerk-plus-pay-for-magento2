@@ -40,6 +40,7 @@ class ConfigProvider implements ConfigProviderInterface
             'resurs_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::resurs_payment_icons.phtml')->toHtml(),
             'vipps_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::vipps_payment_icons.phtml')->toHtml(),
             'forbrugsforeningen_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::forbrugsforeningen_payment_icons.phtml')->toHtml(),
+            'saved_credit_cards' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\SavedCreditCards')->setTemplate('Radarsofthouse_Reepay::saved_credit_cards.phtml')->toHtml()
         ];
     }
 }
