@@ -1,5 +1,10 @@
 
 # Changelog
+## Version 1.2.0 on 5 May 2021
+- Implement save credit cards function.
+- Show payment instructions on checkout page.
+- Mobilepay icon label fixing.
+
 ## Version 1.1.11 on 15 February 2021
 - Add backend configuration to control order cancellation.
 

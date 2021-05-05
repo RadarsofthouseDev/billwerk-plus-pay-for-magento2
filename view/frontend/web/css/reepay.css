@@ -46,6 +46,9 @@
     max-width: 100%;
     display: block;
 }
+.reepay-payment-method .reepay-payment-instructions{
+    margin-bottom: 10px;
+}
 .reepay-payment-method img.reepay-payment-icon{
     height: 20px;
     width: auto;

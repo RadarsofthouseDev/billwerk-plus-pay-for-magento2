@@ -162,7 +162,7 @@
 					<comment/>
 				</field>
 				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
-					<label>Show Viabill icon</label>
+					<label>Show Mobilepay icon</label>
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>

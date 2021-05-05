@@ -14,10 +14,17 @@ class ConfigProvider implements ConfigProviderInterface
 {
     /** @var LayoutInterface  */
     protected $_layout;
+    protected $_storeManager;
+    protected $_scopeConfig;
 
-    public function __construct(LayoutInterface $layout)
-    {
+    public function __construct(
+        LayoutInterface $layout,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+    ){
         $this->_layout = $layout;
+        $this->_storeManager = $storeManager;
+        $this->_scopeConfig = $scopeConfig;
     }
 
     /**
@@ -27,6 +34,7 @@ class ConfigProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
+        $store_id = $this->_storeManager->getStore()->getId();
         return [
             'payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::payment_icons.phtml')->toHtml(),
             'viabill_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::viabill_payment_icons.phtml')->toHtml(),
@@ -40,7 +48,19 @@ class ConfigProvider implements ConfigProviderInterface
             'resurs_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::resurs_payment_icons.phtml')->toHtml(),
             'vipps_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::vipps_payment_icons.phtml')->toHtml(),
             'forbrugsforeningen_payment_icons' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\Paymenticons')->setTemplate('Radarsofthouse_Reepay::forbrugsforeningen_payment_icons.phtml')->toHtml(),
-            'saved_credit_cards' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\SavedCreditCards')->setTemplate('Radarsofthouse_Reepay::saved_credit_cards.phtml')->toHtml()
+            'saved_credit_cards' => $this->_layout->createBlock('Radarsofthouse\Reepay\Block\SavedCreditCards')->setTemplate('Radarsofthouse_Reepay::saved_credit_cards.phtml')->toHtml(),
+            "reepay_payment_instructions" => $this->_scopeConfig->getValue('payment/reepay_payment/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_applepay_instructions" => $this->_scopeConfig->getValue('payment/reepay_applepay/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_mobilepay_instructions" => $this->_scopeConfig->getValue('payment/reepay_mobilepay/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_klarnapaynow_instructions" => $this->_scopeConfig->getValue('payment/reepay_klarnapaynow/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_klarnapaylater_instructions" => $this->_scopeConfig->getValue('payment/reepay_klarnapaylater/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_klarnasliceit_instructions" => $this->_scopeConfig->getValue('payment/reepay_klarnasliceit/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_swish_instructions" => $this->_scopeConfig->getValue('payment/reepay_swish/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_resurs_instructions" => $this->_scopeConfig->getValue('payment/reepay_resurs/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_vipps_instructions" => $this->_scopeConfig->getValue('payment/reepay_vipps/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_forbrugsforeningen_instructions" => $this->_scopeConfig->getValue('payment/reepay_forbrugsforeningen/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_viabill_instructions" => $this->_scopeConfig->getValue('payment/reepay_viabill/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id),
+            "reepay_paypal_instructions" => $this->_scopeConfig->getValue('payment/reepay_paypal/instructions',\Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store_id)
         ];
     }
 }
