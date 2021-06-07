@@ -26,6 +26,7 @@ class Data extends AbstractHelper
         'reepay_resurs',
         'reepay_vipps',
         'reepay_forbrugsforeningen',
+        'reepay_googlepay',
     ];
 
     protected $_storeManager;
@@ -452,6 +453,9 @@ class Data extends AbstractHelper
                 break;
             case 'reepay_forbrugsforeningen':
                 $paymentMethods[] = 'ffk';
+                break;
+            case 'reepay_googlepay':
+                $paymentMethods[] = 'googlepay';
                 break;
             default:
                 $allowedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());

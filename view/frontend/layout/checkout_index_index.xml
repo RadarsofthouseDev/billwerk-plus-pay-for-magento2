@@ -2,6 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 	<head>
 		<css src="Radarsofthouse_Reepay::css/reepay.css" />
+        <script src="https://checkout.reepay.com/checkout.js" src_type="url"/>
 	</head>
 	<body>
 		<referenceBlock name="checkout.root">
@@ -112,6 +113,14 @@
 																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_forbrugsforeningen</item>
 																	<item name="methods" xsi:type="array">
 																		<item name="reepay_forbrugsforeningen" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_googlepay" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_googlepay</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_googlepay" xsi:type="array">
 																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
 																		</item>
 																	</item>

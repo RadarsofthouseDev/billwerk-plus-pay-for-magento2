@@ -239,4 +239,22 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         return $paymentIcon;
     }
+
+    /**
+     * get Google pay payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getGooglepayPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_googlepay/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['googlepay'];
+        }
+
+        return $paymentIcon;
+    }
 }

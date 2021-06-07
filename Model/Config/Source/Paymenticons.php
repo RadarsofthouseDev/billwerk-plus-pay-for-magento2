@@ -37,6 +37,7 @@ class Paymenticons implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'paypal', 'label' => __('PayPal')],
             ['value' => 'resurs', 'label' => __('Resurs Bank')],
             ['value' => 'vipps', 'label' => __('Vipps')],
+            ['value' => 'googlepay', 'label' => __('Google Pay')],
         ];
     }
 }

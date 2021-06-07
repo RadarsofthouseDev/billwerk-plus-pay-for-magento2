@@ -3,21 +3,19 @@
 namespace Radarsofthouse\Reepay\Model;
 
 /**
- * Class Reepayapplepay
+ * Class Reepaygooglepay
  *
  * @package Radarsofthouse\Reepay\Model
  */
-class Reepayapplepay extends \Radarsofthouse\Reepay\Model\Reepaypayment
+class Reepaygooglepay extends \Radarsofthouse\Reepay\Model\Reepaypayment
 {
-    protected $_code = 'reepay_applepay';
+    protected $_code = 'reepay_googlepay';
 
     public function isAvailable(\Magento\Quote\Api\Data\CartInterface $quote = null){
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
         if(stripos( $user_agent, 'Edg') !== false){
             return false;
-        }else if(stripos( $user_agent, 'Chrome') !== false){
-            return false;
-        }else if(stripos( $user_agent, 'Safari') !== false){
+        }elseif (stripos( $user_agent, 'Chrome') !== false){
             return parent::isAvailable($quote);   
         }else{
             return false;

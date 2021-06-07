@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.1 on 7 June 2021
+- Add "Google Pay" payment method.
+- Allowed "Apple Pay" payment only Safari browser.
+
 ## Version 1.2.0 on 5 May 2021
 - Implement save credit cards function.
 - Show payment instructions on checkout page.
