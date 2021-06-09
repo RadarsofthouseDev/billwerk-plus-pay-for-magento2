@@ -42,7 +42,24 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             if ($paymentMethod === 'reepay_swish') {
                 return;
             }
+
             $order = $payment->getOrder();
+
+            $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
+            $reepay_charge = $this->reepayCharge->get(
+                $apiKey,
+                $order->getIncrementId()
+            );
+
+            if( $this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) ){
+                if (!empty($reepay_charge)) {
+                    if ($reepay_charge['state'] == 'settled') {
+                        $this->logger->addDebug("auto capture is enabled : skip to settle again");
+                        return;
+                    }
+                }
+            }
+
             $amount = $invoice->getGrandTotal();
             $originalAmount  = $order->getGrandTotal();
 
@@ -62,8 +79,6 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             $options['key'] = count($orderInvoices);
             $options['amount'] = $amount*100;
             $options['ordertext'] = "settled";
-
-            $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
 
             $charge = $this->reepayCharge->settle(
                 $apiKey,

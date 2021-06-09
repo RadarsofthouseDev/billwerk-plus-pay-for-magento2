@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.2 on 9 June 2021
+- Fixed refund online issue when the auto capture function is enabled.
+
 ## Version 1.2.1 on 7 June 2021
 - Add "Google Pay" payment method.
 - Allowed "Apple Pay" payment only Safari browser.
