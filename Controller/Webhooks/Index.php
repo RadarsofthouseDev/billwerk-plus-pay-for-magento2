@@ -17,7 +17,7 @@ class Index extends \Magento\Framework\App\Action\Action
     protected $order;
     protected $orderService;
     protected $orderInterface;
-    protected $transaction;
+    protected $transactionFactory;
     protected $invoiceService;
     protected $reepayHelper;
     protected $invoice;
@@ -61,7 +61,7 @@ class Index extends \Magento\Framework\App\Action\Action
         \Magento\Sales\Model\Order $order,
         \Magento\Sales\Model\Service\OrderService $orderService,
         \Magento\Sales\Api\Data\OrderInterface $orderInterface,
-        \Magento\Framework\DB\Transaction $transaction,
+        \Magento\Framework\DB\TransactionFactory $transactionFactory,
         \Magento\Sales\Model\Service\InvoiceService $invoiceService,
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Magento\Sales\Model\Order\CreditmemoFactory $creditmemoFactory,
@@ -80,7 +80,7 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->order = $order;
         $this->orderService = $orderService;
         $this->orderInterface = $orderInterface;
-        $this->transaction = $transaction;
+        $this->transactionFactory = $transactionFactory;
         $this->invoiceService = $invoiceService;
         $this->reepayHelper = $reepayHelper;
         $this->invoice = $invoice;
@@ -259,12 +259,27 @@ class Index extends \Magento\Framework\App\Action\Action
                     $order_id
                 );
 
+                
+
                 $transactionID = $this->reepayHelper->addCaptureTransactionToOrder($order, $reepayTransactionData, $chargeRes);
                 if ($transactionID) {
                     $this->reepayHelper->setReepayPaymentState($order->getPayment(), 'settled');
                     $order->save();
 
                     $this->surchargeFee($order_id, $chargeRes);
+
+                    if( $this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) && $order->canInvoice() ){
+                    
+                        $invoice = $this->invoiceService->prepareInvoice($order);
+                        $invoice->setRequestedCaptureCase(\Magento\Sales\Model\Order\Invoice::CAPTURE_ONLINE);
+                        $invoice->register();
+                        $invoice->getOrder()->setCustomerNoteNotify(false);
+                        $invoice->getOrder()->setIsInProcess(true);
+                        $transactionSave = $this->transactionFactory->create()->addObject($invoice)->addObject($invoice->getOrder());
+                        $transactionSave->save();
+    
+                        $this->logger->addDebug("Automatic create invoice for the order #".$order_id);
+                    }
 
                     $this->logger->addDebug('Settled order #' . $order_id . " , transaction ID : " . $transactionID);
 

@@ -669,10 +669,8 @@ class Data extends AbstractHelper
             $autoCapture = $this->getConfig('auto_capture', $order->getStoreId());
             if (!empty($orderStatusAfterPayment) && $autoCapture) {
                 $totalDue = $this->_priceHelper->currency($order->getTotalDue(), true, false);
-
                 $order->setState($orderStatusAfterPayment, true);
                 $order->setStatus($orderStatusAfterPayment);
-                $order->addStatusToHistory($order->getStatus(), 'Reepay: Captured amount of ' . $totalDue .'by Reepay webhook. Transaction ID: ' .$transactionData['id']);
                 $order->save();
             }
 

@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.3 on 14 June 2021
+- Create invoice in Magento automatically when auto capture is enabled.
+- Update default configuration for "Change order status to cancelled if the customer is redirected to the cancel_url".
+
 ## Version 1.2.2 on 9 June 2021
 - Fixed refund online issue when the auto capture function is enabled.
 
