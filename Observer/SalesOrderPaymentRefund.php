@@ -72,8 +72,11 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
             if (!empty($refund)) {
                 if (isset($refund["error"])) {
                     $this->logger->addDebug("refund error : ", $refund);
-                    $this->messageManager->addError($refund["error"]);
-                    throw new \Magento\Framework\Exception\LocalizedException($refund["error"]);
+                    $error_message = $refund["error"];
+                    if( isset($refund["message"]) ){
+                        $error_message = $refund["message"];
+                    }
+                    throw new \Magento\Framework\Exception\LocalizedException(__($error_message));
                 }
 
                 if ($refund['state'] == 'refunded') {

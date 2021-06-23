@@ -401,6 +401,84 @@ class Data extends AbstractHelper
     }
 
     /**
+     * get order lines data from invoice
+     *
+     * @param \Magento\Sales\Model\Order\Invoice $invoice
+     * @return array $orderLines
+     */
+    public function getOrderLinesFromInvoice($invoice)
+    {
+        $grandTotal = $invoice->getGrandTotal()*100;
+        $order = $invoice->getOrder();
+        $total = 0;
+        $orderLines = [];
+
+        // products
+        $invoiceitems = $invoice->getItems();
+        foreach ($invoiceitems as $item) {
+            $amount = $item->getPriceInclTax() * 100;
+            $amount = round($amount);
+
+            $qty = $item->getQty();
+
+            $line = [
+                'ordertext' => $item->getName(),
+                'amount' => $this->toInt($amount),
+                'quantity' => $this->toInt($qty),
+                'vat' => $item->getTaxPercent()/100,
+                'amount_incl_vat' => "true",
+            ];
+            $orderLines[] = $line;
+
+            $total = $total + $this->toInt($amount) * $this->toInt($qty);
+        }
+
+        // shipping
+        $shippingAmount = ($invoice->getShippingAmount() * 100);
+        if ($shippingAmount != 0) {
+            $line = [
+                'ordertext' => !empty($order->getShippingDescription()) ? $order->getShippingDescription():  __('Shipping')->render(),
+                'amount' => $this->toInt($shippingAmount),
+                'quantity' => 1,
+                'vat' => 0,
+                'amount_incl_vat' => "true"
+            ];
+            $orderLines[] = $line;
+
+            $total = $total + $this->toInt($shippingAmount);
+        }
+
+        // Surcharge Fee
+        if( $invoice->getReepaySurchargeFee() ){
+            if( $invoice->getReepaySurchargeFee() > 0 ){
+                $surchargeFee = $invoice->getReepaySurchargeFee()*100;
+                $line = [
+                    'ordertext' => __('Surcharge Fee')->render(),
+                    'amount' => $this->toInt($surchargeFee),
+                    'vat' => 0,
+                    'amount_incl_vat' => "true"
+                ];
+                $orderLines[] = $line;
+                $total = $total + $this->toInt($surchargeFee);
+            }
+        }
+
+        // re-check order line total not equal invoice total
+        if( $total != $this->toInt($grandTotal) ){
+            $orderLines = [];
+            $orderLines[] = [
+                'ordertext' => "settled",
+                'amount' => $this->toInt($grandTotal),
+                'quantity' => 1,
+                'vat' => 0,
+                'amount_incl_vat' => "true",
+            ];
+        }
+
+        return $orderLines;
+    }
+
+    /**
      * convert variable to integer
      *
      * @return int

@@ -35,8 +35,11 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
+        $this->logger->addDebug(__METHOD__, []);
+
         $payment = $observer->getPayment();
         $invoice = $observer->getInvoice();
+        $this->logger->addDebug($invoice->getId());
         $paymentMethod = $payment->getMethod();
         if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
             if ($paymentMethod === 'reepay_swish') {
@@ -63,22 +66,31 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             $amount = $invoice->getGrandTotal();
             $originalAmount  = $order->getGrandTotal();
 
-            if ($amount > $order->getGrandTotal()) {
-                $amount = $order->getGrandTotal();
-            }
-
-            if ($amount != $originalAmount) {
-                $this->logger->addDebug("Change capture amount from {$amount} to {$originalAmount} for order" . $order->getIncrementId());
-            }
-
-            $this->logger->addDebug(__METHOD__, ['capture : ' . $order->getIncrementId() . ', amount : ' . $amount]);
-
             $orderInvoices = $order->getInvoiceCollection();
 
             $options = [];
             $options['key'] = count($orderInvoices);
-            $options['amount'] = $amount*100;
+            if ($this->reepayHelper->getConfig('send_order_line') == '1') {
+                // send order lines
+                $options['order_lines'] = $this->reepayHelper->getOrderLinesFromInvoice($invoice);
+            }else{
+                // send amount
+                if ($amount > $order->getGrandTotal()) {
+                    $amount = $order->getGrandTotal();
+                }
+                if ($amount != $originalAmount) { 
+                    $this->logger->addDebug("Change capture amount from {$amount} to {$originalAmount} for order" . $order->getIncrementId());
+                }
+    
+                $this->logger->addDebug(__METHOD__, ['capture : ' . $order->getIncrementId() . ', amount : ' . $amount]);
+
+                $options['amount'] = $amount*100;
+            }
+            
             $options['ordertext'] = "settled";
+
+            $this->logger->addDebug( "settle request =>" );
+            $this->logger->addDebug( json_encode($options) );
 
             $charge = $this->reepayCharge->settle(
                 $apiKey,
@@ -89,8 +101,11 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             if (!empty($charge)) {
                 if (isset($charge["error"])) {
                     $this->logger->addDebug("settle error : ", $charge);
-                    $this->messageManager->addError($charge["error"]);
-                    throw new \Magento\Framework\Exception\LocalizedException($charge["error"]);
+                    $error_message = $charge["error"];
+                    if( isset($charge["message"]) ){
+                        $error_message = $charge["message"];
+                    }
+                    throw new \Magento\Framework\Exception\LocalizedException(__($error_message));
                     return;
                 }
 
