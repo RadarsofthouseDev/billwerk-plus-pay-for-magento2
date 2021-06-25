@@ -244,6 +244,20 @@ class Index extends \Magento\Framework\App\Action\Action
                         $hasTxn = true;
                     }
                 }
+
+                if( $this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) && $order->canInvoice() ){
+                    
+                    $invoice = $this->invoiceService->prepareInvoice($order);
+                    $invoice->setRequestedCaptureCase(\Magento\Sales\Model\Order\Invoice::CAPTURE_ONLINE);
+                    $invoice->register();
+                    $invoice->getOrder()->setCustomerNoteNotify(false);
+                    $invoice->getOrder()->setIsInProcess(true);
+                    $transactionSave = $this->transactionFactory->create()->addObject($invoice)->addObject($invoice->getOrder());
+                    $transactionSave->save();
+
+                    $this->logger->addDebug("#Automatic create invoice for the order #".$order_id);
+                }
+
                 if ($hasTxn) {
                     $this->logger->addDebug("Magento have created the transaction '" . $reepayTransactionData['id'] . "' already.");
 

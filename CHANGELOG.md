@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.4 on 25 June 2021
+- Fixed invoice is not created automatically for some orders when the auto capture function is enabled.
+- Fixed error when throwing a LocalizedException
+
 ## Version 1.2.3 on 14 June 2021
 - Create invoice in Magento automatically when auto capture is enabled.
 - Update default configuration for "Change order status to cancelled if the customer is redirected to the cancel_url".
