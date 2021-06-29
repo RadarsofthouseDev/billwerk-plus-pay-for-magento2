@@ -27,7 +27,7 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
     }
 
     /**
-     * sales_order_payment_place_start observer
+     * sales_order_payment_capture observer
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return void

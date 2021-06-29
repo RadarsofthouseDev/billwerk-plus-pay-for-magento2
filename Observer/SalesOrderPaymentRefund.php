@@ -27,7 +27,7 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
     }
 
     /**
-     * sales_order_payment_place_start observer
+     * sales_order_payment_refund observer
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return void

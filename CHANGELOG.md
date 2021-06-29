@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.5 on 29 June 2021
+- Fixed create online refund issue
+
 ## Version 1.2.4 on 25 June 2021
 - Fixed invoice is not created automatically for some orders when the auto capture function is enabled.
 - Fixed error when throwing a LocalizedException
