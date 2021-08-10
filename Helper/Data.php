@@ -401,6 +401,89 @@ class Data extends AbstractHelper
     }
 
     /**
+     * get order lines from invoice
+     *
+     * @param \Magento\Sales\Model\Order\Invoice $invoice
+     * @return array $orderLines
+     */
+    public function getOrderLinesFromInvoice($invoice)
+    {
+        $order = $invoice->getOrder();
+        $invoiceTotal = $invoice->getGrandTotal() * 100;
+        $invoiceTotal = $this->toInt($invoiceTotal);
+        $total = 0;
+        $orderLines = [];
+
+        // products
+        $invoiceItems = $invoice->getAllItems();
+        foreach ($invoiceItems as $invoiceItem) {
+            $amount = $invoiceItem->getPriceInclTax() * 100;
+            $amount = round($amount);
+
+            $qty = $invoiceItem->getQty();
+
+            $line = [
+                'ordertext' => $invoiceItem->getName(),
+                'amount' => $this->toInt($amount),
+                'quantity' => $this->toInt($qty),
+                'vat' => $invoiceItem->getTaxPercent()/100,
+                'amount_incl_vat' => "true",
+            ];
+            $orderLines[] = $line;
+
+            $total = $total + $this->toInt($amount) * $this->toInt($qty);
+        }
+
+        // shipping
+        $shippingAmount = ($invoice->getShippingInclTax() * 100);
+        if ($shippingAmount != 0) {
+            $line = [
+                'ordertext' => !empty($order->getShippingDescription()) ? $order->getShippingDescription():  __('Shipping')->render(),
+                'amount' => $this->toInt($shippingAmount),
+                'quantity' => 1,
+            ];
+            if ($invoice->getShippingTaxAmount() > 0) {
+                $line['vat'] = $invoice->getShippingTaxAmount()/$invoice->getShippingAmount();
+                $line['amount_incl_vat'] = "true";
+            } else {
+                $line['vat'] = 0;
+                $line['amount_incl_vat'] = "true";
+            }
+            $orderLines[] = $line;
+            $total = $total + $this->toInt($shippingAmount);
+        }
+
+        // discount
+        $discountAmount = ($invoice->getDiscountAmount() * 100);
+        if ($discountAmount != 0) {
+            $line = [
+                'ordertext' => !empty($invoice->getDiscountDescription())? __('Discount: %1',$invoice->getDiscountDescription())->render() :  __('Discount')->render(),
+                'amount' => $this->toInt($discountAmount),
+                'quantity' => 1,
+                'vat' => 0,
+                'amount_incl_vat' => "true",
+            ];
+            $orderLines[] = $line;
+            $total = $total + $this->toInt($discountAmount);
+        }
+
+        // other
+        if ($total != $invoiceTotal) {
+            $amount = $invoiceTotal - $total;
+            $line = [
+                'ordertext' => __('Other')->render(),
+                'amount' => $this->toInt($amount),
+                'quantity' => 1,
+                'vat' => 0,
+                'amount_incl_vat' => "true",
+            ];
+            $orderLines[] = $line;
+        }
+
+        return $orderLines;
+    }
+
+    /**
      * convert variable to integer
      *
      * @return int

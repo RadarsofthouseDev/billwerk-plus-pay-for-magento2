@@ -73,12 +73,13 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
 
             $this->logger->addDebug(__METHOD__, ['capture : ' . $order->getIncrementId() . ', amount : ' . $amount]);
 
-            $orderInvoices = $order->getInvoiceCollection();
-
             $options = [];
-            $options['key'] = count($orderInvoices);
-            $options['amount'] = $amount*100;
-            $options['ordertext'] = "settled";
+            
+            if( $this->reepayHelper->getConfig('send_order_line', $order->getStoreId()) ){
+                $options['order_lines'] = $this->reepayHelper->getOrderLinesFromInvoice($invoice);
+            }else{
+                $options['amount'] = $amount*100;
+            }
 
             $charge = $this->reepayCharge->settle(
                 $apiKey,

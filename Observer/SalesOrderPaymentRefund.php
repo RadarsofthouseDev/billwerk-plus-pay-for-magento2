@@ -54,11 +54,8 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
 
             $this->logger->addDebug(__METHOD__, ['online_refund : ' . $order->getIncrementId() . ', amount : ' . $amount]);
 
-            $creditmemos = $order->getCreditmemosCollection();
-
             $options = [];
             $options['invoice'] = $order->getIncrementId();
-            $options['key'] = count($creditmemos);
             $options['amount'] = $amount*100;
             $options['ordertext'] = "refund";
 

@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.6 on 10 August 2021
+- Implement order lines for the settle request.
+- Remove "key" argument from settle and refund request. 
+
 ## Version 1.2.5 on 29 June 2021
 - Fixed create online refund issue
 
