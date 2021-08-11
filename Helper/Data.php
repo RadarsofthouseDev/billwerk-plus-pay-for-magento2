@@ -426,7 +426,7 @@ class Data extends AbstractHelper
                 'ordertext' => $invoiceItem->getName(),
                 'amount' => $this->toInt($amount),
                 'quantity' => $this->toInt($qty),
-                'vat' => $invoiceItem->getTaxPercent()/100,
+                'vat' => $invoiceItem->getOrderItem()->getTaxPercent()/100,
                 'amount_incl_vat' => "true",
             ];
             $orderLines[] = $line;
