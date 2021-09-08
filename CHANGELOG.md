@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.8 on 8 September 2021
+- Restore the last order when back from window payment.
+
 ## Version 1.2.7 on 11 August 2021
 - Fixed VAT issue on order lines of the settle request
 
