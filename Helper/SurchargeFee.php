@@ -5,10 +5,11 @@ namespace Radarsofthouse\Reepay\Helper;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Sales\Api\CreditmemoRepositoryInterface;
 use Magento\Sales\Api\InvoiceRepositoryInterface;
+use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Sales\Model\OrderFactory;
 
 /**
  * Class SurchargeFee
@@ -17,10 +18,6 @@ use Magento\Sales\Api\InvoiceRepositoryInterface;
  */
 class SurchargeFee extends AbstractHelper
 {
-    /**
-     * @var ObjectManager
-     */
-    private $objectManager;
     /**
      * @var CreditmemoRepositoryInterface
      */
@@ -43,16 +40,31 @@ class SurchargeFee extends AbstractHelper
     private $email;
 
     /**
-     * constructor.
-     *
+     * @var OrderFactory
+     */
+    private $orderFactory;
+
+    /**
+     * @var CartRepositoryInterface
+     */
+    private $quoteRepository;
+
+
+    /**
+     * SurchargeFee constructor.
      * @param Context $context
+     * @param OrderFactory $orderFactory
+     * @param CartRepositoryInterface $quoteRepository
      * @param InvoiceRepositoryInterface $invoiceRepository
      * @param CreditmemoRepositoryInterface $creditmemoRepository
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param Email $email
      * @param Logger $logger
      */
     public function __construct(
         Context $context,
+        OrderFactory $orderFactory,
+        CartRepositoryInterface $quoteRepository,
         InvoiceRepositoryInterface $invoiceRepository,
         CreditmemoRepositoryInterface $creditmemoRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
@@ -60,7 +72,8 @@ class SurchargeFee extends AbstractHelper
         Logger $logger
     ) {
         parent::__construct($context);
-        $this->objectManager = ObjectManager::getInstance();
+        $this->orderFactory = $orderFactory;
+        $this->quoteRepository = $quoteRepository;
         $this->creditmemoRepository = $creditmemoRepository;
         $this->invoiceRepository = $invoiceRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -70,11 +83,20 @@ class SurchargeFee extends AbstractHelper
 
     /**
      * @param $quoteId
-     * @return mixed
+     * @return \Magento\Quote\Model\Quote
      */
-    private function loadQuote($quoteId)
+    private function getQuote($quoteId)
     {
-        return $this->objectManager->create(\Magento\Quote\Model\Quote::class)->load($quoteId);
+        return $this->quoteRepository->get($quoteId);
+    }
+
+    /**
+     * @param $incrementId
+     * @return \Magento\Sales\Model\Order
+     */
+    private function getOrder($incrementId)
+    {
+        return $this->orderFactory->create()->loadByIncrementId($incrementId);
     }
 
     /**
@@ -85,12 +107,13 @@ class SurchargeFee extends AbstractHelper
     {
         try {
             $this->logger->addDebug(__METHOD__);
-            /** @var  \Magento\Sales\Model\Order $order */
-            $order = $this->objectManager->create(\Magento\Sales\Model\Order::class)->loadByIncrementId($orderIncrementId);
-            /** @var  \Magento\Quote\Model\Quote $quote */
-//            $quote = $this->loadQuote($order->getQuoteId());
-            $quote = $this->objectManager->create(\Magento\Quote\Model\Quote::class)->load($order->getQuoteId());
-            if (array_key_exists('source', $charge) && array_key_exists('surcharge_fee', $charge['source']) && $charge['source']['surcharge_fee'] > 0) {
+            $order = $this->getOrder($orderIncrementId);
+            $quote = $this->getQuote($order->getQuoteId());
+            if (
+                array_key_exists('source', $charge) &&
+                array_key_exists('surcharge_fee', $charge['source']) &&
+                $charge['source']['surcharge_fee'] > 0
+            ) {
                 $surchargeFee = (float)($charge['source']['surcharge_fee'] / 100);
                 $quote->setReepaySurchargeFee($surchargeFee);
                 $quote->setTotalsCollectedFlag(false)->collectTotals();
