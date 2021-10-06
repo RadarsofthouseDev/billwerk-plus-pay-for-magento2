@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.9 on 6 October 2021
+- Fix deprecated load method in SurchargeFee.php by @puntable
+
 ## Version 1.2.8 on 8 September 2021
 - Restore the last order when back from window payment.
 
