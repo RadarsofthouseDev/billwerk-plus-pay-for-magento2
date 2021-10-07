@@ -182,4 +182,31 @@ class Charge extends AbstractHelper
             return false;
         }
     }
+
+    /**
+     * Delete charge
+     * Delete an created charge. A void of reserved money will be attempted.
+     *
+     * @param string $apiKey
+     * @param string $handle
+     * @return bool|array
+     * @throws \Exception
+     */
+    public function delete($apiKey, $handle)
+    {
+        $log = ['param' => ['handle' => $handle]];
+        $response = $this->client->delete($apiKey, self::ENDPOINT . "/{$handle}");
+        if ($this->client->success()) {
+            $log['response'] = $response;
+            $this->logger->addInfo(__METHOD__, $log, true);
+
+            return $response;
+        } else {
+            $log['http_errors'] = $this->client->getHttpError();
+            $log['response_errors'] = $this->client->getErrors();
+            $this->logger->addError(__METHOD__, $log, true);
+
+            return false;
+        }
+    }
 }

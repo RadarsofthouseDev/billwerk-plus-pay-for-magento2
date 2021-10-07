@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.10 on 7 October 2021
+- Delete the charge when order is canceled from Magento (only not paid order). So, user cannot pay after cancel order.
+
 ## Version 1.2.9 on 6 October 2021
 - Fix deprecated load method in SurchargeFee.php by @puntable
 

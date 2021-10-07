@@ -13,6 +13,7 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
     private $reepaySession;
     protected $scopeConfig;
     protected $reepayHelper;
+    protected $logger;
 
     /**
      * Constructor
@@ -26,12 +27,14 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
         \Radarsofthouse\Reepay\Helper\Charge $reepayCharge,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Radarsofthouse\Reepay\Helper\Session $reepaySession,
-        \Radarsofthouse\Reepay\Helper\Data $reepayHelper
+        \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
+        \Radarsofthouse\Reepay\Helper\Logger $logger
     ) {
         $this->reepayCharge = $reepayCharge;
         $this->scopeConfig = $scopeConfig;
         $this->reepaySession = $reepaySession;
         $this->reepayHelper = $reepayHelper;
+        $this->logger = $logger;
     }
 
     /**
@@ -48,25 +51,46 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
         $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
         if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
 
+            $this->logger->addDebug(__METHOD__, ['order ID : ' . $order->getIncrementId()]);
+
             $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
 
-            $cancelRes = $this->reepayCharge->cancel(
+            $charge = $this->reepayCharge->get(  
                 $apiKey,
                 $order->getIncrementId()
             );
 
-            if (!empty($cancelRes)) {
-                if ($cancelRes['state'] == 'cancelled') {
-                    $_payment = $order->getPayment();
-                    $this->reepayHelper->setReepayPaymentState($_payment, 'cancelled');
+            if ($charge['state'] == 'created') {
 
-                    // delete reepay session
-                    $sessionRes = $this->reepaySession->delete(
-                        $apiKey,
-                        $order->getIncrementId()
-                    );
+                $charge = $this->reepayCharge->delete(
+                    $apiKey,
+                    $order->getIncrementId()
+                );
+
+                $this->logger->addDebug("Delete charge for order #".$order->getIncrementId());
+            }else{
+
+                $cancelRes = $this->reepayCharge->cancel(
+                    $apiKey,
+                    $order->getIncrementId()
+                );
+
+                $this->logger->addDebug("Cancel charge for order #".$order->getIncrementId());
+    
+                if (!empty($cancelRes)) {
+                    if ($cancelRes['state'] == 'cancelled') {
+                        $_payment = $order->getPayment();
+                        $this->reepayHelper->setReepayPaymentState($_payment, 'cancelled');
+    
+                        // delete reepay session
+                        $sessionRes = $this->reepaySession->delete(
+                            $apiKey,
+                            $order->getIncrementId()
+                        );
+                    }
                 }
             }
+            
         }
 
         return $this;
