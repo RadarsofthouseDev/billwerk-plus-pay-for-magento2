@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.11 on 14 October 2021
+- Fixed restore cart issue (restore when empty cart only). The issue related to V 1.2.8
+
 ## Version 1.2.10 on 7 October 2021
 - Delete the charge when order is canceled from Magento (only not paid order). So, user cannot pay after cancel order.
 

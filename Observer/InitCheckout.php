@@ -38,10 +38,13 @@ class InitCheckout implements \Magento\Framework\Event\ObserverInterface
                 $paymentMethod = $lastRealOrder->getPayment()->getMethodInstance()->getCode();
                 if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
                     
-                    $this->logger->addDebug("restore the last order : ".$lastRealOrder->getEntityId());
+                    $quoteItems = $this->checkoutSession->getQuote()->getAllVisibleItems();
 
-                    $this->checkoutSession->restoreQuote();
-                    
+                    if( count($quoteItems) == 0 ){
+                        $this->logger->addDebug("restore the last order : ".$lastRealOrder->getEntityId());
+                        $this->checkoutSession->restoreQuote();
+                    }
+
                 }
             }
         }
