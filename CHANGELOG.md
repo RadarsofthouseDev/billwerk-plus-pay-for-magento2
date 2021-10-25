@@ -1,6 +1,6 @@
 
 # Changelog
-## Version 1.2.12 on 24 October 2021
+## Version 1.2.12 on 25 October 2021
 - Add module version in the backend.
 
 ## Version 1.2.11 on 14 October 2021
