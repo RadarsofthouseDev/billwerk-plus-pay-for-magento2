@@ -4,6 +4,10 @@
 		<section id="payment">
 			<group id="reepay_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label">
 				<label>Reepay payment</label>
+                <field id="version" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="label">
+					<label>Version</label>
+					<frontend_model>Radarsofthouse\Reepay\Block\System\Config\Form\Field\Version</frontend_model>
+				</field>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -16,7 +20,6 @@
 				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
 					<label>Instructions</label>
 					<comment/>
-
 				</field>
 				<field id="private_key_test" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="21" translate="label" type="text">
 					<label>Private API Key For Test</label>
