@@ -34,6 +34,11 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $paymentIconsConfig = $this->scopeConfig->getValue('payment/reepay_payment/payment_icons', $storeScope);
+        
+        if( empty($paymentIconsConfig) ){
+            return [];  
+        }
+
         $paymentIcons = explode(',', $paymentIconsConfig);
 
         return $paymentIcons;

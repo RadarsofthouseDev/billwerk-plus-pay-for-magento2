@@ -1,7 +1,12 @@
 
 # Changelog
+## Version 1.2.13 on 27 October 2021
+- Allowed blank value for payment icons configuration.
+- Fixed payment icons issue when the payment icons setting is empty.
+- Updated the "reepay_surcharge_fee" extension attribute.
+
 ## Version 1.2.12 on 25 October 2021
-- Add module version in the backend.
+- Added module version in the backend.
 
 ## Version 1.2.11 on 14 October 2021
 - Fixed restore cart issue (restore when empty cart only). The issue related to V 1.2.8
