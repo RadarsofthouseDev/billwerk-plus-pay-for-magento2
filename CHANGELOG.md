@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.14 on 1 November 2021
+- Fixed wrong prices and total on multistore setup
+
 ## Version 1.2.13 on 27 October 2021
 - Allowed blank value for payment icons configuration.
 - Fixed payment icons issue when the payment icons setting is empty.
