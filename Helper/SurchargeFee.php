@@ -10,6 +10,7 @@ use Magento\Sales\Api\CreditmemoRepositoryInterface;
 use Magento\Sales\Api\InvoiceRepositoryInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Sales\Model\OrderFactory;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Class SurchargeFee
@@ -49,6 +50,10 @@ class SurchargeFee extends AbstractHelper
      */
     private $quoteRepository;
 
+    /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
 
     /**
      * SurchargeFee constructor.
@@ -60,6 +65,7 @@ class SurchargeFee extends AbstractHelper
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param Email $email
      * @param Logger $logger
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         Context $context,
@@ -69,7 +75,8 @@ class SurchargeFee extends AbstractHelper
         CreditmemoRepositoryInterface $creditmemoRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         Email $email,
-        Logger $logger
+        Logger $logger,
+        StoreManagerInterface $storeManager
     ) {
         parent::__construct($context);
         $this->orderFactory = $orderFactory;
@@ -79,6 +86,7 @@ class SurchargeFee extends AbstractHelper
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->email = $email;
         $this->logger = $logger;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -108,6 +116,8 @@ class SurchargeFee extends AbstractHelper
         try {
             $this->logger->addDebug(__METHOD__);
             $order = $this->getOrder($orderIncrementId);
+            // setting store to get correct prices and totals
+            $this->storeManager->setCurrentStore($order->getStoreId());
             $quote = $this->getQuote($order->getQuoteId());
             if (
                 array_key_exists('source', $charge) &&
