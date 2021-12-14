@@ -80,10 +80,7 @@ class SendPaymentLink implements \Magento\Framework\Event\ObserverInterface
                     $this->_logger->addDebug("SEND EMAIL");
                     $this->_reepayEmail->sendPaymentLinkEmail($order, $sessionId);
 
-
-
-
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     $this->_logger->addError(__METHOD__." Exception : ".$e->getMessage());
                     $this->_messageManager->addException($e, $e->getMessage());
                 }

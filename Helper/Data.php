@@ -670,7 +670,7 @@ class Data extends AbstractHelper
             }
 
             return  $transaction->getTransactionId();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new \Magento\framework\Exception\PaymentException(__('addTransactionToOrder() Exception : ' . $e->getMessage()));
 
             return;
@@ -758,7 +758,7 @@ class Data extends AbstractHelper
             }
 
             return  $transactionId;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new \Magento\framework\Exception\PaymentException(__('addCaptureTransactionToOrder() Exception : ' . $e->getMessage()));
 
             return;
@@ -831,7 +831,7 @@ class Data extends AbstractHelper
             $order->save();
 
             return  $transaction->save()->getTransactionId();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new \Magento\framework\Exception\PaymentException(__('addRefundTransactionToOrder() Exception : ' . $e->getMessage()));
 
             return;

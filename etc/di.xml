@@ -47,6 +47,9 @@
 			</argument>
 		</arguments>
 	</type>
+	<type name="Magento\Backend\Block\Widget\Button\Toolbar">
+        <plugin name="Radarsofthouse_Reepay_Plugin_Block_Widget_Button_ToolbarPlugin" type="Radarsofthouse\Reepay\Plugin\Block\Widget\Button\ToolbarPlugin" />
+    </type>
     <preference for="Radarsofthouse\Reepay\Api\CustomerRepositoryInterface" type="Radarsofthouse\Reepay\Model\CustomerRepository"/>
     <preference for="Radarsofthouse\Reepay\Api\Data\CustomerInterface" type="Radarsofthouse\Reepay\Model\Data\Customer"/>
     <preference for="Radarsofthouse\Reepay\Api\Data\CustomerSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
