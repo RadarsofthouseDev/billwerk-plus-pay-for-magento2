@@ -52,7 +52,7 @@ class ToolbarPlugin
  
         if ($order) {
 
-            $paymentMethod = $this->getOrder()->getPayment()->getMethodInstance()->getCode();
+            $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
             $isReepayPaymentMethod = $this->reepayHelper->isReepayPaymentMethod($paymentMethod);
             if( $isReepayPaymentMethod ){
                 $orderTransactions = $this->getTransactionByOrderId($order->getId());
