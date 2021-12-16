@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.16 on 16 December 2021
+- Fixed Toolbar Plugin error in order view backend.
+
 ## Version 1.2.15 on 14 December 2021
 - Add "Send payment link" button in order view backend.
 
