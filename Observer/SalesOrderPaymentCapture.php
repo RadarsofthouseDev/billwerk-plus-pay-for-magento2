@@ -67,13 +67,13 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
                 $tmp_amount = $amount;
                 $authorized_amount  = $reepay_charge['authorized_amount'];
                 
-                if ($amount > $authorized_amount) {
-                    $amount = $authorized_amount;
+                if ( $this->reepayHelper->toInt($amount * 100) > $authorized_amount) {
+                    $amount = $authorized_amount/100;
                 }
                 if ($amount != $tmp_amount) {
                     $this->logger->addDebug("Change capture amount from {$tmp_amount} to {$amount} for order" . $order->getIncrementId());
                 }
-                
+
             }
 
             $this->logger->addDebug(__METHOD__, ['capture : ' . $order->getIncrementId() . ', amount : ' . $amount]);

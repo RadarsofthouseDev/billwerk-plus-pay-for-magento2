@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.18 on 9 February 2022
+- Change capture amount condition in capture function 
+
 ## Version 1.2.17 on 9 February 2022
 - Fixed parse int issue.
 
