@@ -490,6 +490,9 @@ class Data extends AbstractHelper
      */
     public function toInt($number)
     {
+        if(gettype($number) == "double"){
+            $number = round($number);
+        }
         return (int)($number . "");
     }
 

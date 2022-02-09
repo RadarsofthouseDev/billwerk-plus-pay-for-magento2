@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.17 on 9 February 2022
+- Fixed parse int issue.
+
 ## Version 1.2.16 on 16 December 2021
 - Fixed Toolbar Plugin error in order view backend.
 

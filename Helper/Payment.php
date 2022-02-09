@@ -86,7 +86,7 @@ class Payment extends AbstractHelper
             $orderData['order_lines'] = $this->_reepayHelper->getOrderLines($order);
         } else {
             $grandTotal = $order->getGrandTotal() * 100;
-            $orderData['amount'] = (int)$grandTotal;
+            $orderData['amount'] = $this->_reepayHelper->toInt($grandTotal);
         }
 
         $settle = false;
@@ -189,7 +189,7 @@ class Payment extends AbstractHelper
             $options['order_lines'] = $this->_reepayHelper->getOrderLines($order);
         } else {
             $grandTotal = $order->getGrandTotal() * 100;
-            $options['amount'] = (int)$grandTotal;
+            $options['amount'] = $this->_reepayHelper->toInt($grandTotal);
         }
 
         $billingAddress = $this->_reepayHelper->getOrderBillingAddress($order);

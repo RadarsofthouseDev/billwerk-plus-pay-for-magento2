@@ -56,7 +56,8 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
 
             $options = [];
             $options['invoice'] = $order->getIncrementId();
-            $options['amount'] = $amount*100;
+            $_amount = $amount * 100;
+            $options['amount'] = $this->reepayHelper->toInt($_amount);
             $options['ordertext'] = "refund";
 
             $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());

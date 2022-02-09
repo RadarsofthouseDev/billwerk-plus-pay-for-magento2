@@ -61,14 +61,19 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             }
 
             $amount = $invoice->getGrandTotal();
-            $originalAmount  = $order->getGrandTotal();
 
-            if ($amount > $order->getGrandTotal()) {
-                $amount = $order->getGrandTotal();
-            }
+            if( isset($reepay_charge['authorized_amount']) && $reepay_charge['authorized_amount'] > 0 ){
 
-            if ($amount != $originalAmount) {
-                $this->logger->addDebug("Change capture amount from {$amount} to {$originalAmount} for order" . $order->getIncrementId());
+                $tmp_amount = $amount;
+                $authorized_amount  = $reepay_charge['authorized_amount'];
+                
+                if ($amount > $authorized_amount) {
+                    $amount = $authorized_amount;
+                }
+                if ($amount != $tmp_amount) {
+                    $this->logger->addDebug("Change capture amount from {$tmp_amount} to {$amount} for order" . $order->getIncrementId());
+                }
+                
             }
 
             $this->logger->addDebug(__METHOD__, ['capture : ' . $order->getIncrementId() . ', amount : ' . $amount]);
@@ -78,7 +83,8 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             if( $this->reepayHelper->getConfig('send_order_line', $order->getStoreId()) ){
                 $options['order_lines'] = $this->reepayHelper->getOrderLinesFromInvoice($invoice);
             }else{
-                $options['amount'] = $amount*100;
+                $_amount = $amount * 100;
+                $options['amount'] = $this->reepayHelper->toInt($_amount);
             }
 
             $charge = $this->reepayCharge->settle(
