@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Api\Data;
 
-/**
- * interface StatusInterface
- *
- * @package Radarsofthouse\Reepay\Api\Data
- */
 interface StatusInterface extends \Magento\Framework\Api\ExtensibleDataInterface
 {
     const MASKED_CARD_NUMBER = 'masked_card_number';

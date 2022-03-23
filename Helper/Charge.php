@@ -6,22 +6,25 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Radarsofthouse\Reepay\Client\Api;
 
-/**
- * Class Charge
- *
- * @package Radarsofthouse\Reepay\Helper
- */
 class Charge extends AbstractHelper
 {
     const ENDPOINT = 'charge';
+
+    /**
+     * @var \Radarsofthouse\Reepay\Client\Api
+     */
     private $client = null;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     private $logger = null;
 
     /**
-     * constructor.
+     * Constructor.
      *
      * @param \Magento\Framework\App\Action\Context $context
-     * @param $logger
+     * @param \Radarsofthouse\Reepay\Helper\Logger $logger
      */
     public function __construct(Context $context, Logger $logger)
     {
@@ -158,7 +161,6 @@ class Charge extends AbstractHelper
 
     /**
      * Cancel charge
-     * Cancel an authorized charge. A void of reserved money will be attempted.
      *
      * @param string $apiKey
      * @param string $handle
@@ -185,7 +187,6 @@ class Charge extends AbstractHelper
 
     /**
      * Delete charge
-     * Delete an created charge. A void of reserved money will be attempted.
      *
      * @param string $apiKey
      * @param string $handle

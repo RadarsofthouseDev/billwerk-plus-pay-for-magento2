@@ -4,6 +4,11 @@ namespace Radarsofthouse\Reepay\Model\Sales\Pdf;
 
 class SurchargeFee extends \Magento\Sales\Model\Order\Pdf\Total\DefaultTotal
 {
+    /**
+     * Get totals
+     *
+     * @return array
+     */
     public function getTotalsForDisplay()
     {
         $amount = $this->getOrder()->formatPriceTxt($this->getAmount());

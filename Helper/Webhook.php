@@ -9,21 +9,27 @@ use Magento\Framework\UrlInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Radarsofthouse\Reepay\Client\Api;
 
-/**
- * Class Charge
- *
- * @package Radarsofthouse\Reepay\Helper
- */
 class Webhook extends AbstractHelper
 {
     public const ENDPOINT = 'account/webhook_settings';
-    private $client = null;
-    private $storeManager;
-    private $logger = null;
-
 
     /**
-     * constructor.
+     * @var \Radarsofthouse\Reepay\Client\Api
+     */
+    private $client = null;
+
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
+    private $logger = null;
+
+    /**
+     * Constructor
      *
      * @param Context $context
      * @param StoreManagerInterface $storeManager
@@ -37,8 +43,10 @@ class Webhook extends AbstractHelper
         $this->logger = $logger;
     }
 
-    /** Update webhook url.
-     * @param $apiKey
+    /**
+     * Update webhook url
+     *
+     * @param string $apiKey
      * @return bool
      */
     public function getUrl($apiKey)
@@ -61,14 +69,16 @@ class Webhook extends AbstractHelper
         return false;
     }
 
-    /** Update webhook url.
-     * @param $apiKey
+    /**
+     * Update webhook url
+     *
+     * @param string $apiKey
      * @return bool
      */
     public function updateUrl($apiKey)
     {
         try {
-            $url = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_LINK,true);
+            $url = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_LINK, true);
             $url .= $url[-1] === '/' ? '' : '/';
             $url .= 'reepay/webhooks/index';
         } catch (NoSuchEntityException $e) {
@@ -78,10 +88,10 @@ class Webhook extends AbstractHelper
         }
         $urls = [$url];
         $currentUrls = $this->getUrl($apiKey);
-        if($currentUrls !== false && !empty($currentUrls)){
+        if ($currentUrls !== false && !empty($currentUrls)) {
             $urls = $currentUrls;
             $isExistUrl = array_search($url, $currentUrls);
-            if($isExistUrl === false){
+            if ($isExistUrl === false) {
                 $urls[] = $url;
             }
         }

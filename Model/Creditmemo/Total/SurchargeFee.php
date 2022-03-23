@@ -8,18 +8,20 @@ class SurchargeFee extends \Magento\Sales\Model\Order\Creditmemo\Total\AbstractT
      * @var \Radarsofthouse\Reepay\Helper\Data
      */
     private $_helperData;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\SurchargeFee
      */
     private $_helperSurchargeFee;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\Logger
      */
     private $_helperLogger;
 
-
     /**
-     * SurchargeFee constructor.
+     * SurchargeFee constructor
+     *
      * @param \Radarsofthouse\Reepay\Helper\Data $helperData
      * @param \Radarsofthouse\Reepay\Helper\SurchargeFee $helperSurchargeFee
      * @param \Radarsofthouse\Reepay\Helper\Logger $helperLogger
@@ -38,6 +40,8 @@ class SurchargeFee extends \Magento\Sales\Model\Order\Creditmemo\Total\AbstractT
     }
 
     /**
+     * Collect total
+     *
      * @param \Magento\Sales\Model\Order\Creditmemo $creditmemo
      * @return $this
      */
@@ -50,7 +54,14 @@ class SurchargeFee extends \Magento\Sales\Model\Order\Creditmemo\Total\AbstractT
         }
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
         $isEnable = $this->_helperData->isSurchargeFeeEnabled();
-        $this->_helperLogger->addDebug(__METHOD__, ['PaymentMethod' => $paymentMethod, 'isReepayPaymentMethod'=>$isReepayPaymentMethod, 'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false')]);
+        $this->_helperLogger->addDebug(
+            __METHOD__,
+            [
+                'PaymentMethod' => $paymentMethod,
+                'isReepayPaymentMethod' => $isReepayPaymentMethod,
+                'SurchargeFeeEnabled' => ($isEnable ? 'true' : 'false')
+            ]
+        );
         if (!$isEnable || !$isReepayPaymentMethod) {
             return $this;
         }
@@ -60,7 +71,9 @@ class SurchargeFee extends \Magento\Sales\Model\Order\Creditmemo\Total\AbstractT
 
         if (empty($amount)) {
             $this->_helperLogger->addDebug('isEmptyReepaySurchargeFee: ', [$amount]);
-            $amount = $this->_helperSurchargeFee->getAvailableSurchargeFeeRefundAmount($creditmemo->getOrder()->getEntityId());
+            $amount = $this->_helperSurchargeFee->getAvailableSurchargeFeeRefundAmount(
+                $creditmemo->getOrder()->getEntityId()
+            );
             $creditmemo->setReepaySurchargeFee($amount);
         }
         $this->_helperLogger->addDebug('ResultReepaySurchargeFee: ', [$amount]);

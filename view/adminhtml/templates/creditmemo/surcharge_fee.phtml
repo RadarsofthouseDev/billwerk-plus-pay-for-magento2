@@ -1,11 +1,14 @@
 <?php $_source  = $block->getSource() ?>
 <tr>
-    <td class="label"><?= $block->escapeHtml($block->getReepaySurchargeFeeLabel()) ?><div id="reepay_surcharge_fee_adv"></div></td>
+    <td class="label">
+        <?= $block->escapeHtml($block->getReepaySurchargeFeeLabel()) ?>
+        <div id="reepay_surcharge_fee_adv"></div>
+    </td>
     <td>
         <input type="text"
-               name="creditmemo[reepay_surcharge_fee]"
-               value="<?= $block->escapeHtmlAttr($_source->getReepaySurchargeFee()) ?>"
-               class="input-text admin__control-text not-negative-amount"
-               id="reepay_surcharge_fee" />
+            name="creditmemo[reepay_surcharge_fee]"
+            value="<?= $block->escapeHtmlAttr($_source->getReepaySurchargeFee()) ?>"
+            class="input-text admin__control-text not-negative-amount"
+            id="reepay_surcharge_fee" />
     </td>
 </tr>

@@ -6,18 +6,22 @@ use Magento\Framework\Api\DataObjectHelper;
 use Radarsofthouse\Reepay\Api\Data\StatusInterfaceFactory;
 use Radarsofthouse\Reepay\Api\Data\StatusInterface;
 
-/**
- * Class Status
- *
- * @package Radarsofthouse\Reepay\Model
- */
 class Status extends \Magento\Framework\Model\AbstractModel
 {
+    /**
+     * @var string
+     */
     protected $_eventPrefix = 'radarsofthouse_reepay_status';
+
+    /**
+     * @var \Radarsofthouse\Reepay\Api\Data\StatusInterfaceFactory
+     */
     protected $statusDataFactory;
 
+    /**
+     * @var \Magento\Framework\Api\DataObjectHelper
+     */
     protected $dataObjectHelper;
-
 
     /**
      * constructor

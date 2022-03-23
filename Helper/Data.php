@@ -5,11 +5,6 @@ namespace Radarsofthouse\Reepay\Helper;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
 
-/**
- * Class Data
- *
- * @package Radarsofthouse\Reepay\Helper
- */
 class Data extends AbstractHelper
 {
     const CONFIG_PATH = 'payment/reepay_payment/';
@@ -29,23 +24,45 @@ class Data extends AbstractHelper
         'reepay_googlepay',
     ];
 
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
     protected $_storeManager;
+
+    /**
+     * @var \Magento\Framework\Locale\Resolver
+     */
     protected $_resolver;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $_scopeConfig;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Model\Status
+     */
     protected $_reepayStatus;
+
+    /**
+     * @var \Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface
+     */
     protected $_transactionBuilder;
+
+    /**
+     * @var \Magento\Framework\Pricing\Helper\Data
+     */
     protected $_priceHelper;
 
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Helper\Context  $context
+     * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\Locale\Resolver $resolver
-     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Radarsofthouse\Reepay\Model\Status $reepayStatus
      * @param \Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface $transactionBuilder
-     * @param \Magento\Framework\Exception $exception
      * @param \Magento\Framework\Pricing\Helper\Data $priceHelper
      */
     public function __construct(
@@ -67,8 +84,10 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param $field
-     * @param null $storeId
+     * Get module configuration by field
+     *
+     * @param string $field
+     * @param int $storeId
      * @return mixed
      */
     public function getConfigValue($field, $storeId = null)
@@ -77,8 +96,10 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param $code
-     * @param null $storeId
+     * Get modile configuration
+     *
+     * @param string $code
+     * @param int $storeId
      * @return mixed
      */
     public function getConfig($code, $storeId = null)
@@ -87,7 +108,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * get private api key from backend configuration
+     * Get private api key from backend configuration
      *
      * @param integer $storeId
      * @return string $apiKey
@@ -110,9 +131,9 @@ class Data extends AbstractHelper
     }
 
     /**
-     * set reepay payment state to radarsofthouse_reepay_status
+     * Set reepay payment state to radarsofthouse_reepay_status
      *
-     * @param  $payment
+     * @param \Magento\Sales\Model\Order\Payment $payment
      * @param string $state
      * @return void
      */
@@ -132,7 +153,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * update reepay payment data to radarsofthouse_reepay_status
+     * Update reepay payment data to radarsofthouse_reepay_status
      *
      * @param string $orderId
      * @param array $data
@@ -178,7 +199,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * get customer data from order
+     * Get customer data from order
      *
      * @param \Magento\Sales\Model\Order $order
      * @return array (customer data)
@@ -218,7 +239,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * get billing address from order
+     * Get billing address from order
      *
      * @param \Magento\Sales\Model\Order $order
      * @return array (billing address data)
@@ -268,14 +289,14 @@ class Data extends AbstractHelper
     }
 
     /**
-     * get shipping address from order
+     * Get shipping address from order
      *
      * @param \Magento\Sales\Model\Order $order
      * @return array (shipping address data)
      */
     public function getOrderShippingAddress($order)
     {
-        if(null === $order->getShippingAddress()){
+        if (null === $order->getShippingAddress()) {
             return $this->getOrderBillingAddress($order);
         }
 
@@ -305,7 +326,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * get order lines data from order
+     * Get order lines data from order
      *
      * @param \Magento\Sales\Model\Order $order
      * @return array $orderLines
@@ -374,7 +395,7 @@ class Data extends AbstractHelper
         $discountAmount = ($order->getDiscountAmount() * 100);
         if ($discountAmount != 0) {
             $line = [
-                'ordertext' => !empty($order->getDiscountDescription())? __('Discount: %1',$order->getDiscountDescription())->render() :  __('Discount')->render(),
+                'ordertext' => !empty($order->getDiscountDescription())? __('Discount: %1', $order->getDiscountDescription())->render() :  __('Discount')->render(),
                 'amount' => $this->toInt($discountAmount),
                 'quantity' => 1,
                 'vat' => 0,
@@ -401,7 +422,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * get order lines from invoice
+     * Get order lines from invoice
      *
      * @param \Magento\Sales\Model\Order\Invoice $invoice
      * @return array $orderLines
@@ -457,7 +478,7 @@ class Data extends AbstractHelper
         $discountAmount = ($invoice->getDiscountAmount() * 100);
         if ($discountAmount != 0) {
             $line = [
-                'ordertext' => !empty($invoice->getDiscountDescription())? __('Discount: %1',$invoice->getDiscountDescription())->render() :  __('Discount')->render(),
+                'ordertext' => !empty($invoice->getDiscountDescription())? __('Discount: %1', $invoice->getDiscountDescription())->render() :  __('Discount')->render(),
                 'amount' => $this->toInt($discountAmount),
                 'quantity' => 1,
                 'vat' => 0,
@@ -484,20 +505,21 @@ class Data extends AbstractHelper
     }
 
     /**
-     * convert variable to integer
+     * Convert variable to integer
      *
+     * @param float|string $number
      * @return int
      */
     public function toInt($number)
     {
-        if(gettype($number) == "double"){
+        if (gettype($number) == "double") {
             $number = round($number);
         }
         return (int)($number . "");
     }
 
     /**
-     * get allowwed payment from backend configuration
+     * Get allowwed payment from backend configuration
      *
      * @param \Magento\Sales\Model\Order $order
      * @return array $paymentMethods
@@ -552,7 +574,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * prepare payment data
+     * Prepare payment data
      *
      * @param array $paymentData
      * @return array $paymentData
@@ -617,7 +639,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * add transaction to order
+     * Add transaction to order
      *
      * @param \Magento\Sales\Model\Order $order
      * @param array $paymentData
@@ -710,6 +732,7 @@ class Data extends AbstractHelper
      *
      * @param \Magento\Sales\Model\Order $order
      * @param array $transactionData
+     * @param array $chargeRes
      * @return int (Magento Transaction ID)
      */
     public function addCaptureTransactionToOrder($order, $transactionData = [], $chargeRes = [])
@@ -794,6 +817,7 @@ class Data extends AbstractHelper
      *
      * @param \Magento\Sales\Model\Order $order
      * @param array $transactionData
+     * @param array $chargeRes
      * @return int (Magento Transaction ID)
      */
     public function addRefundTransactionToOrder($order, $transactionData = [], $chargeRes = [])
@@ -854,6 +878,7 @@ class Data extends AbstractHelper
 
     /**
      * Get SurchargeFee Enabled
+     *
      * @return bool
      */
     public function isSurchargeFeeEnabled()
@@ -862,7 +887,9 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param $method
+     * Ckeck is Reepay payment method
+     *
+     * @param string $method
      * @return bool
      */
     public function isReepayPaymentMethod($method = '')

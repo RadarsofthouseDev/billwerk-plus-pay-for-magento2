@@ -2,29 +2,71 @@
 
 namespace Radarsofthouse\Reepay\Controller\Standard;
 
-/**
- * Class Error
- *
- * @package Radarsofthouse\Reepay\Controller\Standard
- */
 class Error extends \Magento\Framework\App\Action\Action
 {
+    /**
+     * @var \Magento\Sales\Api\Data\OrderInterface
+     */
     private $orderInterface;
+
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
     private $resultPageFactory;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Charge
+     */
     private $reepayCharge;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Session
+     */
     private $reepaySession;
+
+    /**
+     * @var \Magento\Framework\App\Request\Http
+     */
     protected $request;
+
+    /**
+     * @var \Magento\Sales\Api\OrderManagementInterface
+     */
     protected $orderManagement;
+
+    /**
+     * @var \Magento\Checkout\Model\Session
+     */
     protected $checkoutSession;
+
+    /**
+     * @var \Magento\Framework\UrlInterface
+     */
     protected $url;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $scopeConfig;
+
+    /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
     protected $resultJsonFactory;
     
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Action\Context  $context
+     * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Magento\Framework\App\Request\Http $request
+     * @param \Magento\Sales\Api\Data\OrderInterface $orderInterface
+     * @param \Magento\Sales\Api\OrderManagementInterface $orderManagement
+     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
+     * @param \Radarsofthouse\Reepay\Helper\Session $reepaySession
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -48,7 +90,6 @@ class Error extends \Magento\Framework\App\Action\Action
         $this->reepayCharge = $reepayCharge;
         $this->reepaySession = $reepaySession;
         $this->resultJsonFactory = $resultJsonFactory;
-        
 
         parent::__construct($context);
     }

@@ -5,22 +5,29 @@ use Magento\Framework\App\ProductMetadataInterface;
 
 class SurchargeFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
 {
+    /**
+     * @var \Magento\Quote\Model\QuoteValidator
+     */
     protected $quoteValidator = null;
+
     /**
      * @var \Magento\Framework\Pricing\PriceCurrencyInterface
      */
     protected $priceCurrency;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\Logger
      */
     private $_helperLogger;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\Data
      */
     private $_helperData;
 
     /**
-     * SurchargeFee constructor.
+     * Constructor
+     *
      * @param \Magento\Quote\Model\QuoteValidator $quoteValidator
      * @param \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency
      * @param \Radarsofthouse\Reepay\Helper\Data $helperData
@@ -38,6 +45,14 @@ class SurchargeFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTota
         $this->_helperLogger = $helperLogger;
     }
 
+    /**
+     * Collect total
+     *
+     * @param \Magento\Quote\Model\Quote $quote
+     * @param \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment
+     * @param \Magento\Quote\Model\Quote\Address\Total $total
+     * @return $this
+     */
     public function collect(
         \Magento\Quote\Model\Quote $quote,
         \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment,
@@ -50,7 +65,14 @@ class SurchargeFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTota
         $paymentMethod = $quote->getPayment()->getMethod();
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
         $isEnable = $this->_helperData->isSurchargeFeeEnabled();
-        $this->_helperLogger->addDebug(__METHOD__, ['PaymentMethod' => $paymentMethod, 'isReepayPaymentMethod'=>$isReepayPaymentMethod, 'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false')]);
+        $this->_helperLogger->addDebug(
+            __METHOD__,
+            [
+                'PaymentMethod' => $paymentMethod,
+                'isReepayPaymentMethod' => $isReepayPaymentMethod,
+                'SurchargeFeeEnabled' => ($isEnable ? 'true' : 'false')
+            ]
+        );
         if ($isEnable && $isReepayPaymentMethod) {
             $surchargeFee = $quote->getReepaySurchargeFee();
             $total->setTotalAmount('reepay_surcharge_fee', $surchargeFee);
@@ -67,6 +89,8 @@ class SurchargeFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTota
     }
 
     /**
+     * Fetch
+     *
      * @param \Magento\Quote\Model\Quote $quote
      * @param \Magento\Quote\Model\Quote\Address\Total $total
      * @return array
@@ -76,7 +100,14 @@ class SurchargeFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTota
         $paymentMethod = $quote->getPayment()->getMethod();
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
         $isEnable = $this->_helperData->isSurchargeFeeEnabled();
-        $this->_helperLogger->addDebug(__METHOD__, ['PaymentMethod' => $paymentMethod, 'isReepayPaymentMethod'=>$isReepayPaymentMethod, 'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false')]);
+        $this->_helperLogger->addDebug(
+            __METHOD__,
+            [
+                'PaymentMethod' => $paymentMethod,
+                'isReepayPaymentMethod' => $isReepayPaymentMethod,
+                'SurchargeFeeEnabled' => ($isEnable ? 'true' : 'false')
+            ]
+        );
         if ($isEnable && $isReepayPaymentMethod) {
             $surchargeFee = $quote->getReepaySurchargeFee();
             $this->_helperLogger->addDebug('result', [
@@ -104,6 +135,8 @@ class SurchargeFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTota
     }
 
     /**
+     * Clear values
+     *
      * @param \Magento\Quote\Model\Quote\Address\Total $total
      */
     protected function clearValues(\Magento\Quote\Model\Quote\Address\Total $total)

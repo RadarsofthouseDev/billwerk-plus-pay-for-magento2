@@ -14,24 +14,31 @@ use Radarsofthouse\Reepay\Helper\Data as DataHelper;
 class Webhook extends Action
 {
 
+    /**
+     * @var JsonFactory
+     */
     protected $resultJsonFactory;
 
     /**
      * @var DataHelper
      */
     protected $helper;
+
     /**
      * @var WebhookHelper
      */
     private $webhookHelper;
+
     /**
      * @var Logger
      */
     private $logger;
+
     /**
      * @var TimezoneInterface
      */
     private $timezone;
+
     /**
      * @var StoreManagerInterface
      */
@@ -54,8 +61,7 @@ class Webhook extends Action
         WebhookHelper $webhookHelper,
         TimezoneInterface $timezone,
         Logger $logger
-    )
-    {
+    ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->storeManager = $storeManager;
         $this->helper = $helper;
@@ -73,23 +79,28 @@ class Webhook extends Action
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
-        $lastUpdateTime = $this->timezone->formatDate(null,\IntlDateFormatter::MEDIUM, true);
+        $lastUpdateTime = $this->timezone->formatDate(null, \IntlDateFormatter::MEDIUM, true);
         try {
             $urls = null;
             $urlsTest = null;
             $storeId = $this->storeManager->getStore()->getId();
             $apiKey = $this->helper->getConfig('private_key', $storeId);
             $apiKeyTest = $this->helper->getConfig('private_key_test', $storeId);
-            $this->logger->addDebug('api key.',['api_key'=>$apiKey, 'api_key_test'=>$apiKeyTest]);
-            if(!empty($apiKey)){
+            $this->logger->addDebug('api key.', ['api_key'=>$apiKey, 'api_key_test'=>$apiKeyTest]);
+            if (!empty($apiKey)) {
                 $urls = $this->webhookHelper->updateUrl($apiKey);
             }
-            if(!empty($apiKeyTest)){
+            if (!empty($apiKeyTest)) {
                 $urlsTest = $this->webhookHelper->updateUrl($apiKeyTest);
             }
-            $this->logger->addDebug('webhook update result',['urls'=>$urls, 'urls_test'=>$urlsTest]);
-            if(($urls !== false && $urls !== null) || ($urlsTest !== false && $urlsTest !== null)){
-                return $result->setData(['success' => true, 'urls'=>$urls, 'urls_test'=>$urlsTest, 'time' => $lastUpdateTime]);
+            $this->logger->addDebug('webhook update result', ['urls'=>$urls, 'urls_test'=>$urlsTest]);
+            if (($urls !== false && $urls !== null) || ($urlsTest !== false && $urlsTest !== null)) {
+                return $result->setData([
+                    'success' => true,
+                    'urls' => $urls,
+                    'urls_test' => $urlsTest,
+                    'time' => $lastUpdateTime
+                ]);
             }
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());
@@ -97,6 +108,11 @@ class Webhook extends Action
         return $result->setData(['success' => false, 'time' => $lastUpdateTime]);
     }
 
+    /**
+     * Is Allowed
+     *
+     * @return boolean
+     */
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('Radarsofthouse_Reepay::config');

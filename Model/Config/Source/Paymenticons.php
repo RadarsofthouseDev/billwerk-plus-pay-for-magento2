@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Model\Config\Source;
 
-/**
- * Class Paymenticons
- *
- * @package Radarsofthouse\Reepay\Model\Config\Source
- */
 class Paymenticons implements \Magento\Framework\Option\ArrayInterface
 {
     /**

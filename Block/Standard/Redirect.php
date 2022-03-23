@@ -2,40 +2,62 @@
 
 namespace Radarsofthouse\Reepay\Block\Standard;
 
-/**
- * Class Redirect
- *
- * @package Radarsofthouse\Reepay\Block\Standard
- */
 class Redirect extends \Magento\Framework\View\Element\Template
 {
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Invoice
+     */
     private $invoice;
+
+    /**
+     * @var string
+     */
     private $paymentTransactionId;
+
+    /**
+     * @var \Magento\Checkout\Model\Session
+     */
     private $checkoutSession;
+
+    /**
+     * @var \Magento\Sales\Model\OrderFactory
+     */
     private $orderFactory;
+
+    /**
+     * @var \Magento\Theme\Block\Html\Header\Logo
+     */
     private $logo;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $scopeConfig;
+
+    /**
+     * @var \Magento\Framework\UrlInterface
+     */
     protected $urlInterface;
     
     /**
      * Index constructor.
      *
-     * @param array $data
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Radarsofthouse\Reepay\Helper\Invoice $invoice
      * @param \Magento\Checkout\Model\Session $checkoutSession
      * @param \Magento\Sales\Model\OrderFactory $orderFactory
      * @param \Magento\Theme\Block\Html\Header\Logo $logo
      * @param \Magento\Framework\UrlInterface $urlInterface
+     * @param array $data
      */
     public function __construct(
-        array $data = [],
         \Magento\Framework\View\Element\Template\Context $context,
         \Radarsofthouse\Reepay\Helper\Invoice $invoice,
         \Magento\Checkout\Model\Session $checkoutSession,
         \Magento\Sales\Model\OrderFactory $orderFactory,
         \Magento\Theme\Block\Html\Header\Logo $logo,
-        \Magento\Framework\UrlInterface $urlInterface
+        \Magento\Framework\UrlInterface $urlInterface,
+        array $data = []
     ) {
         $this->invoice = $invoice;
         $this->checkoutSession = $checkoutSession;
@@ -47,14 +69,16 @@ class Redirect extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * load order fron checkout session
+     * Load order fron checkout session
      *
      * @return \Magento\Sales\Model\Order $order | boolean false
      */
     public function getOrder()
     {
         if ($this->checkoutSession->getLastRealOrderId()) {
-            $order = $this->orderFactory->create()->loadByIncrementId($this->checkoutSession->getLastRealOrderId());
+            $order = $this->orderFactory->create()->loadByIncrementId(
+                $this->checkoutSession->getLastRealOrderId()
+            );
 
             return $order;
         }
@@ -63,7 +87,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get website logo
+     * Get website logo
      *
      * @return string
      */
@@ -73,7 +97,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get website logo Alt
+     * Get website logo Alt
      *
      * @return string
      */
@@ -83,9 +107,9 @@ class Redirect extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * set Payment Transaction Id
+     * Set Payment Transaction Id
      *
-     * @param string
+     * @param string $paymentTransactionId
      */
     public function setPaymentTransactionId($paymentTransactionId)
     {
@@ -93,7 +117,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Payment Transaction Id
+     * Get Payment Transaction Id
      *
      * @return string
      */
@@ -103,7 +127,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get payment seccess callback url
+     * Get payment seccess callback url
      *
      * @return string
      */
@@ -113,7 +137,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get payment error callback url
+     * Get payment error callback url
      *
      * @return string
      */
@@ -123,7 +147,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get payment cancel callback url
+     * Get payment cancel callback url
      *
      * @return string
      */

@@ -2,18 +2,36 @@
 
 namespace Radarsofthouse\Reepay\Observer;
 
-/**
- * Class SalesOrderPaymentCapture observer 'sales_order_payment_capture' event
- *
- * @package Radarsofthouse\Reepay\Observer
- */
 class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInterface
 {
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data
+     */
     protected $reepayHelper;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $logger;
+
+    /**
+     * @var \Magento\Framework\Message\ManagerInterface
+     */
     protected $messageManager;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Charge
+     */
     protected $reepayCharge;
 
+    /**
+     * Constructor
+     *
+     * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
+     * @param \Radarsofthouse\Reepay\Helper\Logger $logger
+     * @param \Magento\Framework\Message\ManagerInterface $messageManager
+     * @param \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
+     */
     public function __construct(
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Radarsofthouse\Reepay\Helper\Logger $logger,
@@ -27,7 +45,7 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
     }
 
     /**
-     * sales_order_payment_capture observer
+     * Observe sales_order_payment_capture
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
@@ -51,7 +69,7 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
                 $order->getIncrementId()
             );
 
-            if( $this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) ){
+            if ($this->reepayHelper->getConfig('auto_capture', $order->getStoreId())) {
                 if (!empty($reepay_charge)) {
                     if ($reepay_charge['state'] == 'settled') {
                         $this->logger->addDebug("auto capture is enabled : skip to settle again");
@@ -62,27 +80,30 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
 
             $amount = $invoice->getGrandTotal();
 
-            if( isset($reepay_charge['authorized_amount']) && $reepay_charge['authorized_amount'] > 0 ){
-
+            if (isset($reepay_charge['authorized_amount']) && $reepay_charge['authorized_amount'] > 0) {
                 $tmp_amount = $amount;
                 $authorized_amount  = $reepay_charge['authorized_amount'];
                 
-                if ( $this->reepayHelper->toInt($amount * 100) > $authorized_amount) {
+                if ($this->reepayHelper->toInt($amount * 100) > $authorized_amount) {
                     $amount = $authorized_amount/100;
                 }
                 if ($amount != $tmp_amount) {
-                    $this->logger->addDebug("Change capture amount from {$tmp_amount} to {$amount} for order" . $order->getIncrementId());
+                    $this->logger->addDebug(
+                        "Change capture amount from {$tmp_amount} to {$amount} for order" . $order->getIncrementId()
+                    );
                 }
-
             }
 
-            $this->logger->addDebug(__METHOD__, ['capture : ' . $order->getIncrementId() . ', amount : ' . $amount]);
+            $this->logger->addDebug(
+                __METHOD__,
+                ['capture : ' . $order->getIncrementId() . ', amount : ' . $amount]
+            );
 
             $options = [];
             
-            if( $this->reepayHelper->getConfig('send_order_line', $order->getStoreId()) ){
+            if ($this->reepayHelper->getConfig('send_order_line', $order->getStoreId())) {
                 $options['order_lines'] = $this->reepayHelper->getOrderLinesFromInvoice($invoice);
-            }else{
+            } else {
                 $_amount = $amount * 100;
                 $options['amount'] = $this->reepayHelper->toInt($_amount);
             }
@@ -97,7 +118,7 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
                 if (isset($charge["error"])) {
                     $this->logger->addDebug("settle error : ", $charge);
                     $error_message = $charge["error"];
-                    if( isset($charge["message"]) ){
+                    if (isset($charge["message"])) {
                         $error_message = $charge["error"]." : ".$charge["message"];
                     }
                     throw new \Magento\Framework\Exception\LocalizedException(__($error_message));

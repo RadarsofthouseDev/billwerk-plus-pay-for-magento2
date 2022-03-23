@@ -14,10 +14,12 @@ class SurchargeFee extends \Magento\Framework\View\Element\Template
      * @var \Magento\Framework\DataObject
      */
     protected $_source;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\Data
      */
     private $_helperData;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\Logger
      */
@@ -25,6 +27,7 @@ class SurchargeFee extends \Magento\Framework\View\Element\Template
 
     /**
      * SurchargeFee constructor.
+     *
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Radarsofthouse\Reepay\Helper\Data $helperData
      * @param \Radarsofthouse\Reepay\Helper\Logger $helperLogger
@@ -40,6 +43,7 @@ class SurchargeFee extends \Magento\Framework\View\Element\Template
         $this->_helperData = $helperData;
         $this->_helperLogger = $helperLogger;
     }
+
     /**
      * Check if we nedd display full tax total info
      *
@@ -60,12 +64,19 @@ class SurchargeFee extends \Magento\Framework\View\Element\Template
         return $this->_source;
     }
 
+    /**
+     * Get order store object
+     *
+     * @return \Magento\Store\Model\Store
+     */
     public function getStore()
     {
         return $this->_order->getStore();
     }
 
     /**
+     * Get order
+     *
      * @return \Magento\Sales\Model\Order
      */
     public function getOrder()
@@ -74,6 +85,8 @@ class SurchargeFee extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Get Label Properties
+     *
      * @return array
      */
     public function getLabelProperties()
@@ -82,6 +95,8 @@ class SurchargeFee extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Get Value Properties
+     *
      * @return array
      */
     public function getValueProperties()
@@ -90,6 +105,8 @@ class SurchargeFee extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Init Totals
+     *
      * @return $this
      */
     public function initTotals()
@@ -108,7 +125,13 @@ class SurchargeFee extends \Magento\Framework\View\Element\Template
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
         $isEnable = $this->_helperData->isSurchargeFeeEnabled();
         $surchargeFee = $this->getSource()->getReepaySurchargeFee();
-        $this->_helperLogger->addDebug(__METHOD__, ['PaymentMethod' => $paymentMethod, 'isReepayPaymentMethod'=>$isReepayPaymentMethod, 'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false'), 'SurchargeFee'=> $surchargeFee]);
+        $this->_helperLogger->addDebug(
+            __METHOD__,
+            ['PaymentMethod' => $paymentMethod,
+            'isReepayPaymentMethod' => $isReepayPaymentMethod,
+            'SurchargeFeeEnabled' => ($isEnable ? 'true' : 'false'),
+            'SurchargeFee' => $surchargeFee]
+        );
 
         if (empty($surchargeFee) || $surchargeFee == 0) {
             if (!$isEnable || !$isReepayPaymentMethod) {

@@ -9,6 +9,8 @@ class Template implements \Magento\Framework\Option\ArrayInterface
     private $templateSource;
 
     /**
+     * Constructor
+     *
      * @param \Magento\Config\Model\Config\Source\Email\Template $templateSource
      */
     public function __construct(
@@ -18,7 +20,9 @@ class Template implements \Magento\Framework\Option\ArrayInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Return list of payment link
+     *
+     * @return array
      */
     public function toOptionArray()
     {

@@ -2,16 +2,26 @@
 
 namespace Radarsofthouse\Reepay\Controller\Standard;
 
-/**
- * Class SetCreditCard
- *
- * @package Radarsofthouse\Reepay\Controller\Standard
- */
 class SetCreditCard extends \Magento\Framework\App\Action\Action
 {
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $_logger;
+
+    /**
+     * @var \Magento\Framework\App\Request\Http
+     */
     protected $_request;
+
+    /**
+     * @var \Magento\Checkout\Model\Session
+     */
     protected $_checkoutSession;
+
+    /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
     protected $_resultJsonFactory;
 
     /**
@@ -29,13 +39,11 @@ class SetCreditCard extends \Magento\Framework\App\Action\Action
         \Magento\Checkout\Model\Session $checkoutSession,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Radarsofthouse\Reepay\Helper\Logger $logger
-    )
-    {
+    ) {
         $this->_request = $request;
         $this->_checkoutSession = $checkoutSession;
         $this->_resultJsonFactory = $resultJsonFactory;
         $this->_logger = $logger;
-
         parent::__construct($context);
     }
 
@@ -54,11 +62,14 @@ class SetCreditCard extends \Magento\Framework\App\Action\Action
         if (empty($params['cid'])) {
             $result['status'] = 'failure';
             $result['message'] = __('Empty credit card ID.');
-            return $this->_resultJsonFactory->create()->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true)->setData($result);
+            return $this->_resultJsonFactory->create()->setHeader(
+                'Cache-Control',
+                'no-store, no-cache, must-revalidate, max-age=0',
+                true
+            )->setData($result);
         }
 
         try {
-
             $quote = $this->_checkoutSession->getQuote();
             $quote->setReepayCreditCard($params['cid']);
             $quote->save();
@@ -66,14 +77,19 @@ class SetCreditCard extends \Magento\Framework\App\Action\Action
             $this->_logger->addDebug('setReepayCreditCard : '.$params['cid']);
 
             $result['status'] = 'success';
-            return $this->_resultJsonFactory->create()->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true)->setData($result);
+            return $this->_resultJsonFactory->create()->setHeader(
+                'Cache-Control',
+                'no-store, no-cache, must-revalidate, max-age=0',
+                true
+            )->setData($result);
         } catch (\Exception $e) {
             $result['status'] = 'failure';
             $result['message'] = $e->getMessage();
-            return $this->_resultJsonFactory->create()->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true)->setData($result);
+            return $this->_resultJsonFactory->create()->setHeader(
+                'Cache-Control',
+                'no-store, no-cache, must-revalidate, max-age=0',
+                true
+            )->setData($result);
         }
-        
-
-        
     }
 }

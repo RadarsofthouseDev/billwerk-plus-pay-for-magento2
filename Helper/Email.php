@@ -4,35 +4,57 @@ namespace Radarsofthouse\Reepay\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 
-/**
- * Class Email
- *
- * @package Radarsofthouse\Reepay\Helper
- */
 class Email extends AbstractHelper
 {
+    /**
+     * @var \Magento\Framework\Mail\Template\TransportBuilder
+     */
     protected $_transportBuilder;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data
+     */
     protected $_reepayHelper;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $_scopeConfig;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $_logger;
+
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
     protected $_storeManager;
+
+    /**
+     * @var \Magento\Sales\Api\Data\OrderInterface
+     */
     protected $_orderInterface;
+
+    /**
+     * @var \Magento\Sales\Model\Order\Email\Sender\OrderSender
+     */
     protected $_orderSender;
 
     /**
+     * Constructor
+     *
      * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation
      * @param \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder
      * @param Data $reepayHelper
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param Logger $logger
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
+     * @param \Magento\Sales\Api\Data\OrderInterface $orderInterface
      * @param \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
-        \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation,
         \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
@@ -51,6 +73,12 @@ class Email extends AbstractHelper
         $this->_orderSender = $orderSender;
     }
 
+    /**
+     * Send payment link email
+     *
+     * @param \Magento\Sales\Model\Order $order
+     * @param string $paymentTransactionId
+     */
     public function sendPaymentLinkEmail($order, $paymentTransactionId)
     {
         $emailTemplateId = $this->_reepayHelper->getConfig('payment_link', $order->getStoreId());
@@ -105,7 +133,9 @@ class Email extends AbstractHelper
     }
 
     /**
-     * @param $orderId
+     * Send email
+     *
+     * @param string $orderIncrementId
      */
     public function sendEmail($orderIncrementId)
     {
@@ -117,13 +147,19 @@ class Email extends AbstractHelper
             'surcharge_fee'=> $order->getReepaySurchargeFee(),
             'grand_total'=> $order->getGrandTotal(),
         ]);
-        if ($this->_reepayHelper->getConfig('send_order_email_when_success', $order->getStoreId()) && !$order->getEmailSent()) {
+        if ($this->_reepayHelper->getConfig('send_order_email_when_success', $order->getStoreId()) &&
+            !$order->getEmailSent()
+        ) {
             try {
                 $this->_orderSender->send($order);
-                $historyItem  = $order->addCommentToStatusHistory(__('Sent order confirmation email to customer'));
+                $historyItem  = $order->addCommentToStatusHistory(
+                    __('Sent order confirmation email to customer')
+                );
                 $historyItem->setIsCustomerNotified(true)->save();
             } catch (\Exception $e) {
-                $historyItem  = $order->addCommentToStatusHistory(__('Send order confirmation email failure: %s', $e->getMessage()));
+                $historyItem  = $order->addCommentToStatusHistory(
+                    __('Send order confirmation email failure: %s', $e->getMessage())
+                );
                 $historyItem->setIsCustomerNotified(false)->save();
             }
         }

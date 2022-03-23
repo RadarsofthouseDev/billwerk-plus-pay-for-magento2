@@ -1,11 +1,13 @@
 <?php /** @var $block \Radarsofthouse\Reepay\Block\Standard\Success */ ?>
 <div class="checkout-success">
-    <h1><?= __('Your order has been received.') ?></h1>
-    <h2><?= __('Thank you for your purchase!') ?></h2>
+    <h1><?= $block->escapeHtml(__('Your order has been received.')) ?></h1>
+    <h2><?= $block->escapeHtml(__('Thank you for your purchase!')) ?></h2>
 
     <div class="actions-toolbar">
         <div class="primary">
-            <a class="action primary continue" href="<?= /* @escapeNotVerified */ $block->getContinueUrl() ?>"><span><?= /* @escapeNotVerified */ __('Continue Shopping') ?></span></a>
+            <a class="action primary continue" href="<?= $block->escapeUrl($block->getContinueUrl()) ?>">
+                <span><?= $block->escapeHtml(__('Continue Shopping')) ?></span>
+            </a>
         </div>
     </div>
 </div>

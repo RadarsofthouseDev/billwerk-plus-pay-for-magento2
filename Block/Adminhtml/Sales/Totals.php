@@ -9,10 +9,12 @@ class Totals extends \Magento\Framework\View\Element\Template
      * @var \Magento\Directory\Model\Currency
      */
     protected $_currency;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\Data
      */
     private $_helperData;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\Logger
      */
@@ -50,6 +52,8 @@ class Totals extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Get Source
+     *
      * @return mixed
      */
     public function getSource()
@@ -58,6 +62,8 @@ class Totals extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Get Currency Symbol
+     *
      * @return string
      */
     public function getCurrencySymbol()
@@ -66,7 +72,7 @@ class Totals extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     *
+     * Init totals
      *
      * @return $this
      */
@@ -84,7 +90,13 @@ class Totals extends \Magento\Framework\View\Element\Template
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
         $isEnable = $this->_helperData->isSurchargeFeeEnabled();
         $surchargeFee = $this->getSource()->getReepaySurchargeFee();
-        $this->_helperLogger->addDebug(__METHOD__, ['PaymentMethod' => $paymentMethod, 'isReepayPaymentMethod'=>$isReepayPaymentMethod, 'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false'), 'SurchargeFee'=> $surchargeFee]);
+        $this->_helperLogger->addDebug(
+            __METHOD__,
+            ['PaymentMethod' => $paymentMethod,
+            'isReepayPaymentMethod' => $isReepayPaymentMethod,
+            'SurchargeFeeEnabled' => ($isEnable ? 'true' : 'false'),
+            'SurchargeFee' => $surchargeFee]
+        );
         if (empty($surchargeFee) || $surchargeFee == 0) {
             if (!$isReepayPaymentMethod || !$isEnable) {
                 $this->_helperLogger->addDebug('Sale ReepaySurchargeFee Total Disabled');

@@ -10,38 +10,44 @@ use Radarsofthouse\Reepay\Api\CustomerRepositoryInterface;
 use Radarsofthouse\Reepay\Api\Data\CustomerInterfaceFactory;
 use Radarsofthouse\Reepay\Client\Api;
 
-/**
- * Class Charge
- *
- * @package Radarsofthouse\Reepay\Helper
- */
 class Customer extends AbstractHelper
 {
     const ENDPOINT = 'customer';
+
     /**
      * @var CustomerRepositoryInterface
      */
     private $customerRepository;
+
     /**
      * @var CustomerInterfaceFactory
      */
     private $customerFactory;
-    private $client = null;
-    private $logger = null;
-
 
     /**
-     * constructor.
+     * @var \Radarsofthouse\Reepay\Client\Api
+     */
+    private $client = null;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
+    private $logger = null;
+
+    /**
+     * Constructor
      *
+     * @param \Radarsofthouse\Reepay\Api\CustomerRepositoryInterface $customerRepository
+     * @param \Radarsofthouse\Reepay\Api\Data\CustomerInterfaceFactory $customerFactory
      * @param \Magento\Framework\App\Action\Context $context
-     * @param $logger
+     * @param \Radarsofthouse\Reepay\Helper\Logger $logger
      */
     public function __construct(
         CustomerRepositoryInterface $customerRepository,
         CustomerInterfaceFactory $customerFactory,
         Context $context,
-        Logger $logger)
-    {
+        Logger $logger
+    ) {
         parent::__construct($context);
         $this->customerRepository = $customerRepository;
         $this->customerFactory = $customerFactory;
@@ -52,8 +58,8 @@ class Customer extends AbstractHelper
     /**
      * Get customer by email.
      *
-     * @param $apiKey
-     * @param $email
+     * @param string $apiKey
+     * @param string $email
      * @return false|string
      */
     public function search($apiKey, $email)
@@ -90,8 +96,10 @@ class Customer extends AbstractHelper
     }
 
     /**
-     * @param $apiKey
-     * @param $handle
+     * Get Payment Cards
+     *
+     * @param string $apiKey
+     * @param string $handle
      * @return array|mixed
      * @throws \Exception
      */
@@ -114,7 +122,9 @@ class Customer extends AbstractHelper
     }
 
     /**
-     * @param $apiKey
+     * Get Payment Cards By Customer
+     *
+     * @param string $apiKey
      * @param \Magento\Customer\Api\Data\CustomerInterface $customer
      * @return array|mixed
      */
@@ -135,6 +145,7 @@ class Customer extends AbstractHelper
                 $handle = $this->search($apiKey, $customer->getEmail());
             }
         } catch (\Exception $e) {
+            $this->logger->addError("Error : getPaymentCardsByCustomer : ".$e->getMessage());
         }
         if ($handle) {
             try {
@@ -147,21 +158,24 @@ class Customer extends AbstractHelper
                     $this->customerRepository->save($reepayCustomer);
                 }
             } catch (LocalizedException $exception) {
+                $this->logger->addError("Error : getPaymentCardsByCustomer : ".$exception->getMessage());
             }
             try {
                 return $this->getPaymentCards($apiKey, $handle);
             } catch (\Exception $e) {
+                $this->logger->addError("Error : getPaymentCardsByCustomer -> getPaymentCards : ".$e->getMessage());
             }
         }
         return [];
     }
 
     /**
-     * @param $apiKey
-     * @param $handle
-     * @param $cardId
+     * Delete Payment Card
+     *
+     * @param string $apiKey
+     * @param string $handle
+     * @param string $cardId
      * @return bool|mixed
-     * @throws \Exception
      */
     public function deletePaymentCard($apiKey, $handle, $cardId)
     {
@@ -178,6 +192,14 @@ class Customer extends AbstractHelper
         return false;
     }
 
+    /**
+     * Delete Payment Card By Customer ID
+     *
+     * @param string $apiKey
+     * @param string $customerId
+     * @param string $cardId
+     * @return bool|mixed
+     */
     public function deletePaymentCardByCustomerId($apiKey, $customerId, $cardId)
     {
         $log = ['param' => ['customerId' => $customerId, 'cardId' => $cardId]];
@@ -186,6 +208,7 @@ class Customer extends AbstractHelper
             $handle = $reepayCustomer->getHandle();
             return $this->deletePaymentCard($apiKey, $handle, $cardId);
         } catch (NoSuchEntityException | LocalizedException | \Exception $e) {
+            $this->logger->addError("Error : deletePaymentCardByCustomerId : ".$e->getMessage());
         }
         return false;
     }

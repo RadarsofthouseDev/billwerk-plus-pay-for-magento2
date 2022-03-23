@@ -1,24 +1,14 @@
 <?php
 
-
 namespace Radarsofthouse\Reepay\Block\Standard;
 
 class Success extends \Magento\Framework\View\Element\Template
 {
-
     /**
-     * Constructor
+     * Get Continue URL
      *
-     * @param \Magento\Framework\View\Element\Template\Context  $context
-     * @param array $data
+     * @return string
      */
-    public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        array $data = []
-    ) {
-        parent::__construct($context, $data);
-    }
-
     public function getContinueUrl()
     {
         return $this->_storeManager->getStore()->getBaseUrl();

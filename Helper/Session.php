@@ -5,15 +5,18 @@ namespace Radarsofthouse\Reepay\Helper;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Radarsofthouse\Reepay\Client\Checkout;
 
-/**
- * Class Session
- *
- * @package Radarsofthouse\Reepay\Helper
- */
 class Session extends AbstractHelper
 {
     const ENDPOINT = 'session';
+
+    /**
+     * @var \Radarsofthouse\Reepay\Client\Checkout
+     */
     protected $client = null;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $logger = null;
 
     /**
@@ -34,8 +37,8 @@ class Session extends AbstractHelper
     /**
      * Create charge session
      *
-     * @param $apiKey
-     * @param $session
+     * @param string $apiKey
+     * @param array $session
      * @return bool|mixed
      * @throws \Exception
      */
@@ -62,8 +65,8 @@ class Session extends AbstractHelper
      *
      * @param string $apiKey
      * @param string $invoice
-     * @param bool $settle
      * @param array $paymentMethods
+     * @param bool $settle
      * @param array $option
      * @return bool|array
      * @throws \Exception
@@ -117,8 +120,8 @@ class Session extends AbstractHelper
      * @param string $apiKey
      * @param array $customer
      * @param array $order
-     * @param bool $settle
      * @param array $paymentMethods
+     * @param bool $settle
      * @param array $option
      * @return bool|array
      * @throws \Exception

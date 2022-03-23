@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Model\Config\Source;
 
-/**
- * Class Allowwedpayment
- *
- * @package Radarsofthouse\Reepay\Model\Config\Source
- */
 class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
 {
     /**

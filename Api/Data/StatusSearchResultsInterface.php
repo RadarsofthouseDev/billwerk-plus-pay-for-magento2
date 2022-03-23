@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Api\Data;
 
-/**
- * Class StatusSearchResultsInterface
- *
- * @package Radarsofthouse\Reepay\Api\Data
- */
 interface StatusSearchResultsInterface extends \Magento\Framework\Api\SearchResultsInterface
 {
 

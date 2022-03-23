@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Api;
 
-/**
- * interface StatusRepositoryInterface
- *
- * @package Radarsofthouse\Reepay\Api
- */
 interface StatusRepositoryInterface
 {
 

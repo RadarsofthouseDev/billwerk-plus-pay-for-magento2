@@ -2,18 +2,36 @@
 
 namespace Radarsofthouse\Reepay\Observer;
 
-/**
- * Class SalesOrderPaymentRefund observer 'sales_order_payment_refund' event
- *
- * @package Radarsofthouse\Reepay\Observer
- */
 class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterface
 {
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data
+     */
     protected $reepayHelper;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $logger;
+
+    /**
+     * @var \Magento\Framework\Message\ManagerInterface
+     */
     protected $messageManager;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Refund
+     */
     protected $reepayRefund;
 
+    /**
+     * Constructor
+     *
+     * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
+     * @param \Radarsofthouse\Reepay\Helper\Logger $logger
+     * @param \Magento\Framework\Message\ManagerInterface $messageManager
+     * @param \Radarsofthouse\Reepay\Helper\Refund $reepayRefund
+     */
     public function __construct(
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Radarsofthouse\Reepay\Helper\Logger $logger,
@@ -27,7 +45,7 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
     }
 
     /**
-     * sales_order_payment_refund observer
+     * Observe sales_order_payment_refund
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
@@ -47,12 +65,18 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
             $order = $payment->getOrder();
             $amount = $creditmemo->getGrandTotal();
 
-            if(!$isOnline){
-                $this->logger->addDebug(__METHOD__, ['offline_refund : ' . $order->getIncrementId() . ', amount : ' . $amount]);
+            if (!$isOnline) {
+                $this->logger->addDebug(
+                    __METHOD__,
+                    ['offline_refund : ' . $order->getIncrementId() . ', amount : ' . $amount]
+                );
                 return;
             }
 
-            $this->logger->addDebug(__METHOD__, ['online_refund : ' . $order->getIncrementId() . ', amount : ' . $amount]);
+            $this->logger->addDebug(
+                __METHOD__,
+                ['online_refund : ' . $order->getIncrementId() . ', amount : ' . $amount]
+            );
 
             $options = [];
             $options['invoice'] = $order->getIncrementId();
@@ -71,7 +95,7 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
                 if (isset($refund["error"])) {
                     $this->logger->addDebug("refund error : ", $refund);
                     $error_message = $refund["error"];
-                    if( isset($refund["message"]) ){
+                    if (isset($refund["message"])) {
                         $error_message = $refund["error"]." : ".$refund["message"];
                     }
                     throw new \Magento\Framework\Exception\LocalizedException(__($error_message));

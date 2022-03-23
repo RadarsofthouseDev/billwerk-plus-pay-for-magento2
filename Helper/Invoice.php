@@ -6,22 +6,25 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Radarsofthouse\Reepay\Client\Api;
 
-/**
- * Class Invoice
- *
- * @package Radarsofthouse\Reepay\Helper
- */
 class Invoice extends AbstractHelper
 {
     const ENDPOINT = 'invoice';
+
+    /**
+     * @var \Radarsofthouse\Reepay\Client\Api
+     */
     private $client = null;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     private $logger = null;
 
     /**
-     * constructor.
+     * Constructor.
      *
      * @param \Magento\Framework\App\Action\Context $context
-     * @param $logger
+     * @param \Radarsofthouse\Reepay\Helper\Logger $logger
      */
     public function __construct(Context $context, Logger $logger)
     {
@@ -283,7 +286,6 @@ class Invoice extends AbstractHelper
 
     /**
      * Cancel settle later.
-     * Scheduled settle later can be cancelled for at pending customer invoice.
      *
      * @param string $apiKey
      * @param string $handle

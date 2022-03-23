@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Model\ResourceModel\Status;
 
-/**
- * Class Collection
- *
- * @package Radarsofthouse\Reepay\Model\ResourceModel\Status
- */
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
     /**

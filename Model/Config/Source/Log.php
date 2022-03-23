@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Model\Config\Source;
 
-/**
- * Class Log
- *
- * @package Radarsofthouse\Reepay\Model\Config\Source
- */
 class Log implements \Magento\Framework\Option\ArrayInterface
 {
     /**

@@ -2,18 +2,13 @@
 
 namespace Radarsofthouse\Reepay\Client;
 
-/**
- * Class ApiException
- *
- * @package Radarsofthouse\Reepay\Client
- */
 class ApiException extends \Exception
 {
 
     /**
      * Index constructor
      *
-     * @param string
+     * @param string $message
      */
     public function __construct($message)
     {

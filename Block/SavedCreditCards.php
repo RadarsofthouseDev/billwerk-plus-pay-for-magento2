@@ -2,21 +2,51 @@
 
 namespace Radarsofthouse\Reepay\Block;
 
-/**
- * Class SavedCreditCards
- *
- * @package Radarsofthouse\Reepay\Block
- */
 class SavedCreditCards extends \Magento\Framework\View\Element\Template
 {
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $_scopeConfig;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Customer
+     */
     protected $_customerHelper;
+
+    /**
+     * @var \Magento\Customer\Model\Session
+     */
     protected $_customerSession;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data
+     */
     protected $_reepayHelper;
+
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
     protected $_storeManager;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $_logger;
+
+    /**
+     * @var \Magento\Framework\UrlInterface
+     */
     protected $_urlInterface;
+
+    /**
+     * @var \Magento\Checkout\Model\Session
+     */
     protected $_checkoutSession;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Model\Config\Source\Allowwedpayment
+     */
     protected $_allowwedpayment;
 
     /**
@@ -58,7 +88,7 @@ class SavedCreditCards extends \Magento\Framework\View\Element\Template
     }
     
     /**
-     * get saved credit card
+     * Get saved credit card
      *
      * @return array $SavedCreditCards
      */
@@ -66,11 +96,17 @@ class SavedCreditCards extends \Magento\Framework\View\Element\Template
     {
         $savedCreditCards = [];
 
-        $save_card_enable = $this->_reepayHelper->getConfig('save_card_enable',$this->_storeManager->getStore()->getId());
-        if( $save_card_enable ){
+        $save_card_enable = $this->_reepayHelper->getConfig(
+            'save_card_enable',
+            $this->_storeManager->getStore()->getId()
+        );
+        if ($save_card_enable) {
             if ($this->_customerSession->isLoggedIn()) {
                 $apiKey = $this->_reepayHelper->getApiKey($this->_storeManager->getStore()->getId());
-                $savedCreditCards = $this->_customerHelper->getPaymentCardsByCustomer($apiKey,$this->_customerSession->getCustomer());
+                $savedCreditCards = $this->_customerHelper->getPaymentCardsByCustomer(
+                    $apiKey,
+                    $this->_customerSession->getCustomer()
+                );
             }
         }
 
@@ -78,7 +114,7 @@ class SavedCreditCards extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get saved credit card from quote
+     * Get saved credit card from quote
      *
      * @return array $SavedCreditCards
      */
@@ -89,7 +125,7 @@ class SavedCreditCards extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Allowwedpayments
+     * Get Allowwedpayments
      *
      * @return array $_allowwedpayments
      */
@@ -97,10 +133,10 @@ class SavedCreditCards extends \Magento\Framework\View\Element\Template
     {
         $allowwedpayments = $this->_allowwedpayment->toOptionArray();
         $_allowwedpayments = [];
-        foreach($allowwedpayments as $allowwedpayment){
-            if($allowwedpayment['value'] == 'card'){
+        foreach ($allowwedpayments as $allowwedpayment) {
+            if ($allowwedpayment['value'] == 'card') {
                 $_allowwedpayments[$allowwedpayment['value']] = __('Debit/Credit card');
-            }else{
+            } else {
                 $_allowwedpayments[$allowwedpayment['value']] = $allowwedpayment['label'];
             }
         }
@@ -108,9 +144,9 @@ class SavedCreditCards extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Remove Card URL
+     * Get Remove Card URL
      *
-     * @return string 
+     * @return string
      */
     public function getRemoveCardUrl()
     {
@@ -118,13 +154,12 @@ class SavedCreditCards extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Set Credit Card URL
+     * Get Set Credit Card URL
      *
-     * @return string 
+     * @return string
      */
     public function getSetCreditCardUrl()
     {
         return $this->_urlInterface->getUrl('reepay/standard/setCreditCard');
     }
-    
 }

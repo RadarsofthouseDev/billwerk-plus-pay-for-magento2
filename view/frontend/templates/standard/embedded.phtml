@@ -1,31 +1,41 @@
 <?php $order = $block->getOrder(); ?>
 
 <div class="reepay-payment-layout">
-	<div class="logo-wrapper">
-		<img class="logo" src="<?php echo $this->getLogoSrc(); ?>" alt="<?php echo $this->getLogoAlt(); ?>">
-	</div>
+    <div class="logo-wrapper">
+        <img class="logo" src="<?= $block->escapeUrl($block->getLogoSrc()); ?>" 
+            alt="<?= $block->escapeHtml($block->getLogoAlt()); ?>">
+    </div>
 
-	<div class="reepay-embedded">
-		<div class="order-section">
-        	<div class="order-info">
-				<p><?php echo __('Order ID :'); ?> <?php  echo $order->getIncrementId(); ?></p>
-				<p><?php echo __('Total :'); ?> <?php  echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($order->getTotalDue(), true, false); ?></p>
-        	</div>
+    <div class="reepay-embedded">
+        <div class="order-section">
+            <div class="order-info">
+                <p><?= $block->escapeHtml(__('Order ID :')); ?> <?= $block->escapeHtml($order->getIncrementId()); ?></p>
+                <p><?= $block->escapeHtml(__('Total :')); ?> 
+                    <?= $block->escapeHtml($this->helper(\Magento\Framework\Pricing\Helper\Data::class)
+                        ->currency($order->getTotalDue(), true, false));
+                    ?>
+                </p>
+            </div>
         </div>
         <div id="rp_container"></div>
-	</div>
-	
-    <script type="text/javascript">
+    </div>
+
+    <script>
 
         require(['jquery','Reepay'],function($,Reepay){
 
-            var rp = new Reepay.EmbeddedCheckout("<?php echo $this->getPaymentTransactionId(); ?>" , 'rp_container');
+            var rp = new Reepay.EmbeddedCheckout("<?= $block->escapeHtml($block->getPaymentTransactionId()); ?>",
+                'rp_container');
 
             rp.addEventHandler(Reepay.Event.Accept, function(data) {
                 data._isAjax = 1;
-                if( (data.error == undefined || data.error == "error.session.INVOICE_ALREADY_PAID" || data.error == "invoice_already_settled" ) && data.invoice ){
+                if( (data.error == undefined || 
+                    data.error == "error.session.INVOICE_ALREADY_PAID" || 
+                    data.error == "invoice_already_settled" ) && 
+                    data.invoice 
+                ){
                     $.ajax({
-                        url: '<?php echo $this->getAcceptUrl(); ?>',
+                        url: '<?= $block->escapeUrl($block->getAcceptUrl()); ?>',
                         method: 'POST',
                         data: data,
                     }).done(function(data){
@@ -42,7 +52,7 @@
             rp.addEventHandler(Reepay.Event.Error, function(data) {
                 // log error
                 $.ajax({
-                    url: '<?php echo $this->getErrorUrl(); ?>',
+                    url: '<?= $block->escapeUrl($block->getErrorUrl()); ?>',
                     method: 'POST',
                     data: data,
                 }).done(function(data){
@@ -59,10 +69,8 @@
                 // not do anything for overlay close
             });
 
-           
-
         });
 
-	</script>
-	
+    </script>
+
 </div>

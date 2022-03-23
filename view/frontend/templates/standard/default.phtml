@@ -1,13 +1,15 @@
 <?php $order = $block->getOrder(); ?>
+
 <div class="reepay-payment">
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="logo">
-                    <img src="<?php echo $this->getLogoSrc(); ?>" alt="<?php echo $this->getLogoAlt(); ?>">
+                    <img class="logo" src="<?= $block->escapeUrl($block->getLogoSrc()); ?>" 
+                        alt="<?= $block->escapeHtml($block->getLogoAlt()); ?>">
                 </div>
                 <div>
-                    Transaction ID : <?php echo $this->getPaymentTransactionId(); ?>
+                    Transaction ID : <?= $block->escapeHtml($block->getPaymentTransactionId()); ?>
                 </div>
             </div>
         </div>

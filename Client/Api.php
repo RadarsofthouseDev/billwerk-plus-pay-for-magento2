@@ -7,28 +7,49 @@ use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
-/**
- * Class Api
- *
- * @package Radarsofthouse\Reepay\Client
- */
 class Api
 {
     const BASE_URI = 'https://api.reepay.com/v1/';
     const TIMEOUT = 10;
     const VERSION = '1.0.0';
 
+    /**
+     * @var GuzzleHttp\Client
+     */
     private $client;
+
+    /**
+     * @var string
+     */
     private $privateKey;
+
+    /**
+     * @var boolean
+     */
     private $requestSuccessful = false;
+
+    /**
+     * @var string
+     */
     private $httpError = '';
+
+    /**
+     * @var array
+     */
     private $errors = [];
+
+    /**
+     * @var array
+     */
     private $lastResponse = [];
+
+    /**
+     * @var array
+     */
     private $lastRequest = [];
 
     /**
-     * Index constructor.
-     *
+     * Index constructor
      */
     public function __construct()
     {
@@ -36,8 +57,7 @@ class Api
     }
 
     /**
-     * initialize
-     *
+     * Initialize
      */
     private function initClient()
     {
@@ -53,10 +73,9 @@ class Api
     }
 
     /**
-     * set private key
+     * Set private key
      *
-     * @param string
-     * @return void
+     * @param string $privateKey
      */
     public function setPrivateKey($privateKey)
     {
@@ -116,6 +135,7 @@ class Api
     /**
      * Perform a DELETE request
      *
+     * @param string $apiKey
      * @param string $endpoint
      * @param array $args
      * @param int $timeout
@@ -132,7 +152,8 @@ class Api
     /**
      * Perform a GET request
      *
-     * @param $endpoint
+     * @param string $apiKey
+     * @param string $endpoint
      * @param array $args
      * @param int $timeout
      * @return mixed
@@ -148,6 +169,7 @@ class Api
     /**
      * Perform a PATCH request
      *
+     * @param string $apiKey
      * @param string $endpoint
      * @param array $args
      * @param int $timeout
@@ -164,6 +186,7 @@ class Api
     /**
      * Perform a POST request
      *
+     * @param string $apiKey
      * @param string $endpoint
      * @param array $args
      * @param int $timeout
@@ -180,6 +203,7 @@ class Api
     /**
      * Perform a PUT request
      *
+     * @param string $apiKey
      * @param string $endpoint
      * @param array $args
      * @param int $timeout
@@ -196,11 +220,10 @@ class Api
     /**
      * Perform an API request request
      *
-     * @param $verb
-     * @param $endpoint
+     * @param string $verb
+     * @param string $endpoint
      * @param array $args
      * @param int $timeout
-     * @param bool $isCheckout
      * @return mixed
      * @throws \Exception
      */
@@ -258,6 +281,8 @@ class Api
     }
 
     /**
+     * Request Success
+     *
      * @param ResponseInterface $response
      * @return array
      */
@@ -273,6 +298,8 @@ class Api
     }
 
     /**
+     * Request Error
+     *
      * @param RequestException $e
      * @return array
      */
@@ -288,7 +315,11 @@ class Api
             $this->lastResponse['headers']['http_code'] = $e->getResponse()->getStatusCode();
             $this->lastResponse['headers']['http_reason'] = $e->getResponse()->getReasonPhrase();
             $this->lastResponse['body'] = (string)$e->getResponse()->getBody();
-            $this->httpError = sprintf('%d: %s', $e->getResponse()->getStatusCode(), $e->getResponse()->getReasonPhrase());
+            $this->httpError = sprintf(
+                '%d: %s',
+                $e->getResponse()->getStatusCode(),
+                $e->getResponse()->getReasonPhrase()
+            );
             if (!empty($this->lastResponse['body'])) {
                 $formattedBody = json_decode($this->lastResponse['body'], true);
                 if (array_key_exists('error', $formattedBody)) {
@@ -309,10 +340,10 @@ class Api
     /**
      * Reset state prior to request
      *
-     * @param $verb
-     * @param $endpoint
-     * @param $url
-     * @param $timeout
+     * @param string $verb
+     * @param string $endpoint
+     * @param string $url
+     * @param int $timeout
      * @return array
      */
     private function prepareStateForRequest($verb, $endpoint, $url, $timeout)
@@ -341,7 +372,7 @@ class Api
     /**
      * Parse header string and return array of headers
      *
-     * @param $headerString
+     * @param object $headerString
      * @return array
      */
     private function getHeadersAsArray($headerString)
@@ -355,10 +386,9 @@ class Api
     }
 
     /**
-     *  json_decode response body
+     *  Format Response
      *
-     * @param $response
-     * @param bool $type
+     * @param array $response
      * @return bool|mixed
      */
     private function formatResponse($response)
@@ -378,7 +408,7 @@ class Api
     private function getMagentoVersion()
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $productMetadata = $objectManager->get('Magento\Framework\App\ProductMetadataInterface');
+        $productMetadata = $objectManager->get(\Magento\Framework\App\ProductMetadataInterface::class);
 
         return $productMetadata->getVersion();
     }
@@ -391,7 +421,7 @@ class Api
     private function getMagentoEdition()
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $productMetadata = $objectManager->get('Magento\Framework\App\ProductMetadataInterface');
+        $productMetadata = $objectManager->get(\Magento\Framework\App\ProductMetadataInterface::class);
 
         return $productMetadata->getEdition();
     }

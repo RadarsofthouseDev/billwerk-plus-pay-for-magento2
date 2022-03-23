@@ -4,11 +4,6 @@ namespace Radarsofthouse\Reepay\Model\Data;
 
 use Radarsofthouse\Reepay\Api\Data\StatusInterface;
 
-/**
- * Class Status
- *
- * @package Radarsofthouse\Reepay\Model\Data
- */
 class Status extends \Magento\Framework\Api\AbstractExtensibleObject implements StatusInterface
 {
 
@@ -32,7 +27,6 @@ class Status extends \Magento\Framework\Api\AbstractExtensibleObject implements 
     {
         return $this->setData(self::STATUS_ID, $statusId);
     }
-
 
     /**
      * Retrieve existing extension attributes object or create a new one.

@@ -5,13 +5,15 @@ namespace Radarsofthouse\Reepay\Controller\Standard;
 
 class Success extends \Magento\Framework\App\Action\Action
 {
-
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
     protected $resultPageFactory;
 
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Action\Context  $context
+     * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(

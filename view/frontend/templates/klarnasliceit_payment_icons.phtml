@@ -1,9 +1,7 @@
-<?php $paymentIcons = $this->getKlarnaSliceItPaymentIcon(); ?>
+<?php $paymentIcons = $block->getKlarnaSliceItPaymentIcon(); ?>
 <?php if (count($paymentIcons) > 0): ?>
     <?php foreach ($paymentIcons as $paymentIcon): ?>
-        <img class="reepay-payment-icon" src="<?php echo $this->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/'.$paymentIcon.'.png'); ?>">
+        <?php $imageUrl = $block->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/'.$paymentIcon.'.png'); ?>
+        <img class="reepay-payment-icon" src="<?= $block->escapeUrl($imageUrl); ?>">
     <?php endforeach; ?>
 <?php endif; ?>
-
-
-

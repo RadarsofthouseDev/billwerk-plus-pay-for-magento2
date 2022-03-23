@@ -6,32 +6,60 @@ use Magento\Checkout\Model\Session\SuccessValidator;
 use Magento\Checkout\Model\Type\Onepage;
 use Magento\Sales\Model\Order;
 
-/**
- * Class Redirect
- *
- * @package Radarsofthouse\Reepay\Controller\Standard
- */
 class Redirect extends \Magento\Framework\App\Action\Action
 {
     public const DISPLAY_EMBEDDED = '1';
     public const DISPLAY_OVERLAY = '2';
     public const DISPLAY_WINDOW = '3';
 
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
     protected $_resultPageFactory;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data
+     */
     protected $_reepayHelper;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Payment
+     */
     protected $_reepayPayment;
+
+    /**
+     * @var Magento\Framework\Message\ManagerInterface
+     */
     protected $_messageManager;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $_logger;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Model\Status
+     */
     protected $_reepayStatus;
+
+    /**
+     * @var \Magento\Customer\Model\Session
+     */
     protected $_customerSession;
+
+    /**
+     * @var \Magento\Checkout\Model\Session
+     */
     protected $_checkoutSession;
+
     /**
      * @var \Magento\Framework\Controller\Result\RedirectFactory
      */
     private $_resultRedirectFactory;
 
     /**
-     * Redirect constructor.
+     * Constructor
+     *
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Framework\Controller\Result\RedirectFactory $resultRedirectFactory
@@ -52,8 +80,7 @@ class Redirect extends \Magento\Framework\App\Action\Action
         \Radarsofthouse\Reepay\Model\Status $reepayStatus,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Checkout\Model\Session $checkoutSession
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->_resultPageFactory = $resultPageFactory;
         $this->_resultRedirectFactory = $resultRedirectFactory;
@@ -67,7 +94,7 @@ class Redirect extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface|\Magento\Framework\View\Result\Page
+     * Execute
      */
     public function execute()
     {
@@ -88,17 +115,19 @@ class Redirect extends \Magento\Framework\App\Action\Action
             }
 
             // check using saved credit card
-            if($order->getPayment()->getMethodInstance()->getCode() == "reepay_payment"){
-                if( !empty($order->getReepayCreditCard()) && $order->getReepayCreditCard() != 'new' ){
-                    
+            if ($order->getPayment()->getMethodInstance()->getCode() == "reepay_payment") {
+                if (!empty($order->getReepayCreditCard()) && $order->getReepayCreditCard() != 'new') {
                     $save_card_type = $this->_reepayHelper->getConfig('save_card_type', $order->getStoreId());
-                    if($save_card_type == 0){
+                    if ($save_card_type == 0) {
                         // CIT (Customer Initiated Transaction)
 
                         $this->_logger->addDebug('use saved credit card : CIT :' . $order->getReepayCreditCard());
 
                         $paymentTransactionId = null;
-                        $paymentTransactionId = $this->_reepayPayment->createReepaySession($order,$order->getReepayCreditCard());
+                        $paymentTransactionId = $this->_reepayPayment->createReepaySession(
+                            $order,
+                            $order->getReepayCreditCard()
+                        );
                         $this->_logger->addDebug('$paymentTransactionId : ' . $paymentTransactionId);
 
                         $pageTitleConfig = $this->_reepayHelper->getConfig('title', $order->getStoreId());
@@ -113,29 +142,33 @@ class Redirect extends \Magento\Framework\App\Action\Action
                         $resultPage->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
 
                         return $resultPage;
-                    }else{
+                    } else {
                         // MIT (Merchant Initiated Transaction)
 
                         $this->_logger->addDebug('use saved credit card : MIT :' . $order->getReepayCreditCard());
 
-                        $createCharge = $this->_reepayPayment->createChargeWithExistCustomer($order,$order->getReepayCreditCard());
-                        if($createCharge){
-                            
+                        $createCharge = $this->_reepayPayment->createChargeWithExistCustomer(
+                            $order,
+                            $order->getReepayCreditCard()
+                        );
+                        if ($createCharge) {
                             $this->_checkoutSession->setLastOrderId($order->getId());
                             $this->_checkoutSession->setLastRealOrderId($order->getIncrementId());
                             $this->_checkoutSession->setLastSuccessQuoteId($order->getQuoteId());
                             $this->_checkoutSession->setLastQuoteId($order->getQuoteId());
 
                             $resultPage = $this->_resultRedirectFactory->create()->setPath('checkout/onepage/success');
-                            $resultPage->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+                            $resultPage->setHeader(
+                                'Cache-Control',
+                                'no-store, no-cache, must-revalidate, max-age=0',
+                                true
+                            );
                             return $resultPage;
-
-                        }else{
+                        } else {
                             $this->_messageManager->addError(__('Payment failure. Please try again later.'));
                             return $this->redirect();
                         }
                     }
-
                 }
             }
 
@@ -152,7 +185,15 @@ class Redirect extends \Magento\Framework\App\Action\Action
             
             $displayTypeConfig = (string)$this->_reepayHelper->getConfig('display_type', $order->getStoreId());
 
-            if ( in_array($order->getPayment()->getMethodInstance()->getCode(), array('reepay_viabill','reepay_vipps','reepay_resurs','reepay_applepay'))) {
+            if (in_array(
+                $order->getPayment()->getMethodInstance()->getCode(),
+                [
+                    'reepay_viabill',
+                    'reepay_vipps',
+                    'reepay_resurs',
+                    'reepay_applepay'
+                ]
+            )) {
                 // force viabill into payment window always
                 $this->_logger->addDebug('Payments : DISPLAY_WINDOW');
                 $template = 'Radarsofthouse_Reepay::standard/window.phtml';
@@ -182,6 +223,8 @@ class Redirect extends \Magento\Framework\App\Action\Action
     }
 
     /**
+     * Redirect
+     *
      * @return \Magento\Framework\Controller\Result\Redirect
      */
     private function redirect()

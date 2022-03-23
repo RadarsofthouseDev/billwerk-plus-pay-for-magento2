@@ -2,17 +2,31 @@
 
 namespace Radarsofthouse\Reepay\Observer;
 
-/**
- * Class Cancelorder
- *
- * @package Radarsofthouse\Reepay\Observer
- */
 class Cancelorder implements \Magento\Framework\Event\ObserverInterface
 {
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Charge
+     */
     private $reepayCharge;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Session
+     */
     private $reepaySession;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $scopeConfig;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data
+     */
     protected $reepayHelper;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $logger;
 
     /**
@@ -22,6 +36,7 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Radarsofthouse\Reepay\Helper\Session $reepaySession
      * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
+     * @param \Radarsofthouse\Reepay\Helper\Logger $logger
      */
     public function __construct(
         \Radarsofthouse\Reepay\Helper\Charge $reepayCharge,
@@ -38,38 +53,34 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
     }
 
     /**
-     * order_cancel_after observer
+     * Observe order_cancel_after
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return $this
      */
-
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $order = $observer->getData('order');
 
         $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
         if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
-
             $this->logger->addDebug(__METHOD__, ['order ID : ' . $order->getIncrementId()]);
 
             $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
 
-            $charge = $this->reepayCharge->get(  
+            $charge = $this->reepayCharge->get(
                 $apiKey,
                 $order->getIncrementId()
             );
 
             if ($charge['state'] == 'created') {
-
                 $charge = $this->reepayCharge->delete(
                     $apiKey,
                     $order->getIncrementId()
                 );
 
                 $this->logger->addDebug("Delete charge for order #".$order->getIncrementId());
-            }else{
-
+            } else {
                 $cancelRes = $this->reepayCharge->cancel(
                     $apiKey,
                     $order->getIncrementId()
@@ -90,7 +101,6 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
                     }
                 }
             }
-            
         }
 
         return $this;

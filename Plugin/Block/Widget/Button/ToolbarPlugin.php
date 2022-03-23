@@ -1,7 +1,7 @@
 <?php
 
 namespace Radarsofthouse\Reepay\Plugin\Block\Widget\Button;
- 
+
 use Magento\Sales\Block\Adminhtml\Order\Create;
 use Magento\Framework\View\Element\AbstractBlock;
 use Magento\Backend\Block\Widget\Button\ButtonList;
@@ -10,16 +10,33 @@ use Magento\Backend\Block\Widget\Button\Toolbar as ToolbarContext;
 class ToolbarPlugin
 {
 
+    /**
+     * @var \Magento\Sales\Api\TransactionRepositoryInterface $repository
+     */
     private $repository;
+
+    /**
+     * @var \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder
+     */
     private $searchCriteriaBuilder;
+
+    /**
+     * @var \Magento\Backend\Model\UrlInterface $backendUrl
+     */
     private $backendUrl;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data $reepayHelper
+     */
     private $reepayHelper;
 
     /**
-     * constructor.
+     * Constructor
      *
      * @param \Magento\Sales\Api\TransactionRepositoryInterface $repository
      * @param \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param \Magento\Backend\Model\UrlInterface $backendUrl
+     * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
      */
     public function __construct(
         \Magento\Sales\Api\TransactionRepositoryInterface $repository,
@@ -34,6 +51,8 @@ class ToolbarPlugin
     }
 
     /**
+     * Before Push Buttons
+     *
      * @param ToolbarContext $toolbar
      * @param AbstractBlock $context
      * @param ButtonList $buttonList
@@ -51,15 +70,17 @@ class ToolbarPlugin
         }
  
         if ($order) {
-
             $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
             $isReepayPaymentMethod = $this->reepayHelper->isReepayPaymentMethod($paymentMethod);
-            if( $isReepayPaymentMethod ){
+            if ($isReepayPaymentMethod) {
                 $orderTransactions = $this->getTransactionByOrderId($order->getId());
 
-                if( count($orderTransactions) <= 0 ){
+                if (count($orderTransactions) <= 0) {
                     $message = __('Are you sure you want to send payment link email to customer?');
-                    $url = $this->backendUrl->getUrl("radarsofthouse_reepay/paymentlink/send", ['order_id' => $order->getId() ]);
+                    $url = $this->backendUrl->getUrl(
+                        "radarsofthouse_reepay/paymentlink/send",
+                        ['order_id' => $order->getId() ]
+                    );
 
                     $buttonList->add(
                         'order_send_payment_link',
@@ -75,12 +96,12 @@ class ToolbarPlugin
             }
         }
  
-        return [$context, $buttonList];        
+        return [$context, $buttonList];
     }
 
     /**
      * Get order transaction by order ID
-     * 
+     *
      * @param int $id
      * @return \Magento\Sales\Api\Data\TransactionInterface[]
      */

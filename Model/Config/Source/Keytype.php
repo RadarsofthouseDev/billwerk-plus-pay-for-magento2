@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Model\Config\Source;
 
-/**
- * Class Keytype
- *
- * @package Radarsofthouse\Reepay\Model\Config\Source
- */
 class Keytype implements \Magento\Framework\Option\ArrayInterface
 {
     /**

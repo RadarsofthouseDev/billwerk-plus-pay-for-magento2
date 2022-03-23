@@ -5,13 +5,44 @@ namespace Radarsofthouse\Reepay\Controller\Adminhtml\Paymentlink;
 class Send extends \Magento\Backend\App\Action
 {
 
+    /**
+     * @var \Magento\Framework\Controller\ResultFactory
+     */
     protected $resultFactory;
+
+    /**
+     * @var \Magento\Framework\App\Request\Http
+     */
     protected $request;
+
+    /**
+     * @var \Magento\Backend\Model\UrlInterface
+     */
     protected $backendUrl;
+
+    /**
+     * @var \Magento\Framework\Message\ManagerInterface
+     */
     protected $messageManager;
+
+    /**
+     * @var \Magento\Sales\Api\OrderRepositoryInterface
+     */
     protected $orderRepository;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Payment
+     */
     protected $reepayPayment;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Email
+     */
     protected $reepayEmail;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $logger;
 
     /**
@@ -49,6 +80,9 @@ class Send extends \Magento\Backend\App\Action
         parent::__construct($context);
     }
 
+    /**
+     * Execute
+     */
     public function execute()
     {
         $order_id = $this->request->getParam("order_id");
@@ -69,14 +103,13 @@ class Send extends \Magento\Backend\App\Action
             $this->reepayEmail->sendPaymentLinkEmail($order, $sessionId);
 
             $this->messageManager->addSuccess(__("Payment link email has been sent to the customer."));
-
         } catch (\Exception $e) {
             $this->logger->addError(__METHOD__." Exception : ".$e->getMessage());
             $this->messageManager->addException($e, $e->getMessage());
         }
 
         $redirect = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT);
-        $redirectUrl = $this->backendUrl->getUrl( 'sales/order/view/' , ['order_id' => $order_id] );
+        $redirectUrl = $this->backendUrl->getUrl('sales/order/view/', ['order_id' => $order_id]);
         $redirect->setUrl($redirectUrl);
 
         return $redirect;

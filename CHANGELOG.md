@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.19 on 23 March 2022
+- Magento coding standard for Magento Marketplace.
+- Fixed error when checkout with multiple shipping address action.
+
 ## Version 1.2.18 on 9 February 2022
 - Change capture amount condition in capture function 
 

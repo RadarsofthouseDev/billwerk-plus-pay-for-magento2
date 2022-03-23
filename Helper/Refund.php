@@ -6,15 +6,18 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Radarsofthouse\Reepay\Client\Api;
 
-/**
- * Class Refund
- *
- * @package Radarsofthouse\Reepay\Helper
- */
 class Refund extends AbstractHelper
 {
     const ENDPOINT = 'refund';
+
+    /**
+     * @var \Radarsofthouse\Reepay\Client\Api
+     */
     private $client = null;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     private $logger = null;
 
     /**

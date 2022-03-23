@@ -1,36 +1,45 @@
-<?php 
-    $savedCreditCards = $this->getSavedCreditCards(); 
-    $savedCreditCardInQuote = $this->getSavedCreditCardFromQuote();
-    $allAllowwedpayments = $this->getAllowwedpayments();
+<?php
+$savedCreditCards = $block->getSavedCreditCards();
+$savedCreditCardInQuote = $block->getSavedCreditCardFromQuote();
+$allAllowwedpayments = $block->getAllowwedpayments();
 
-    $selected_key = 0;
-    foreach ($savedCreditCards as $key => $savedCreditCard){
-        if($savedCreditCard['id'] == $savedCreditCardInQuote){
-            $selected_key = $key;
-        }
+$selected_key = 0;
+foreach ($savedCreditCards as $key => $savedCreditCard) {
+    if ($savedCreditCard['id'] == $savedCreditCardInQuote) {
+        $selected_key = $key;
     }
-
+}
 ?>
-<?php if (count($savedCreditCards) > 0){ ?>
+<?php if (count($savedCreditCards) > 0) { ?>
     <div class="select-credit-card">
     <?php foreach ($savedCreditCards as $key => $savedCreditCard): ?>
         <div class="credit-card-container">
-            <label class="credit-card"><?php echo $allAllowwedpayments[$savedCreditCard['card_type']]." : ".$savedCreditCard['masked_card']; ?>
-                <input type="radio" name="credit-card" <?php echo ($key == $selected_key && $savedCreditCardInQuote != "new") ? 'checked="checked"' : ""; ?> value="<?php echo $savedCreditCard['id']; ?>">
+            <label class="credit-card">
+                <?= $block->escapeHtml($allAllowwedpayments[$savedCreditCard['card_type']].
+                    " : ".$savedCreditCard['masked_card']); ?>
+                <input type="radio" name="credit-card" 
+                    <?= ($key == $selected_key && $savedCreditCardInQuote != "new") ? 'checked="checked"' : ""; ?> 
+                    value="<?= $block->escapeHtml($savedCreditCard['id']); ?>"
+                >
                 <span class="checkmark"></span>
             </label>
-            <span class="remove-credit-card-btn" data-cid="<?php echo $savedCreditCard['id']; ?>" data-card="<?php echo $savedCreditCard['masked_card']; ?>"></span>
+            <span class="remove-credit-card-btn" 
+                data-cid="<?= $block->escapeHtml($savedCreditCard['id']); ?>" 
+                data-card="<?= $block->escapeHtml($savedCreditCard['masked_card']); ?>">
+            </span>
         </div>
     <?php endforeach; ?>
         <div class="credit-card-container">
-            <label class="credit-card"><?php echo __('New credit card') ?>
-                <input type="radio" name="credit-card" <?php echo ($savedCreditCardInQuote == "new") ? 'checked="checked"' : ""; ?> value="new">
+            <label class="credit-card"><?= $block->escapeHtml(__('New credit card')) ?>
+                <input type="radio" 
+                    name="credit-card" <?= ($savedCreditCardInQuote == "new") ? 'checked="checked"' : ""; ?> 
+                    value="new">
                 <span class="checkmark"></span>
             </label>
         </div>
     </div>
 
-    <script type="text/javascript">
+    <script>
         require(['jquery','Magento_Ui/js/modal/alert'],function($,modalAlert){
             $(document).ready(function(){
 
@@ -39,7 +48,7 @@
                         cid: $('input[name="credit-card"]:checked').val(),
                     }
                     $.ajax({
-                        url: '<?php echo $this->getSetCreditCardUrl(); ?>',
+                        url: '<?= $block->escapeUrl($block->getSetCreditCardUrl()); ?>',
                         method: 'POST',
                         data: data,
                         showLoader: true,
@@ -103,7 +112,7 @@
                                 }
                                 
                                 $.ajax({
-                                    url: '<?php echo $this->getRemoveCardUrl(); ?>',
+                                    url: '<?= $block->escapeUrl($block->getRemoveCardUrl()); ?>',
                                     method: 'POST',
                                     data: data,
                                     showLoader: true,
@@ -118,7 +127,10 @@
                                         }else{
                                             // select first card
                                             $('input[name="credit-card"]').attr('checked', false);
-                                            $('.select-credit-card .credit-card-container:first-child input[name="credit-card"]').attr('checked', true);
+                                            $('.select-credit-card .credit-card-container:first-child input[name="credit-card"]').attr(
+                                                'checked', 
+                                                true
+                                            );
                                             setCreditCard();
                                         }
                                         

@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Model\Config\Source;
 
-/**
- * Class Displaytype
- *
- * @package Radarsofthouse\Reepay\Model\Config\Source
- */
 class Displaytype implements \Magento\Framework\Option\ArrayInterface
 {
     /**

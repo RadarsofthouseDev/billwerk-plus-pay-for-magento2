@@ -2,15 +2,18 @@
 
 namespace Radarsofthouse\Reepay\Observer;
 
-/**
- * Class SalesOrderPaymentPlaceStart
- *
- * @package Radarsofthouse\Reepay\Observer
- */
 class SalesOrderPaymentPlaceStart implements \Magento\Framework\Event\ObserverInterface
 {
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data
+     */
     protected $reepayHelper;
 
+    /**
+     * Constructor
+     *
+     * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
+     */
     public function __construct(
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper
     ) {
@@ -18,7 +21,7 @@ class SalesOrderPaymentPlaceStart implements \Magento\Framework\Event\ObserverIn
     }
 
     /**
-     * sales_order_payment_place_start observer
+     * Observe sales_order_payment_place_start
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return void

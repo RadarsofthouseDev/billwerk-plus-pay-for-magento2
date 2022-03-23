@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Radarsofthouse\Reepay\Model;
 
 use Magento\Framework\Exception\CouldNotDeleteException;
@@ -18,27 +17,65 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Exception\CouldNotSaveException;
 
-/**
- * Class StatusRepository
- *
- * @package Radarsofthouse\Reepay\Model
- */
 class StatusRepository implements StatusRepositoryInterface
 {
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
     private $storeManager;
+
+    /**
+     * @var \Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface
+     */
     private $collectionProcessor;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Model\ResourceModel\Status
+     */
     protected $resource;
+
+    /**
+     * @var \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface
+     */
     protected $extensionAttributesJoinProcessor;
+
+    /**
+     * @var \Magento\Framework\Reflection\DataObjectProcessor
+     */
     protected $dataObjectProcessor;
+
+    /**
+     * @var \Magento\Framework\Api\ExtensibleDataObjectConverter
+     */
     protected $extensibleDataObjectConverter;
+
+    /**
+     * @var \Magento\Framework\Api\DataObjectHelper
+     */
     protected $dataObjectHelper;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Model\Model\Status
+     */
     protected $statusFactory;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Api\Data\StatusInterfaceFactory
+     */
     protected $dataStatusFactory;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Api\Data\StatusSearchResultsInterfaceFactory
+     */
     protected $searchResultsFactory;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Model\ResourceModel\Status\CollectionFactory
+     */
     protected $statusCollectionFactory;
 
     /**
-     * constructor
+     * Constructor
      *
      * @param ResourceStatus $resource
      * @param StatusFactory $statusFactory
@@ -79,7 +116,11 @@ class StatusRepository implements StatusRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Save Status
+     *
+     * @param \Radarsofthouse\Reepay\Api\Data\StatusInterface $status
+     * @return \Radarsofthouse\Reepay\Api\Data\StatusInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function save(
         \Radarsofthouse\Reepay\Api\Data\StatusInterface $status
@@ -110,7 +151,11 @@ class StatusRepository implements StatusRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Retrieve Status
+     *
+     * @param string $statusId
+     * @return \Radarsofthouse\Reepay\Api\Data\StatusInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getById($statusId)
     {
@@ -124,7 +169,11 @@ class StatusRepository implements StatusRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Retrieve Status matching the specified criteria.
+     *
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $criteria
+     * @return \Radarsofthouse\Reepay\Api\Data\StatusSearchResultsInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getList(
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
@@ -153,7 +202,11 @@ class StatusRepository implements StatusRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Delete Status
+     *
+     * @param \Radarsofthouse\Reepay\Api\Data\StatusInterface $status
+     * @return bool true on success
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function delete(
         \Radarsofthouse\Reepay\Api\Data\StatusInterface $status
@@ -173,7 +226,12 @@ class StatusRepository implements StatusRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Delete Status by ID
+     *
+     * @param string $statusId
+     * @return bool true on success
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function deleteById($statusId)
     {

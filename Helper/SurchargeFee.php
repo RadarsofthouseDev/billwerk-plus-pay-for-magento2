@@ -12,29 +12,28 @@ use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Sales\Model\OrderFactory;
 use Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Class SurchargeFee
- *
- * @package Radarsofthouse\Reepay\Helper
- */
 class SurchargeFee extends AbstractHelper
 {
     /**
      * @var CreditmemoRepositoryInterface
      */
     private $creditmemoRepository;
+
     /**
      * @var InvoiceRepositoryInterface
      */
     private $invoiceRepository;
+
     /**
      * @var SearchCriteriaBuilder
      */
     private $searchCriteriaBuilder;
+
     /**
      * @var Logger
      */
     private $logger;
+    
     /**
      * @var Email
      */
@@ -90,7 +89,9 @@ class SurchargeFee extends AbstractHelper
     }
 
     /**
-     * @param $quoteId
+     * Get quote
+     *
+     * @param string $quoteId
      * @return \Magento\Quote\Model\Quote
      */
     private function getQuote($quoteId)
@@ -99,7 +100,9 @@ class SurchargeFee extends AbstractHelper
     }
 
     /**
-     * @param $incrementId
+     * Get order
+     *
+     * @param string $incrementId
      * @return \Magento\Sales\Model\Order
      */
     private function getOrder($incrementId)
@@ -108,8 +111,10 @@ class SurchargeFee extends AbstractHelper
     }
 
     /**
-     * @param $orderId
-     * @param $charge
+     * Update fee to order
+     *
+     * @param string $orderIncrementId
+     * @param array $charge
      */
     public function updateFeeToOrder($orderIncrementId, $charge)
     {
@@ -119,8 +124,7 @@ class SurchargeFee extends AbstractHelper
             // setting store to get correct prices and totals
             $this->storeManager->setCurrentStore($order->getStoreId());
             $quote = $this->getQuote($order->getQuoteId());
-            if (
-                array_key_exists('source', $charge) &&
+            if (array_key_exists('source', $charge) &&
                 array_key_exists('surcharge_fee', $charge['source']) &&
                 $charge['source']['surcharge_fee'] > 0
             ) {
@@ -145,7 +149,7 @@ class SurchargeFee extends AbstractHelper
     /**
      * Get Invoice is captured surcharge fee
      *
-     * @param $orderId
+     * @param string $orderId
      * @return bool
      */
     public function isInvoicedSurchargeFee($orderId)
@@ -167,7 +171,9 @@ class SurchargeFee extends AbstractHelper
     }
 
     /**
-     * @param $orderId
+     * Get available surcharge fee refund amount
+     *
+     * @param string $orderId
      * @return float
      */
     public function getAvailableSurchargeFeeRefundAmount($orderId)

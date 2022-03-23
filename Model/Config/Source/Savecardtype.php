@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Model\Config\Source;
 
-/**
- * Class Savecardtype
- *
- * @package Radarsofthouse\Reepay\Model\Config\Source
- */
 class Savecardtype implements \Magento\Framework\Option\ArrayInterface
 {
     /**

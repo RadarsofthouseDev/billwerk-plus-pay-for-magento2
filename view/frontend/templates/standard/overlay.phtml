@@ -1,33 +1,42 @@
 <?php $order = $block->getOrder(); ?>
 
 <div class="reepay-payment-layout">
-	<div class="logo-wrapper">
-    <img class="logo" src="<?php echo $this->getLogoSrc(); ?>" alt="<?php echo $this->getLogoAlt(); ?>">
-	</div>
-	<div class="reepay-overlay">
-		<div class="order-section">
-        	<div class="order-info">
-                <p><?php echo __('Order ID :'); ?> <?php  echo $order->getIncrementId(); ?></p>
-				<p><?php echo __('Total :'); ?> <?php  echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($order->getTotalDue(), true, false); ?></p>
-			</div>
+    <div class="logo-wrapper">
+        <img class="logo" src="<?= $block->escapeUrl($block->getLogoSrc()); ?>" 
+            alt="<?= $block->escapeHtml($block->getLogoAlt()); ?>">
+    </div>
+    <div class="reepay-overlay">
+        <div class="order-section">
+            <div class="order-info">
+                <p><?= $block->escapeHtml(__('Order ID :')); ?> <?= $block->escapeHtml($order->getIncrementId()); ?></p>
+                <p><?= $block->escapeHtml(__('Total :')); ?> 
+                    <?= $block->escapeHtml($this->helper(\Magento\Framework\Pricing\Helper\Data::class)
+                        ->currency($order->getTotalDue(), true, false));
+                    ?>
+                </p>
+            </div>
 
-			<div class="button pay-btn">
-				<?php echo __('Pay'); ?>
-			</div>
+            <div class="button pay-btn">
+                <?= $block->escapeHtml(__('Pay')); ?>
+            </div>
         </div>
-	</div>
-	
-    <script type="text/javascript">
+    </div>
+
+    <script>
 
         require(['jquery','Reepay'],function($,Reepay){
 
-            var rp = new Reepay.ModalCheckout("<?php echo $this->getPaymentTransactionId(); ?>");
+            var rp = new Reepay.ModalCheckout("<?= $block->escapeHtml($block->getPaymentTransactionId()); ?>");
 
             rp.addEventHandler(Reepay.Event.Accept, function(data) {
                 data._isAjax = 1;
-                if( (data.error == undefined || data.error == "error.session.INVOICE_ALREADY_PAID" || data.error == "invoice_already_settled" ) && data.invoice ){
+                if( ( data.error == undefined || 
+                    data.error == "error.session.INVOICE_ALREADY_PAID" || 
+                    data.error == "invoice_already_settled" ) && 
+                    data.invoice 
+                ){
                     $.ajax({
-                        url: '<?php echo $this->getAcceptUrl(); ?>',
+                        url: '<?= $block->escapeUrl($block->getAcceptUrl()); ?>',
                         method: 'POST',
                         data: data,
                     }).done(function(data){
@@ -45,7 +54,7 @@
                 // log error
                 data._isAjax = 1;
                 $.ajax({
-                    url: '<?php echo $this->getErrorUrl(); ?>',
+                    url: '<?= $block->escapeUrl($block->getErrorUrl()); ?>',
                     method: 'POST',
                     data: data,
                 }).done(function(data){
@@ -61,7 +70,7 @@
             rp.addEventHandler(Reepay.Event.Cancel, function(data) {
                 data._isAjax = 1;
                 $.ajax({
-                    url: '<?php echo $this->getCancelUrl(); ?>',
+                    url: '<?= $block->escapeUrl($block->getCancelUrl()); ?>',
                     method: 'POST',
                     data: data,
                 }).done(function(data){
@@ -80,14 +89,11 @@
 
             $(document).ready(function(){
                 $(".pay-btn").click(function(){
-                    rp.show('<?php echo $this->getPaymentTransactionId(); ?>');
+                    rp.show('<?= $block->escapeHtml($block->getPaymentTransactionId()); ?>');
                 });
             });
-
-           
-
         });
 
-	</script>
-	
+    </script>
+    
 </div>

@@ -9,17 +9,20 @@ class SurchargeFee extends \Magento\Sales\Model\Order\Invoice\Total\AbstractTota
      * @var \Radarsofthouse\Reepay\Helper\Data
      */
     private $_helperData;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\SurchargeFee
      */
     private $_helperSurchargeFee;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\Logger
      */
     private $_helperLogger;
 
     /**
-     * SurchargeFee constructor.
+     * Constructor
+     *
      * @param \Radarsofthouse\Reepay\Helper\Data $helperData
      * @param \Radarsofthouse\Reepay\Helper\SurchargeFee $helperSurchargeFee
      * @param \Radarsofthouse\Reepay\Helper\Logger $helperLogger
@@ -38,6 +41,8 @@ class SurchargeFee extends \Magento\Sales\Model\Order\Invoice\Total\AbstractTota
     }
 
     /**
+     * Collect total
+     *
      * @param \Magento\Sales\Model\Order\Invoice $invoice
      * @return $this
      */
@@ -51,7 +56,14 @@ class SurchargeFee extends \Magento\Sales\Model\Order\Invoice\Total\AbstractTota
 
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
         $isEnable = $this->_helperData->isSurchargeFeeEnabled();
-        $this->_helperLogger->addDebug(__METHOD__, ['PaymentMethod' => $paymentMethod, 'isReepayPaymentMethod'=>$isReepayPaymentMethod, 'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false')]);
+        $this->_helperLogger->addDebug(
+            __METHOD__,
+            [
+                'PaymentMethod' => $paymentMethod,
+                'isReepayPaymentMethod' => $isReepayPaymentMethod,
+                'SurchargeFeeEnabled' => ($isEnable ? 'true' : 'false')
+            ]
+        );
         if (!$isEnable || !$isReepayPaymentMethod) {
             return $this;
         }

@@ -16,6 +16,7 @@ class Totals extends \Magento\Framework\View\Element\Template
 
     /**
      * Totals constructor.
+     *
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Radarsofthouse\Reepay\Helper\Data $helperData
      * @param \Radarsofthouse\Reepay\Helper\Logger $helperLogger
@@ -44,6 +45,7 @@ class Totals extends \Magento\Framework\View\Element\Template
 
     /**
      *  Get Creditmemo
+     *
      * @return \Magento\Sales\Model\Order\Creditmemo
      */
     public function getCreditmemo()
@@ -51,7 +53,13 @@ class Totals extends \Magento\Framework\View\Element\Template
         return $this->getParentBlock()->getCreditmemo();
     }
 
-    public function getReepaySurchargeFeeLabel(){
+    /**
+     *  Get Surcharge Fee Label
+     *
+     * @return string
+     */
+    public function getReepaySurchargeFeeLabel()
+    {
         return __('Surcharge Fee');
     }
 
@@ -74,7 +82,13 @@ class Totals extends \Magento\Framework\View\Element\Template
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
         $isEnable = $this->_helperData->isSurchargeFeeEnabled();
         $surchargeFee = $this->getSource()->getReepaySurchargeFee();
-        $this->_helperLogger->addDebug(__METHOD__, ['PaymentMethod' => $paymentMethod, 'isReepayPaymentMethod'=>$isReepayPaymentMethod, 'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false'), 'SurchargeFee'=> $surchargeFee]);
+        $this->_helperLogger->addDebug(
+            __METHOD__,
+            ['PaymentMethod' => $paymentMethod,
+            'isReepayPaymentMethod' => $isReepayPaymentMethod,
+            'SurchargeFeeEnabled' => ($isEnable ? 'true' : 'false'),
+            'SurchargeFee' => $surchargeFee]
+        );
 
         if (empty($surchargeFee) || $surchargeFee == 0) {
             if (!$isEnable || !$isReepayPaymentMethod) {

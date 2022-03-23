@@ -2,32 +2,96 @@
 
 namespace Radarsofthouse\Reepay\Controller\Webhooks;
 
-/**
- * Class Index
- *
- * @package Radarsofthouse\Reepay\Controller\Webhooks
- */
-
 class Index extends \Magento\Framework\App\Action\Action
 {
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
     protected $resultPageFactory;
-    protected $jsonHelper;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $logger;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Invoice
+     */
     protected $invoiceHelper;
+
+    /**
+     * @var \Magento\Sales\Model\Order
+     */
     protected $order;
+
+    /**
+     * @var \Magento\Sales\Model\Service\OrderService
+     */
     protected $orderService;
+
+    /**
+     * @var \Magento\Sales\Api\Data\OrderInterface
+     */
     protected $orderInterface;
+
+    /**
+     * @var \Magento\Framework\DB\TransactionFactory
+     */
     protected $transactionFactory;
+
+    /**
+     * @var \Magento\Sales\Model\Service\InvoiceService
+     */
     protected $invoiceService;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data
+     */
     protected $reepayHelper;
+
+    /**
+     * @var \Magento\Sales\Model\Order\Invoice
+     */
     protected $invoice;
+
+    /**
+     * @var \Magento\Sales\Model\Order\CreditmemoFactory
+     */
     protected $creditmemoFactory;
+
+    /**
+     * @var \Magento\Sales\Model\Service\CreditmemoService
+     */
     protected $creditmemoService;
+
+    /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
     protected $resultJsonFactory;
+
+    /**
+     * @var \Magento\Sales\Api\Data\TransactionSearchResultInterfaceFactory
+     */
     protected $transactionSearchResultInterfaceFactory;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Model\Status
+     */
     protected $reepayStatus;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Charge
+     */
     protected $reepayCharge;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\SurchargeFee
+     */
     protected $reepaySurchargeFee;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Email
+     */
     protected $reepayEmail;
 
     /**
@@ -40,7 +104,7 @@ class Index extends \Magento\Framework\App\Action\Action
      * @param \Magento\Sales\Model\Order $order
      * @param \Magento\Sales\Model\Service\OrderService $orderService
      * @param \Magento\Sales\Api\Data\OrderInterface $orderInterface
-     * @param \Magento\Framework\DB\Transaction $transaction
+     * @param \Magento\Framework\DB\TransactionFactory $transactionFactory
      * @param \Magento\Sales\Model\Service\InvoiceService $invoiceService
      * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
      * @param \Magento\Sales\Model\Order\CreditmemoFactory $creditmemoFactory
@@ -106,6 +170,8 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     /**
+     * Execute
+     *
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      * @throws \Exception
      */
@@ -246,9 +312,7 @@ class Index extends \Magento\Framework\App\Action\Action
                 }
 
                 if ($hasTxn) {
-                    
-                    if( $this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) && $order->canInvoice() ){
-                    
+                    if ($this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) && $order->canInvoice()) {
                         $invoice = $this->invoiceService->prepareInvoice($order);
                         $invoice->setRequestedCaptureCase(\Magento\Sales\Model\Order\Invoice::CAPTURE_ONLINE);
                         $invoice->register();
@@ -274,8 +338,6 @@ class Index extends \Magento\Framework\App\Action\Action
                     $order_id
                 );
 
-                
-
                 $transactionID = $this->reepayHelper->addCaptureTransactionToOrder($order, $reepayTransactionData, $chargeRes);
                 if ($transactionID) {
                     $this->reepayHelper->setReepayPaymentState($order->getPayment(), 'settled');
@@ -283,8 +345,7 @@ class Index extends \Magento\Framework\App\Action\Action
 
                     $this->surchargeFee($order_id, $chargeRes);
 
-                    if( $this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) && $order->canInvoice() ){
-                    
+                    if ($this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) && $order->canInvoice()) {
                         $invoice = $this->invoiceService->prepareInvoice($order);
                         $invoice->setRequestedCaptureCase(\Magento\Sales\Model\Order\Invoice::CAPTURE_ONLINE);
                         $invoice->register();
@@ -541,8 +602,10 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * @param $orderIncrementId
-     * @param $chargeRes
+     * Surcharge Fee
+     *
+     * @param string $orderIncrementId
+     * @param array $chargeRes
      */
     private function surchargeFee($orderIncrementId, $chargeRes)
     {

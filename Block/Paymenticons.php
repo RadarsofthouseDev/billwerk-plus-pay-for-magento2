@@ -2,13 +2,11 @@
 
 namespace Radarsofthouse\Reepay\Block;
 
-/**
- * Class Paymenticons
- *
- * @package Radarsofthouse\Reepay\Block
- */
 class Paymenticons extends \Magento\Framework\View\Element\Template
 {
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $scopeConfig;
 
     /**
@@ -26,7 +24,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get payment icons for credit card payment
+     * Get payment icons for credit card payment
      *
      * @return array $paymentIcons
      */
@@ -35,8 +33,8 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $paymentIconsConfig = $this->scopeConfig->getValue('payment/reepay_payment/payment_icons', $storeScope);
         
-        if( empty($paymentIconsConfig) ){
-            return [];  
+        if (empty($paymentIconsConfig)) {
+            return [];
         }
 
         $paymentIcons = explode(',', $paymentIconsConfig);
@@ -45,7 +43,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Viabill payment icon
+     * Get Viabill payment icon
      *
      * @return array $paymentIcon
      */
@@ -63,7 +61,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get mobile pay payment icon
+     * Get mobile pay payment icon
      *
      * @return array $paymentIcon
      */
@@ -81,7 +79,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Applepay payment icon
+     * Get Applepay payment icon
      *
      * @return array $paymentIcon
      */
@@ -99,7 +97,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Paypal payment icon
+     * Get Paypal payment icon
      *
      * @return array $paymentIcon
      */
@@ -117,13 +115,12 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Klarna Pay Now payment icon
+     * Get Klarna Pay Now payment icon
      *
      * @return array $paymentIcon
      */
     public function getKlarnapaynowPaymentIcon()
     {
-
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_klarnapaynow/show_icon', $storeScope);
 
@@ -136,13 +133,12 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Klarna Pay Later payment icon
+     * Get Klarna Pay Later payment icon
      *
      * @return array $paymentIcon
      */
     public function getKlarnapaylaterPaymentIcon()
     {
-
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_klarnapaylater/show_icon', $storeScope);
 
@@ -155,13 +151,12 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Klarna Slice It payment icon
+     * Get Klarna Slice It payment icon
      *
      * @return array $paymentIcon
      */
     public function getKlarnaSliceItPaymentIcon()
     {
-
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $showIcon = $this->scopeConfig->getValue('payment/reepay_klarnasliceit/show_icon', $storeScope);
 
@@ -174,7 +169,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Swish payment icon
+     * Get Swish payment icon
      *
      * @return array $paymentIcon
      */
@@ -192,7 +187,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Resurs payment icon
+     * Get Resurs payment icon
      *
      * @return array $paymentIcon
      */
@@ -210,7 +205,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Resurs payment icon
+     * Get Resurs payment icon
      *
      * @return array $paymentIcon
      */
@@ -228,7 +223,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Forbrugsforeningen payment icon
+     * Get Forbrugsforeningen payment icon
      *
      * @return array $paymentIcon
      */
@@ -246,7 +241,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * get Google pay payment icon
+     * Get Google pay payment icon
      *
      * @return array $paymentIcon
      */

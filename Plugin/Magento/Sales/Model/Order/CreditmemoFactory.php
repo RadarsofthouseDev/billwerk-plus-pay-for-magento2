@@ -1,13 +1,4 @@
 <?php
-/**
- * Radarsofthouse
- * Copyright (C) 2019 Radarsofthouse
- *
- * This file included in Radarsofthouse/Reepay is licensed under OSL 3.0
- *
- * http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- * Please see LICENSE.txt for the full text of the OSL 3.0 license
- */
 
 namespace Radarsofthouse\Reepay\Plugin\Magento\Sales\Model\Order;
 
@@ -17,17 +8,20 @@ class CreditmemoFactory
      * @var \Radarsofthouse\Reepay\Helper\Data
      */
     private $_helperData;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\SurchargeFee
      */
     private $_helperSurchargeFee;
+
     /**
      * @var \Radarsofthouse\Reepay\Helper\Logger
      */
     private $_helperLogger;
 
     /**
-     * CreditmemoFactory constructor.
+     * Constructor
+     *
      * @param \Radarsofthouse\Reepay\Helper\Data $helperData
      * @param \Radarsofthouse\Reepay\Helper\SurchargeFee $helperSurchargeFee
      * @param \Radarsofthouse\Reepay\Helper\Logger $logger
@@ -42,6 +36,15 @@ class CreditmemoFactory
         $this->_helperLogger = $logger;
     }
 
+    /**
+     * Around Create By Order
+     *
+     * @param \Magento\Sales\Model\Order\CreditmemoFactory $subject
+     * @param \Closure $proceed
+     * @param \Magento\Sales\Model\Order $order
+     * @param array $data
+     * @return \Magento\Sales\Model\Order\Creditmemo $result
+     */
     public function aroundCreateByOrder(
         \Magento\Sales\Model\Order\CreditmemoFactory $subject,
         \Closure $proceed,
@@ -57,7 +60,14 @@ class CreditmemoFactory
         }
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
         $isEnable = $this->_helperData->isSurchargeFeeEnabled();
-        $this->_helperLogger->addDebug(__METHOD__, ['PaymentMethod' => $paymentMethod, 'isReepayPaymentMethod'=>$isReepayPaymentMethod, 'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false')]);
+        $this->_helperLogger->addDebug(
+            __METHOD__,
+            [
+                'PaymentMethod' => $paymentMethod,
+                'isReepayPaymentMethod'=>$isReepayPaymentMethod,
+                'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false')
+            ]
+        );
         if (!$isEnable || !$isReepayPaymentMethod) {
             return $result;
         }
@@ -74,15 +84,38 @@ class CreditmemoFactory
                 $this->_helperLogger->addDebug(' inputSurchargeFee > surchargeFee');
                 $inputSurchargeFee = $availableSurchargeFee;
             }
-            $this->_helperLogger->addDebug(__METHOD__, ['surchargeFee'=> $surchargeFee, 'inputSurchargeFee' => $inputSurchargeFee, 'GrandTotal'=> $result->getGrandTotal(), 'BaseGrandTotal'=> $result->getBaseGrandTotal()]);
+            $this->_helperLogger->addDebug(
+                __METHOD__,
+                [
+                    'surchargeFee' => $surchargeFee,
+                    'inputSurchargeFee' => $inputSurchargeFee,
+                    'GrandTotal' => $result->getGrandTotal(),
+                    'BaseGrandTotal' => $result->getBaseGrandTotal()
+                ]
+            );
             $result->setGrandTotal($result->getGrandTotal() - $surchargeFee + $inputSurchargeFee);
             $result->setBaseGrandTotal($result->getBaseGrandTotal() - $surchargeFee + $inputSurchargeFee);
             $result->setReepaySurchargeFee($inputSurchargeFee);
-            $this->_helperLogger->addDebug(__METHOD__, ['newGrandTotal'=> $result->getGrandTotal(), 'newBaseGrandTotal'=> $result->getBaseGrandTotal()]);
+            $this->_helperLogger->addDebug(
+                __METHOD__,
+                [
+                    'newGrandTotal' => $result->getGrandTotal(),
+                    'newBaseGrandTotal' => $result->getBaseGrandTotal()
+                ]
+            );
         }
         return $result;
     }
 
+    /**
+     * Around Create By Order
+     *
+     * @param \Magento\Sales\Model\Order\CreditmemoFactory $subject
+     * @param \Closure $proceed
+     * @param \Magento\Sales\Model\Order\Invoice $invoice
+     * @param array $data
+     * @return \Magento\Sales\Model\Order\Creditmemo $result
+     */
     public function aroundCreateByInvoice(
         \Magento\Sales\Model\Order\CreditmemoFactory $subject,
         \Closure $proceed,
@@ -99,7 +132,14 @@ class CreditmemoFactory
         }
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
         $isEnable = $this->_helperData->isSurchargeFeeEnabled();
-        $this->_helperLogger->addDebug(__METHOD__, ['PaymentMethod' => $paymentMethod, 'isReepayPaymentMethod'=>$isReepayPaymentMethod, 'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false')]);
+        $this->_helperLogger->addDebug(
+            __METHOD__,
+            [
+                'PaymentMethod' => $paymentMethod,
+                'isReepayPaymentMethod'=>$isReepayPaymentMethod,
+                'SurchargeFeeEnabled'=> ($isEnable ? 'true' : 'false')
+            ]
+        );
         if (!$isEnable || !$isReepayPaymentMethod) {
             return $result;
         }
@@ -107,7 +147,9 @@ class CreditmemoFactory
         if (array_key_exists('reepay_surcharge_fee', $data)) {
             $surchargeFee = round((float)$result->getReepaySurchargeFee(), 2);
             $inputSurchargeFee = round((float)$data['reepay_surcharge_fee'], 2);
-            $availableSurchargeFee = $this->_helperSurchargeFee->getAvailableSurchargeFeeRefundAmount($invoice->getOrder()->getId());
+            $availableSurchargeFee = $this->_helperSurchargeFee->getAvailableSurchargeFeeRefundAmount(
+                $invoice->getOrder()->getId()
+            );
             if ($surchargeFee === $inputSurchargeFee) {
                 $this->_helperLogger->addDebug('surchargeFee == inputSurchargeFee');
                 return $result;
@@ -116,11 +158,25 @@ class CreditmemoFactory
                 $this->_helperLogger->addDebug(' inputSurchargeFee > surchargeFee');
                 $inputSurchargeFee = $availableSurchargeFee;
             }
-            $this->_helperLogger->addDebug(__METHOD__, ['surchargeFee'=> $surchargeFee, 'inputSurchargeFee' => $inputSurchargeFee, 'GrandTotal'=> $result->getGrandTotal(), 'BaseGrandTotal'=> $result->getBaseGrandTotal()]);
+            $this->_helperLogger->addDebug(
+                __METHOD__,
+                [
+                    'surchargeFee' => $surchargeFee,
+                    'inputSurchargeFee' => $inputSurchargeFee,
+                    'GrandTotal' => $result->getGrandTotal(),
+                    'BaseGrandTotal' => $result->getBaseGrandTotal()
+                ]
+            );
             $result->setGrandTotal($result->getGrandTotal() - $surchargeFee + $inputSurchargeFee);
             $result->setBaseGrandTotal($result->getBaseGrandTotal() - $surchargeFee + $inputSurchargeFee);
             $result->setReepaySurchargeFee($inputSurchargeFee);
-            $this->_helperLogger->addDebug(__METHOD__, ['newGrandTotal'=> $result->getGrandTotal(), 'newBaseGrandTotal'=> $result->getBaseGrandTotal()]);
+            $this->_helperLogger->addDebug(
+                __METHOD__,
+                [
+                    'newGrandTotal'=> $result->getGrandTotal(),
+                    'newBaseGrandTotal'=> $result->getBaseGrandTotal()
+                ]
+            );
         }
         return $result;
     }

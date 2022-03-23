@@ -2,23 +2,56 @@
 
 namespace Radarsofthouse\Reepay\Controller\Standard;
 
-/**
- * Class Cancel
- *
- * @package Radarsofthouse\Reepay\Controller\Standard
- */
 class Cancel extends \Magento\Framework\App\Action\Action
 {
+    /**
+     * @var \Magento\Sales\Api\Data\OrderInterface
+     */
     private $orderInterface;
+
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
     private $resultPageFactory;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Session
+     */
     private $reepaySession;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     private $logger;
+
+    /**
+     * @var \Magento\Framework\App\Request\Http
+     */
     protected $request;
-    protected $orderManagement;
+
+    /**
+     * @var \Magento\Checkout\Model\Session
+     */
     protected $checkoutSession;
+
+    /**
+     * @var \Magento\Framework\UrlInterface
+     */
     protected $url;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data
+     */
     protected $reepayHelper;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $scopeConfig;
+
+    /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
     protected $resultJsonFactory;
 
     /**
@@ -46,8 +79,7 @@ class Cancel extends \Magento\Framework\App\Action\Action
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Radarsofthouse\Reepay\Helper\Logger $logger
-    )
-    {
+    ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->request = $request;
         $this->orderInterface = $orderInterface;
@@ -109,7 +141,6 @@ class Cancel extends \Magento\Framework\App\Action\Action
                 ->unsLastRealOrderId();
         }
 
-
         // unset reepay session id on checkout session
         /*
         if ($this->checkoutSession->getReepaySessionID() && $this->checkoutSession->getReepaySessionOrder()) {
@@ -134,6 +165,9 @@ class Cancel extends \Magento\Framework\App\Action\Action
     }
 
     /**
+     * Redirect
+     *
+     * @param string $path
      * @return \Magento\Framework\Controller\Result\Redirect
      */
     private function redirect($path)

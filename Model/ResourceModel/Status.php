@@ -2,11 +2,6 @@
 
 namespace Radarsofthouse\Reepay\Model\ResourceModel;
 
-/**
- * Class Status
- *
- * @package Radarsofthouse\Reepay\Model\ResourceModel
- */
 class Status extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
 

@@ -7,7 +7,7 @@
         var webhookSpan = jQuery('#webhook_span');
         jQuery('#webhook_button').click(function () {
             var params = {};
-            new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
+            new Ajax.Request('<?= $block->escapeUrl($block->getAjaxUrl()) ?>', {
                 parameters:     params,
                 loaderArea:     false,
                 asynchronous:   true,
@@ -41,9 +41,11 @@
     });
 </script>
 
-<?php echo $block->getButtonHtml() ?>
+<?= $block->getButtonHtml() ?>
 <span class="collect-indicator" id="webhook_span">
-    <img class="processing" hidden="hidden" alt="Processing" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
-    <img class="updated" hidden="hidden" alt="Updated" style="margin:-3px 5px" src="<?php echo $block->getViewFileUrl('images/rule_component_apply.gif') ?>"/>
+    <img class="processing" hidden="hidden" alt="Processing" style="margin:0 5px" 
+        src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
+    <img class="updated" hidden="hidden" alt="Updated" style="margin:-3px 5px" 
+        src="<?= $block->escapeUrl($block->getViewFileUrl('images/rule_component_apply.gif')) ?>"/>
     <span id="webhook_message_span"></span>
 </span>

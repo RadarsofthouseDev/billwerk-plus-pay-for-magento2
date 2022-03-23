@@ -4,27 +4,78 @@ namespace Radarsofthouse\Reepay\Controller\Standard;
 
 use Magento\Framework\App\ResponseInterface;
 
-/**
- * Class Accept
- *
- * @package Radarsofthouse\Reepay\Controller\Standard
- */
 class Accept extends \Magento\Framework\App\Action\Action
 {
+    /**
+     * @var \Magento\Sales\Api\Data\OrderInterface
+     */
     protected $_orderInterface;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Charge
+     */
     protected $_reepayCharge;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Session
+     */
     protected $_reepaySession;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Logger
+     */
     protected $_logger;
+
+    /**
+     * @var \Magento\Framework\App\Request\Http
+     */
     protected $_request;
+
+    /**
+     * @var \Magento\Framework\UrlInterface
+     */
     protected $_url;
+
+    /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
     protected $_resultJsonFactory;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Data
+     */
     protected $_reepayHelper;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Model\Status
+     */
     protected $_reepayStatus;
+
+    /**
+     * @var \Magento\Framework\Pricing\Helper\Data
+     */
     protected $_priceHelper;
+
+    /**
+     * @var \Magento\Sales\Model\Order\Email\Sender\OrderSender
+     */
     protected $_orderSender;
+
+    /**
+     * @var \Magento\Checkout\Model\Session
+     */
     protected $_checkoutSession;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\Email
+     */
     protected $_reepayHelperEmail;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Helper\SurchargeFee
+     */
     protected $_reepayHelperSurchargeFee;
+
     /**
      * @var \Magento\Framework\Controller\Result\RedirectFactory
      */
@@ -65,8 +116,7 @@ class Accept extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Pricing\Helper\Data $priceHelper,
         \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender,
         \Magento\Checkout\Model\Session $checkoutSession
-    )
-    {
+    ) {
         $this->_request = $request;
         $this->_orderInterface = $orderInterface;
         $this->_url = $context->getUrl();
@@ -87,8 +137,7 @@ class Accept extends \Magento\Framework\App\Action\Action
     }
 
     /**
-     * @return ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\Result\Redirect|\Magento\Framework\Controller\ResultInterface|void
-     * @throws \Magento\framework\Exception\PaymentException
+     * Execute
      */
     public function execute()
     {
@@ -124,7 +173,11 @@ class Accept extends \Magento\Framework\App\Action\Action
                 // place by admin
                 $result['redirect_url'] = $this->_url->getUrl('reepay/standard/success');
             }
-            return $this->_resultJsonFactory->create()->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true)->setData($result);
+            return $this->_resultJsonFactory->create()->setHeader(
+                'Cache-Control',
+                'no-store, no-cache, must-revalidate, max-age=0',
+                true
+            )->setData($result);
         }
         $this->_logger->addDebug('Redirect to checkout/onepage/success');
         if (!empty($order->getRemoteIp())) {
@@ -132,16 +185,22 @@ class Accept extends \Magento\Framework\App\Action\Action
             return $this->redirect('checkout/onepage/success');
         }// place by admin
         return $this->redirect('reepay/standard/success');
-
     }
 
     /**
+     * Redirect
+     *
+     * @param string $path
      * @return \Magento\Framework\Controller\Result\Redirect
      */
     private function redirect($path)
     {
         $resultPage = $this->_resultRedirectFactory->create()->setPath($path);
-        $resultPage->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+        $resultPage->setHeader(
+            'Cache-Control',
+            'no-store, no-cache, must-revalidate, max-age=0',
+            true
+        );
         return $resultPage;
     }
 }
