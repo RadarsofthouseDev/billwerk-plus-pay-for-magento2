@@ -1,24 +1,35 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-	<event name="order_cancel_after">
-		<observer name="radarsofthouse_reepay_cancelorder" instance="Radarsofthouse\Reepay\Observer\Cancelorder" />
-	</event>
-	<event name="checkout_submit_all_after">
-		<observer name="radarsofthouse_reepay_checkout_submit_all_after" instance="Radarsofthouse\Reepay\Observer\SendPaymentLink" />
-	</event>
-	<event name="sales_order_payment_place_start">
-		<observer name="radarsofthouse_reepay_sales_order_payment_place_start" instance="Radarsofthouse\Reepay\Observer\SalesOrderPaymentPlaceStart"/>
-	</event>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="order_cancel_after">
+        <observer name="radarsofthouse_reepay_cancelorder" instance="Radarsofthouse\Reepay\Observer\Cancelorder"/>
+    </event>
+    <event name="checkout_submit_all_after">
+        <observer name="radarsofthouse_reepay_checkout_submit_all_after"
+                  instance="Radarsofthouse\Reepay\Observer\SendPaymentLink"/>
+    </event>
+    <event name="sales_order_payment_place_start">
+        <observer name="radarsofthouse_reepay_sales_order_payment_place_start"
+                  instance="Radarsofthouse\Reepay\Observer\SalesOrderPaymentPlaceStart"/>
+    </event>
     <event name="sales_order_payment_capture">
-        <observer name="radarsofthouse_reepay_sales_order_payment_capture" instance="Radarsofthouse\Reepay\Observer\SalesOrderPaymentCapture"/>
+        <observer name="radarsofthouse_reepay_sales_order_payment_capture"
+                  instance="Radarsofthouse\Reepay\Observer\SalesOrderPaymentCapture"/>
     </event>
     <event name="sales_order_payment_refund">
-        <observer name="radarsofthouse_reepay_sales_order_payment_refund" instance="Radarsofthouse\Reepay\Observer\SalesOrderPaymentRefund"/>
+        <observer name="radarsofthouse_reepay_sales_order_payment_refund"
+                  instance="Radarsofthouse\Reepay\Observer\SalesOrderPaymentRefund"/>
     </event>
     <event name="sales_model_service_quote_submit_before">
-        <observer name="radarsofthouse_reepay_quote_submit_before" instance="Radarsofthouse\Reepay\Observer\QuoteSubmitBefore" />
+        <observer name="radarsofthouse_reepay_quote_submit_before"
+                  instance="Radarsofthouse\Reepay\Observer\QuoteSubmitBefore"/>
     </event>
     <event name="controller_action_predispatch_checkout_index_index">
-        <observer name="radarsofthouse_reepay_initiate_checkout" instance="Radarsofthouse\Reepay\Observer\InitCheckout" />
+        <observer name="radarsofthouse_reepay_initiate_checkout"
+                  instance="Radarsofthouse\Reepay\Observer\InitCheckout"/>
+    </event>
+    <event name="controller_action_predispatch_checkout_cart_index">
+        <observer name="radarsofthouse_reepay_initiate_checkout"
+                  instance="Radarsofthouse\Reepay\Observer\InitCheckout"/>
     </event>
 </config>
