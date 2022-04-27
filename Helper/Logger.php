@@ -75,9 +75,9 @@ class Logger extends AbstractHelper
             $logConfig = $this->scopeConfig->getValue('payment/reepay_payment/log', $storeScope);
 
             if ($logConfig == 1 && $isApi) {
-                $this->debugLogger->addDebug($message, $context);
+                $this->debugLogger->debug($message, $context);
             } elseif ($logConfig == 2) {
-                $this->debugLogger->addDebug($message, $context);
+                $this->debugLogger->debug($message, $context);
             }
         }
     }
@@ -97,9 +97,9 @@ class Logger extends AbstractHelper
             $logConfig = $this->scopeConfig->getValue('payment/reepay_payment/log', $storeScope);
 
             if ($logConfig == 1 && $isApi) {
-                $this->infoLogger->addInfo($message, $context);
+                $this->infoLogger->info($message, $context);
             } elseif ($logConfig == 2) {
-                $this->infoLogger->addInfo($message, $context);
+                $this->infoLogger->info($message, $context);
             }
         }
     }
@@ -119,9 +119,9 @@ class Logger extends AbstractHelper
             $logConfig = $this->scopeConfig->getValue('payment/reepay_payment/log', $storeScope);
 
             if ($logConfig == 1 && $isApi) {
-                $this->errorLogger->addError($message, $context);
+                $this->errorLogger->error($message, $context);
             } elseif ($logConfig == 2) {
-                $this->errorLogger->addError($message, $context);
+                $this->errorLogger->error($message, $context);
             }
         }
     }

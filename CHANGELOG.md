@@ -2,6 +2,7 @@
 # Changelog
 ## Version 1.2.20 on 26 April 2022
 - Not allowed order cancelation via payment window for the order that is paid.
+- Compatible with Magento 2.4.4
 
 ## Version 1.2.19 on 23 March 2022
 - Magento coding standard for Magento Marketplace.

@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 class Api
 {
     const BASE_URI = 'https://api.reepay.com/v1/';
-    const TIMEOUT = 10;
+    const TIMEOUT = 30;
     const VERSION = '1.0.0';
 
     /**
