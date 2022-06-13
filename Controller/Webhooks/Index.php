@@ -280,7 +280,7 @@ class Index extends \Magento\Framework\App\Action\Action
      *
      * @param array $data
      * @return array
-     * @throws \Magento\framework\Exception\PaymentException
+     * @throws \Magento\Framework\Exception\PaymentException
      */
     protected function settled($data)
     {
@@ -539,7 +539,7 @@ class Index extends \Magento\Framework\App\Action\Action
      *
      * @param array $data
      * @return array
-     * @throws \Magento\framework\Exception\PaymentException
+     * @throws \Magento\Framework\Exception\PaymentException
      */
     protected function authorize($data)
     {

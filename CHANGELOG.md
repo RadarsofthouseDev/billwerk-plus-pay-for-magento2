@@ -1,5 +1,10 @@
 
 # Changelog
+## Version 1.2.21 on 13 June 2022
+- Fixed canceleration order for pending order.
+- Fixed restore the last order when back from window payment when use swissup firecheckout.
+- Fixed typo in PaymentException path
+
 ## Version 1.2.20 on 26 April 2022
 - Not allowed order cancelation via payment window for the order that is paid.
 - Compatible with Magento 2.4.4
