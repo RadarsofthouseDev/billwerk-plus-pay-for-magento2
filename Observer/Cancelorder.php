@@ -73,7 +73,7 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
                 $order->getIncrementId()
             );
 
-            if ($charge['state'] == 'created') {
+            if ($charge !== false && $charge['state'] == 'created') {
                 $charge = $this->reepayCharge->delete(
                     $apiKey,
                     $order->getIncrementId()
