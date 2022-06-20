@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.22 on 20 June 2022
+- Fixed duplicate credit card saving issue for CIT.
+
 ## Version 1.2.21 on 13 June 2022
 - Fixed canceleration order for pending order.
 - Fixed restore the last order when back from window payment when use swissup firecheckout.

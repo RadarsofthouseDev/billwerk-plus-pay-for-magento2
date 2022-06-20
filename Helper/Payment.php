@@ -174,6 +174,7 @@ class Payment extends AbstractHelper
 
         if ($reepayCreditCard !== null) {
             $options['card_on_file'] = $reepayCreditCard;
+            $options['recurring_optional'] = false;
         }
 
         if ($customerHandle !== false) {
