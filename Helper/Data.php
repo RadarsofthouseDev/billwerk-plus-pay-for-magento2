@@ -22,6 +22,12 @@ class Data extends AbstractHelper
         'reepay_vipps',
         'reepay_forbrugsforeningen',
         'reepay_googlepay',
+        'reepay_ideal',
+        'reepay_blik',
+        'reepay_p24',
+        'reepay_verkkopankki',
+        'reepay_giropay',
+        'reepay_sepa'
     ];
 
     /**
@@ -564,6 +570,24 @@ class Data extends AbstractHelper
                 break;
             case 'reepay_googlepay':
                 $paymentMethods[] = 'googlepay';
+                break;
+            case 'reepay_ideal':
+                $paymentMethods[] = 'ideal';
+                break;
+            case 'reepay_blik':
+                $paymentMethods[] = 'blik';
+                break;
+            case 'reepay_p24':
+                $paymentMethods[] = 'p24';
+                break;
+            case 'reepay_verkkopankki':
+                $paymentMethods[] = 'verkkopankki';
+                break;
+            case 'reepay_giropay':
+                $paymentMethods[] = 'giropay';
+                break;
+            case 'reepay_sepa':
+                $paymentMethods[] = 'sepa';
                 break;
             default:
                 $allowedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());

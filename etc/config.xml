@@ -21,8 +21,8 @@
 				<cancel_order_after_payment_cancel>0</cancel_order_after_payment_cancel>
 				<allowspecific/>
 				<specificcountry/>
-				<allowwed_payment>card,dankort,visa,visa_dk,visa_elec,mc,amex,klarna_pay_later,klarna_pay_now,diners,maestro,laser,discover,jcb,china_union_pay,ffk,applepay,paypal,resurs,googlepay</allowwed_payment>
-				<payment_icons>american-express,dankort,diners-club-international,discover,forbrugsforeningen,jcb,maestro,mastercard,mobilepay,unionpay,viabill,visa,visa-electron,klarna-pay-later,klarna-pay-now,applepay,paypal,resurs,googlepay</payment_icons>
+				<allowwed_payment>card,dankort,visa,visa_dk,visa_elec,mc,amex,klarna_pay_later,klarna_pay_now,diners,maestro,laser,discover,jcb,china_union_pay,ffk,applepay,paypal,resurs,googlepay,ideal,blik,p24,verkkopankki,giropay,sepa</allowwed_payment>
+				<payment_icons>american-express,dankort,diners-club-international,discover,forbrugsforeningen,jcb,maestro,mastercard,mobilepay,unionpay,viabill,visa,visa-electron,klarna-pay-later,klarna-pay-now,applepay,paypal,resurs,googlepay,ideal,blik,p24,verkkopankki,giropay,sepa</payment_icons>
 				<payment_link>payment_reepay_payment_payment_link</payment_link>
 				<sort_order>0</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepaypayment</model>
@@ -147,6 +147,66 @@
 				<sort_order>2</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepaygooglepay</model>
 			</reepay_googlepay>
+            <reepay_ideal>
+				<active>0</active>
+				<title>iDEAL payment by Reepay</title>
+				<instructions>iDEAL payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayideal</model>
+			</reepay_ideal>
+            <reepay_blik>
+				<active>0</active>
+				<title>BLIK payment by Reepay</title>
+				<instructions>BLIK payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayblik</model>
+			</reepay_blik>
+            <reepay_p24>
+				<active>0</active>
+				<title>Przelewy24 (P24) payment by Reepay</title>
+				<instructions>Przelewy24 (P24) payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayp24</model>
+			</reepay_p24>
+            <reepay_verkkopankki>
+				<active>0</active>
+				<title>Verkkopankki payment by Reepay</title>
+				<instructions>Verkkopankki payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayverkkopankki</model>
+			</reepay_verkkopankki>
+            <reepay_giropay>
+				<active>0</active>
+				<title>giropay payment by Reepay</title>
+				<instructions>giropay payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaygiropay</model>
+			</reepay_giropay>
+            <reepay_sepa>
+				<active></active>
+				<title>SEPA Direct Debit payment by Reepay</title>
+				<instructions>SEPA Direct Debit payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaysepa</model>
+			</reepay_sepa>
 		</payment>
 	</default>
 </config>

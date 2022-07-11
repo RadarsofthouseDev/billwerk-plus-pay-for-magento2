@@ -74,6 +74,18 @@ class ConfigProvider implements ConfigProviderInterface
                 ->setTemplate('Radarsofthouse_Reepay::forbrugsforeningen_payment_icons.phtml')->toHtml(),
             'googlepay_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::googlepay_payment_icons.phtml')->toHtml(),
+            'ideal_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::ideal_payment_icons.phtml')->toHtml(),
+            'blik_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::blik_payment_icons.phtml')->toHtml(),
+            'p24_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::p24_payment_icons.phtml')->toHtml(),
+            'verkkopankki_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::verkkopankki_payment_icons.phtml')->toHtml(),
+            'giropay_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::giropay_payment_icons.phtml')->toHtml(),
+            'sepa_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::sepa_payment_icons.phtml')->toHtml(),
             'saved_credit_cards' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\SavedCreditCards::class)
                 ->setTemplate('Radarsofthouse_Reepay::saved_credit_cards.phtml')->toHtml(),
             "reepay_payment_instructions" => $this->_scopeConfig->getValue(
@@ -138,6 +150,36 @@ class ConfigProvider implements ConfigProviderInterface
             ),
             "reepay_googlepay_instructions" => $this->_scopeConfig->getValue(
                 'payment/reepay_googlepay/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_ideal_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_ideal/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_blik_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_blik/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_p24_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_p24/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_verkkopankki_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_verkkopankki/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_giropay_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_giropay/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_sepa_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_sepa/instructions',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
                 $store_id
             )

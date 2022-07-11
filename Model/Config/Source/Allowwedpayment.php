@@ -36,6 +36,12 @@ class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'resurs', 'label' => __('Resurs Bank')],
             ['value' => 'vipps', 'label' => __('Vipps')],
             ['value' => 'googlepay', 'label' => __('Google Pay')],
+            ['value' => 'ideal', 'label' => __('iDEAL')],
+            ['value' => 'blik', 'label' => __('BLIK')],
+            ['value' => 'p24', 'label' => __('Przelewy24 (P24)')],
+            ['value' => 'verkkopankki', 'label' => __('Verkkopankki')],
+            ['value' => 'giropay', 'label' => __('giropay')],
+            ['value' => 'sepa', 'label' => __('SEPA Direct Debit')],
         ];
     }
 }

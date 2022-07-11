@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.23 on 11 July 2022
+- Add new payment methods "iDEAL", "BLIK", "Przelewy24 (P24)", "Verkkopankki", "giropay" and "SEPA Direct Debit".
+
 ## Version 1.2.22 on 20 June 2022
 - Fixed duplicate credit card saving issue for CIT.
 

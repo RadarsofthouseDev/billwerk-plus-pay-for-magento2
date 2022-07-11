@@ -257,4 +257,112 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         return $paymentIcon;
     }
+
+    /**
+     * Get iDEAL payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getIdealPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_ideal/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['ideal'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get BLIK payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getBlikPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_blik/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['blik'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get Przelewy24 (P24) payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getP24PaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_p24/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['p24'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get Verkkopankki payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getVerkkopankkiPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_verkkopankki/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['verkkopankki'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get giropay payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getGiropayPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_giropay/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['giropay'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get SEPA Direct Debit payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getSepaPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_sepa/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['sepa'];
+        }
+
+        return $paymentIcon;
+    }
 }
