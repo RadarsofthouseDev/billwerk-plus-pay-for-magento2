@@ -621,29 +621,8 @@ class Data extends AbstractHelper
             $source = $paymentData['source'];
             unset($paymentData['source']);
 
-            if (isset($source['type'])) {
-                $paymentData['source_type'] = $source['type'];
-            }
-            if (isset($source['fingerprint'])) {
-                $paymentData['source_fingerprint'] = $source['fingerprint'];
-            }
-            if (isset($source['provider'])) {
-                $paymentData['source_provider'] = $source['provider'];
-            }
-            if (isset($source['card_type'])) {
-                $paymentData['source_card_type'] = $source['card_type'];
-            }
-            if (isset($source['exp_date'])) {
-                $paymentData['source_exp_date'] = $source['exp_date'];
-            }
-            if (isset($source['masked_card'])) {
-                $paymentData['source_masked_card'] = $source['masked_card'];
-            }
-            if (isset($source['type'])) {
-                $paymentData['source_type'] = $source['type'];
-            }
-            if (isset($source['auth_transaction'])) {
-                $paymentData['source_auth_transaction'] = $source['auth_transaction'];
+            foreach ($source as $key => $value) {
+                $paymentData['source_'.$key] = $value;
             }
         }
 
