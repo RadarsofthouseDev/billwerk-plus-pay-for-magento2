@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.25 on 15 September 2022
+- Fixed order status issue for Swish payment.
+
 ## Version 1.2.24 on 20 July 2022
 - Add all payment source data to payment additional information.
 

@@ -778,6 +778,11 @@ class Data extends AbstractHelper
 
             $orderStatusAfterPayment = $this->getConfig('order_status_after_payment', $order->getStoreId());
             $autoCapture = $this->getConfig('auto_capture', $order->getStoreId());
+            
+            if( $order->getPayment()->getMethodInstance()->getCode() == "reepay_swish" ){
+                $autoCapture = 1;
+            }
+
             if (!empty($orderStatusAfterPayment) && $autoCapture) {
                 $totalDue = $this->_priceHelper->currency($order->getTotalDue(), true, false);
                 $order->setState($orderStatusAfterPayment, true);
