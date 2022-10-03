@@ -737,7 +737,7 @@ class Data extends AbstractHelper
      * @param array $chargeRes
      * @return int (Magento Transaction ID)
      */
-    public function addCaptureTransactionToOrder($order, $transactionData = [], $chargeRes = [])
+    public function addCaptureTransactionToOrder($order, $transactionData = [], $chargeRes = [], $authorizationTxnId = null)
     {
         try {
             // prepare transaction data
@@ -753,6 +753,7 @@ class Data extends AbstractHelper
             $payment->setAdditionalInformation(
                 [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $paymentData]
             );
+            $payment->setParentTransactionId($authorizationTxnId);
 
             $formatedPrice = $order->getBaseCurrency()->formatTxt($transactionData['amount']);
             $message = __('Reepay : Captured amount of %1 by Reepay webhook.', $formatedPrice);
@@ -770,7 +771,6 @@ class Data extends AbstractHelper
                 $transaction,
                 $message
             );
-            $payment->setParentTransactionId(null);
             $payment->save();
             $order->save();
 
@@ -779,7 +779,7 @@ class Data extends AbstractHelper
             $orderStatusAfterPayment = $this->getConfig('order_status_after_payment', $order->getStoreId());
             $autoCapture = $this->getConfig('auto_capture', $order->getStoreId());
             
-            if( $order->getPayment()->getMethodInstance()->getCode() == "reepay_swish" ){
+            if( $order->getPayment()->getMethodInstance()->isAutoCapture() ){
                 $autoCapture = 1;
             }
 
@@ -894,7 +894,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Ckeck is Reepay payment method
+     * Check is Reepay payment method
      *
      * @param string $method
      * @return bool

@@ -25,23 +25,31 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
     protected $reepayCharge;
 
     /**
+     * @var \\Magento\Framework\Registry
+     */
+    protected $registry;
+
+    /**
      * Constructor
      *
      * @param \Radarsofthouse\Reepay\Helper\Data $reepayHelper
      * @param \Radarsofthouse\Reepay\Helper\Logger $logger
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      * @param \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
+     * @param \Magento\Framework\Registry $registry
      */
     public function __construct(
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Radarsofthouse\Reepay\Helper\Logger $logger,
         \Magento\Framework\Message\ManagerInterface $messageManager,
-        \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
+        \Radarsofthouse\Reepay\Helper\Charge $reepayCharge,
+        \Magento\Framework\Registry $registry
     ) {
         $this->reepayHelper = $reepayHelper;
         $this->logger = $logger;
         $this->messageManager = $messageManager;
         $this->reepayCharge = $reepayCharge;
+        $this->registry = $registry;
     }
 
     /**
@@ -57,7 +65,8 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
         $invoice = $observer->getInvoice();
         $paymentMethod = $payment->getMethod();
         if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
-            if ($paymentMethod === 'reepay_swish') {
+            if ($payment->getMethodInstance()->isAutoCapture()) {
+                $this->logger->addDebug("Skip settle request to Reepay for the 'auto_capture' payment.");
                 return;
             }
 
@@ -108,11 +117,18 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
                 $options['amount'] = $this->reepayHelper->toInt($_amount);
             }
 
-            $charge = $this->reepayCharge->settle(
-                $apiKey,
-                $order->getIncrementId(),
-                $options
-            );
+            $charge = null;
+            if( $this->registry->registry('is_reepay_settled_webhook') == 1 ){
+                // When invoice created from the settled webhook then don't do the settle request to Reepay
+                $this->logger->addDebug("Skip settle request to Reepay when invoice is created from Reepay settled webhook");
+                $charge = $reepay_charge;
+            }else{
+                $charge = $this->reepayCharge->settle(
+                    $apiKey,
+                    $order->getIncrementId(),
+                    $options
+                );
+            }
 
             if (!empty($charge)) {
                 if (isset($charge["error"])) {

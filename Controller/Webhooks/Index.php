@@ -95,6 +95,11 @@ class Index extends \Magento\Framework\App\Action\Action
     protected $reepayEmail;
 
     /**
+     * @var \\Magento\Framework\Registry
+     */
+    protected $registry;
+
+    /**
      * Index constructor
      *
      * @param \Magento\Framework\App\Action\Context $context
@@ -116,6 +121,7 @@ class Index extends \Magento\Framework\App\Action\Action
      * @param \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
      * @param \Radarsofthouse\Reepay\Helper\SurchargeFee $reepaySurchargeFee
      * @param \Radarsofthouse\Reepay\Helper\Email $reepayEmail
+     * @param \Magento\Framework\Registry $registry
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -136,7 +142,8 @@ class Index extends \Magento\Framework\App\Action\Action
         \Radarsofthouse\Reepay\Model\Status $reepayStatus,
         \Radarsofthouse\Reepay\Helper\Charge $reepayCharge,
         \Radarsofthouse\Reepay\Helper\SurchargeFee $reepaySurchargeFee,
-        \Radarsofthouse\Reepay\Helper\Email $reepayEmail
+        \Radarsofthouse\Reepay\Helper\Email $reepayEmail,
+        \Magento\Framework\Registry $registry
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->logger = $logger;
@@ -156,6 +163,7 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->reepayCharge = $reepayCharge;
         $this->reepaySurchargeFee = $reepaySurchargeFee;
         $this->reepayEmail = $reepayEmail;
+        $this->registry = $registry;
         parent::__construct($context);
 
         // CsrfAwareAction Magento2.3 compatibility
@@ -305,23 +313,56 @@ class Index extends \Magento\Framework\App\Action\Action
                 // check the transaction has been created
                 $transactions = $this->transactionSearchResultInterfaceFactory->create()->addOrderIdFilter($order->getId());
                 $hasTxn = false;
+                $authorizationTxnId = null;
                 foreach ($transactions->getItems() as $transaction) {
                     if ($transaction->getTxnId() == $reepayTransactionData['id']) {
                         $hasTxn = true;
                     }
+                    if($transaction->getTxnType() == \Magento\Sales\Model\Order\Payment\Transaction::TYPE_AUTH){
+                        $authorizationTxnId = $transaction->getTxnId();
+                    }
                 }
 
+                $_invoiceType = "";
+                $_createInvoice = false;
+                if( $this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) ||
+                    $order->getPayment()->getMethodInstance()->isAutoCapture()
+                ){
+                    $_invoiceType = 'auto_capture';
+                    $_createInvoice = true;
+                }
+
+                $chargeRes = $this->reepayCharge->get(
+                    $apiKey,
+                    $order_id
+                );
+
+                if( !$_createInvoice && 
+                    $this->reepayHelper->getConfig('auto_create_invoice', $order->getStoreId())
+                ){
+                    if( isset($chargeRes['state']) &&
+                        $chargeRes['state'] == "settled" && 
+                        $chargeRes['amount'] == ($order->getGrandTotal() * 100)
+                    ){
+                        $_invoiceType = 'settled_in_reepay';
+                        $_createInvoice = true;
+                    }
+                }
+
+                $this->registry->register('is_reepay_settled_webhook', 1);
+
                 if ($hasTxn) {
-                    if ($this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) && $order->canInvoice()) {
+                    if ($_createInvoice && $order->canInvoice()) {
                         $invoice = $this->invoiceService->prepareInvoice($order);
                         $invoice->setRequestedCaptureCase(\Magento\Sales\Model\Order\Invoice::CAPTURE_ONLINE);
                         $invoice->register();
                         $invoice->getOrder()->setCustomerNoteNotify(false);
                         $invoice->getOrder()->setIsInProcess(true);
+                        $invoice->setState(\Magento\Sales\Model\Order\Invoice::STATE_PAID);
                         $transactionSave = $this->transactionFactory->create()->addObject($invoice)->addObject($invoice->getOrder());
                         $transactionSave->save();
     
-                        $this->logger->addDebug("#Automatic create invoice for the order #".$order_id);
+                        $this->logger->addDebug("#1 : Automatic create invoice for the order #".$order_id." : Invoice type => ".$_invoiceType);
                     }
 
                     $this->logger->addDebug("Magento have created the transaction '" . $reepayTransactionData['id'] . "' already.");
@@ -331,30 +372,25 @@ class Index extends \Magento\Framework\App\Action\Action
                         'message' => "Magento have created the transaction '" . $reepayTransactionData['id'] . "' already.",
                     ];
                 }
-
-                $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
-                $chargeRes = $this->reepayCharge->get(
-                    $apiKey,
-                    $order_id
-                );
-
-                $transactionID = $this->reepayHelper->addCaptureTransactionToOrder($order, $reepayTransactionData, $chargeRes);
+                
+                $transactionID = $this->reepayHelper->addCaptureTransactionToOrder($order, $reepayTransactionData, $chargeRes, $authorizationTxnId);
                 if ($transactionID) {
                     $this->reepayHelper->setReepayPaymentState($order->getPayment(), 'settled');
                     $order->save();
 
                     $this->surchargeFee($order_id, $chargeRes);
 
-                    if ($this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) && $order->canInvoice()) {
+                    if ($_createInvoice && $order->canInvoice()) {
                         $invoice = $this->invoiceService->prepareInvoice($order);
                         $invoice->setRequestedCaptureCase(\Magento\Sales\Model\Order\Invoice::CAPTURE_ONLINE);
                         $invoice->register();
                         $invoice->getOrder()->setCustomerNoteNotify(false);
                         $invoice->getOrder()->setIsInProcess(true);
+                        $invoice->setState(\Magento\Sales\Model\Order\Invoice::STATE_PAID);
                         $transactionSave = $this->transactionFactory->create()->addObject($invoice)->addObject($invoice->getOrder());
                         $transactionSave->save();
     
-                        $this->logger->addDebug("Automatic create invoice for the order #".$order_id);
+                        $this->logger->addDebug("#2 : Automatic create invoice for the order #".$order_id." : Invoice type => ".$_invoiceType);
                     }
 
                     $this->logger->addDebug('Settled order #' . $order_id . " , transaction ID : " . $transactionID);

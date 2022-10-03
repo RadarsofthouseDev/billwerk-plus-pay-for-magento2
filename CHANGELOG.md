@@ -1,5 +1,11 @@
 
 # Changelog
+## Version 1.2.26 on 3 October 2022
+- Fixed PHP error when get error response from Reepay API.
+- Added automatic create invoice option when full amount is settled in Reepay.
+- Changed "SEPA Direct Debit" and "Verkkopankki" payments to the "auto_captute" payment flow.
+- Automatic create invoice for the "auto_capture" payments ("Swish", "SEPA Direct Debit" and "Verkkopankki").
+
 ## Version 1.2.25 on 15 September 2022
 - Fixed order status issue for Swish payment.
 

@@ -43,6 +43,11 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
      * @var boolean
      */
     protected $_canRefundInvoicePartial = true;
+
+    /**
+     * @var boolean
+     */
+    protected $_isAutoCapture = false;
     
     /**
      * Override capture payment
@@ -66,5 +71,14 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
     public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
         return $this;
+    }
+
+    /**
+     * Check payment type is "auto_capture" payment
+     *
+     * @return $bool
+     */
+    public function isAutoCapture(){
+        return $this->_isAutoCapture;
     }
 }

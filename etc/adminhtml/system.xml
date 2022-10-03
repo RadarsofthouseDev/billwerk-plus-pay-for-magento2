@@ -55,17 +55,27 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Invoice will be created automatically in Magento.</comment>
                 </field>
-                <field id="surcharge_fee" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="41" translate="label" type="select">
+                <field id="auto_create_invoice" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="41" translate="label" type="select">
+                    <label>Create invoice in Magento when full amount is settled in Reepay</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="auto_capture">0</field>
+                    </depends>
+                </field>
+                <field id="surcharge_fee" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="42" translate="label" type="select">
                     <label>Surcharge Fee</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="save_card_enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="42" translate="label" type="select">
+                <field id="save_card_enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="43" translate="label" type="select">
                     <label>Enable save credit card</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="save_card_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="43" translate="label" type="select">
+                <field id="save_card_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="44" translate="label" type="select">
                     <label>Initiated transaction type when using saved credit card</label>
                     <source_model>Radarsofthouse\Reepay\Model\Config\Source\Savecardtype</source_model>
+                    <depends>
+                        <field id="save_card_enable">1</field>
+                    </depends>
                 </field>
 				<field id="order_status_after_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="select">
 					<label>Order status when the payment is made</label>

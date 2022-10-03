@@ -95,6 +95,7 @@ class Payment extends AbstractHelper
      * @param \Magento\Sales\Model\Order $order
      * @param string $reepayCreditCard
      * @return string $paymentTransactionId
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function createReepaySession($order, $reepayCreditCard = null)
     {
@@ -123,7 +124,7 @@ class Payment extends AbstractHelper
         $settle = false;
         $autoCaptureConfig = $this->_reepayHelper->getConfig('auto_capture', $order->getStoreId());
         if ($autoCaptureConfig == 1 ||
-            $order->getPayment()->getMethodInstance()->getCode() == "reepay_swish"
+            $order->getPayment()->getMethodInstance()->isAutoCapture()
         ) {
             $settle = true;
         }
@@ -177,6 +178,7 @@ class Payment extends AbstractHelper
             $options['recurring_optional'] = false;
         }
 
+        $res = false;
         if ($customerHandle !== false) {
             $res = $this->_reepaySessionHelper->chargeCreateWithExistCustomer(
                 $apiKey,
@@ -197,9 +199,14 @@ class Payment extends AbstractHelper
             );
         }
 
-        $paymentTransactionId = $res['id'];
-
-        return $paymentTransactionId;
+        if (is_array($res) && isset($res['id'])){
+            $paymentTransactionId = $res['id'];
+            return $paymentTransactionId;
+        }else{
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('Cannot create Reepay session.')
+            );
+        }
     }
 
     /**

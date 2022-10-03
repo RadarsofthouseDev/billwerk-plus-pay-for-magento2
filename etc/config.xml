@@ -18,6 +18,7 @@
 				<send_order_email_when_success>1</send_order_email_when_success>
 				<order_status_before_payment>pending</order_status_before_payment>
 				<order_status_after_payment>processing</order_status_after_payment>
+				<auto_create_invoice>0</auto_create_invoice>
 				<cancel_order_after_payment_cancel>0</cancel_order_after_payment_cancel>
 				<allowspecific/>
 				<specificcountry/>
