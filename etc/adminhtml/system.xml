@@ -371,6 +371,76 @@
                     <comment/>
                 </field>
             </group>
+            <group id="reepay_klarnadirectbanktransfer" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+                <label>Reepay: Klarna Direct Bank Transfer</label>
+                <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Enabled</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+                    <label>title</label>
+                    <comment/>
+                </field>
+                <field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+                    <label>Instructions</label>
+                    <comment/>
+                </field>
+                <field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+                    <label>Show Klarna Direct Bank Transfer icon</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+                    <label>Payment From Applicable Countries</label>
+                    <comment/>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+                    <label>Payment From Specific Countries</label>
+                    <comment/>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                </field>
+                <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+                    <label>Sort order</label>
+                    <comment/>
+                </field>
+            </group>
+            <group id="reepay_klarnadirectdebit" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+                <label>Reepay: Klarna Direct Debit</label>
+                <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Enabled</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+                    <label>title</label>
+                    <comment/>
+                </field>
+                <field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+                    <label>Instructions</label>
+                    <comment/>
+                </field>
+                <field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+                    <label>Show Klarna Direct Debit icon</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+                    <label>Payment From Applicable Countries</label>
+                    <comment/>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+                    <label>Payment From Specific Countries</label>
+                    <comment/>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                </field>
+                <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+                    <label>Sort order</label>
+                    <comment/>
+                </field>
+            </group>
             <group id="reepay_swish" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Reepay: Swish</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">

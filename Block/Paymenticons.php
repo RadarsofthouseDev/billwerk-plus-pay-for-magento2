@@ -169,6 +169,42 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Get Klarna Direct Bank Transfer payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getKlarnaDirectBankTransferPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_klarnadirectbanktransfer/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['klarna-direct-bank-transfer'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get Klarna Direct Debit payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getKlarnaDirectDebitPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_klarnadirectdebit/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['klarna-direct-debit'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
      * Get Swish payment icon
      *
      * @return array $paymentIcon

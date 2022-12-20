@@ -98,6 +98,26 @@
                 <sort_order>2</sort_order>
                 <model>Radarsofthouse\Reepay\Model\Reepayklarnasliceit</model>
             </reepay_klarnasliceit>
+            <reepay_klarnadirectbanktransfer>
+                <active>0</active>
+                <title>Klarna Direct Bank Transfer payment by Reepay</title>
+                <instructions>Klarna Direct Bank Transfer payment</instructions>
+                <show_icon>0</show_icon>
+                <allowspecific>0</allowspecific>
+                <specificcountry>0</specificcountry>
+                <sort_order>2</sort_order>
+                <model>Radarsofthouse\Reepay\Model\Reepayklarnadirectbanktransfer</model>
+            </reepay_klarnadirectbanktransfer>
+            <reepay_klarnadirectdebit>
+                <active>0</active>
+                <title>Klarna Direct Debit payment by Reepay</title>
+                <instructions>Klarna Direct Debit payment</instructions>
+                <show_icon>0</show_icon>
+                <allowspecific>0</allowspecific>
+                <specificcountry>0</specificcountry>
+                <sort_order>2</sort_order>
+                <model>Radarsofthouse\Reepay\Model\Reepayklarnadirectdebit</model>
+            </reepay_klarnadirectdebit>
             <reepay_swish>
 				<active>0</active>
 				<title>Swish payment by Reepay</title>

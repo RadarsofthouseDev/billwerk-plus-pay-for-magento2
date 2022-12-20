@@ -24,6 +24,8 @@ class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'klarna_pay_later', 'label' => __('Klarna Pay Later')],
             ['value' => 'klarna_pay_now', 'label' => __('Klarna Pay Now')],
             ['value' => 'klarna_slice_it', 'label' => __('Klarna Slice It')],
+            ['value' => 'klarna_direct_bank_transfer', 'label' => __('Klarna Direct Bank Transfer')],
+            ['value' => 'klarna_direct_debit', 'label' => __('Klarna Direct Debit')],
             ['value' => 'diners', 'label' => __('Diners Club')],
             ['value' => 'maestro', 'label' => __('Maestro')],
             ['value' => 'laser', 'label' => __('Laser')],

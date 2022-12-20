@@ -64,6 +64,10 @@ class ConfigProvider implements ConfigProviderInterface
                 ->setTemplate('Radarsofthouse_Reepay::klarnapaylater_payment_icons.phtml')->toHtml(),
             'klarnasliceit_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::klarnasliceit_payment_icons.phtml')->toHtml(),
+            'klarnadirectbanktransfer_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::klarnadirectbanktransfer_payment_icons.phtml')->toHtml(),
+            'klarnadirectdebit_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::klarnadirectdebit_payment_icons.phtml')->toHtml(),
             'swish_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::swish_payment_icons.phtml')->toHtml(),
             'resurs_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
@@ -115,6 +119,16 @@ class ConfigProvider implements ConfigProviderInterface
             ),
             "reepay_klarnasliceit_instructions" => $this->_scopeConfig->getValue(
                 'payment/reepay_klarnasliceit/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_klarnadirectbanktransfer_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_klarnadirectbanktransfer/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_klarnadirectdebit_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_klarnadirectdebit/instructions',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
                 $store_id
             ),

@@ -17,6 +17,8 @@ class Data extends AbstractHelper
         'reepay_klarnapaynow',
         'reepay_klarnapaylater',
         'reepay_klarnasliceit',
+        'reepay_klarnadirectbanktransfer',
+        'reepay_klarnadirectdebit',
         'reepay_swish',
         'reepay_resurs',
         'reepay_vipps',
@@ -555,6 +557,12 @@ class Data extends AbstractHelper
                 break;
             case 'reepay_klarnasliceit':
                 $paymentMethods[] = 'klarna_slice_it';
+                break;
+            case 'reepay_klarnadirectbanktransfer':
+                $paymentMethods[] = 'klarna_direct_bank_transfer';
+                break;
+            case 'reepay_klarnadirectdebit':
+                $paymentMethods[] = 'klarna_direct_debit';
                 break;
             case 'reepay_swish':
                 $paymentMethods[] = 'swish';

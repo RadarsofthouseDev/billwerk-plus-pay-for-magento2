@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.27 on 20 December 2022
+- Added new payment methods "Klarna Direct Bank Transfer" and "Klarna Direct Debit".
+
 ## Version 1.2.26 on 3 October 2022
 - Fixed PHP error when get error response from Reepay API.
 - Added automatic create invoice option when full amount is settled in Reepay.
