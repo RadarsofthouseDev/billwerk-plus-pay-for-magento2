@@ -318,16 +318,17 @@ class Index extends \Magento\Framework\App\Action\Action
                     if ($transaction->getTxnId() == $reepayTransactionData['id']) {
                         $hasTxn = true;
                     }
-                    if($transaction->getTxnType() == \Magento\Sales\Model\Order\Payment\Transaction::TYPE_AUTH){
+                    if ($transaction->getTxnType() == \Magento\Sales\Model\Order\Payment\Transaction::TYPE_AUTH) {
                         $authorizationTxnId = $transaction->getTxnId();
                     }
                 }
 
                 $_invoiceType = "";
                 $_createInvoice = false;
-                if( $this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) ||
-                    $order->getPayment()->getMethodInstance()->isAutoCapture()
-                ){
+                $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
+                if ($this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) ||
+                    ($this->reepayHelper->isReepayPaymentMethod($paymentMethod) && $order->getPayment()->getMethodInstance()->isAutoCapture())
+                ) {
                     $_invoiceType = 'auto_capture';
                     $_createInvoice = true;
                 }
@@ -337,13 +338,13 @@ class Index extends \Magento\Framework\App\Action\Action
                     $order_id
                 );
 
-                if( !$_createInvoice && 
+                if (!$_createInvoice &&
                     $this->reepayHelper->getConfig('auto_create_invoice', $order->getStoreId())
-                ){
-                    if( isset($chargeRes['state']) &&
-                        $chargeRes['state'] == "settled" && 
+                ) {
+                    if (isset($chargeRes['state']) &&
+                        $chargeRes['state'] == "settled" &&
                         $chargeRes['amount'] == ($order->getGrandTotal() * 100)
-                    ){
+                    ) {
                         $_invoiceType = 'settled_in_reepay';
                         $_createInvoice = true;
                     }

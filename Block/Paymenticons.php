@@ -61,6 +61,24 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Get AnyDay payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getAnydayPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_anyday/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['anyday'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
      * Get mobile pay payment icon
      *
      * @return array $paymentIcon
@@ -241,7 +259,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * Get Resurs payment icon
+     * Get Vipps payment icon
      *
      * @return array $paymentIcon
      */

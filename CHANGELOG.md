@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.28 on 4 January 2023
+- Added new payment method "AnyDay".
+
 ## Version 1.2.27 on 20 December 2022
 - Added new payment methods "Klarna Direct Bank Transfer" and "Klarna Direct Debit".
 

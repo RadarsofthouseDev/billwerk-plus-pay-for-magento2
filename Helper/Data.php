@@ -11,6 +11,7 @@ class Data extends AbstractHelper
     const REEPAY_PAYMENT_METHODS = [
         'reepay_payment',
         'reepay_viabill',
+        'reepay_anyday',
         'reepay_mobilepay',
         'reepay_applepay',
         'reepay_paypal',
@@ -540,6 +541,9 @@ class Data extends AbstractHelper
             case 'reepay_viabill':
                 $paymentMethods[] = 'viabill';
                 break;
+            case 'reepay_anyday':
+                $paymentMethods[] = 'anyday';
+                break;
             case 'reepay_mobilepay':
                 $paymentMethods[] = 'mobilepay';
                 break;
@@ -787,7 +791,8 @@ class Data extends AbstractHelper
             $orderStatusAfterPayment = $this->getConfig('order_status_after_payment', $order->getStoreId());
             $autoCapture = $this->getConfig('auto_capture', $order->getStoreId());
             
-            if( $order->getPayment()->getMethodInstance()->isAutoCapture() ){
+            $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
+            if ($this->isReepayPaymentMethod($paymentMethod) && $order->getPayment()->getMethodInstance()->isAutoCapture()) {
                 $autoCapture = 1;
             }
 

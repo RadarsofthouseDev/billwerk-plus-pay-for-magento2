@@ -52,6 +52,8 @@ class ConfigProvider implements ConfigProviderInterface
                 ->setTemplate('Radarsofthouse_Reepay::payment_icons.phtml')->toHtml(),
             'viabill_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::viabill_payment_icons.phtml')->toHtml(),
+            'anyday_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::anyday_payment_icons.phtml')->toHtml(),
             'mobilepay_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::mobilepay_payment_icons.phtml')->toHtml(),
             'applepay_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
@@ -154,6 +156,11 @@ class ConfigProvider implements ConfigProviderInterface
             ),
             "reepay_viabill_instructions" => $this->_scopeConfig->getValue(
                 'payment/reepay_viabill/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_anyday_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_anyday/instructions',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
                 $store_id
             ),

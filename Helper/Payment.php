@@ -123,8 +123,9 @@ class Payment extends AbstractHelper
 
         $settle = false;
         $autoCaptureConfig = $this->_reepayHelper->getConfig('auto_capture', $order->getStoreId());
+        $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
         if ($autoCaptureConfig == 1 ||
-            $order->getPayment()->getMethodInstance()->isAutoCapture()
+            ($this->_reepayHelper->isReepayPaymentMethod($paymentMethod) && $order->getPayment()->getMethodInstance()->isAutoCapture())
         ) {
             $settle = true;
         }
@@ -199,10 +200,10 @@ class Payment extends AbstractHelper
             );
         }
 
-        if (is_array($res) && isset($res['id'])){
+        if (is_array($res) && isset($res['id'])) {
             $paymentTransactionId = $res['id'];
             return $paymentTransactionId;
-        }else{
+        } else {
             throw new \Magento\Framework\Exception\LocalizedException(
                 __('Cannot create Reepay session.')
             );
