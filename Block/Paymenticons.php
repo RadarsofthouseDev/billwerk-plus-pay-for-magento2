@@ -419,4 +419,22 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         return $paymentIcon;
     }
+
+    /**
+     * Get Bancontact payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getBancontactPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_bancontact/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['bancontact'];
+        }
+
+        return $paymentIcon;
+    }
 }

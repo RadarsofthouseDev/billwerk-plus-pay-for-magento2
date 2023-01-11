@@ -39,9 +39,7 @@ class Paymenticons implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'ideal', 'label' => __('iDEAL')],
             ['value' => 'blik', 'label' => __('BLIK')],
             ['value' => 'p24', 'label' => __('Przelewy24 (P24)')],
-            ['value' => 'verkkopankki', 'label' => __('Verkkopankki')],
-            ['value' => 'giropay', 'label' => __('giropay')],
-            ['value' => 'sepa', 'label' => __('SEPA Direct Debit')],
+            ['value' => 'giropay', 'label' => __('giropay')]
         ];
     }
 }

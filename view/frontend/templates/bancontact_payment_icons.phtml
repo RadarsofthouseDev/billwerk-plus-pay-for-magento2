@@ -1,0 +1,7 @@
+<?php $paymentIcons = $block->getBancontactPaymentIcon(); ?>
+<?php if (count($paymentIcons) > 0): ?>
+    <?php foreach ($paymentIcons as $paymentIcon): ?>
+        <?php $imageUrl = $block->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/'.$paymentIcon.'.png'); ?>
+        <img class="reepay-payment-icon" src="<?= $block->escapeUrl($imageUrl); ?>">
+    <?php endforeach; ?>
+<?php endif; ?>

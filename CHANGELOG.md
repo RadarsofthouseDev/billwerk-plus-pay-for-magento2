@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.29 on 11 January 2023
+- Added new payment method "Bancontact".
+- Remove "SEPA Direct Debit" and "Verkkopankki" from payment options of main method.
+
 ## Version 1.2.28 on 4 January 2023
 - Added new payment method "AnyDay".
 

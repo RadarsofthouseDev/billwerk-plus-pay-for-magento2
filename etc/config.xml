@@ -22,8 +22,8 @@
 				<cancel_order_after_payment_cancel>0</cancel_order_after_payment_cancel>
 				<allowspecific/>
 				<specificcountry/>
-				<allowwed_payment>card,dankort,visa,visa_dk,visa_elec,mc,amex,mobilepay,viabill,anyday,klarna_pay_later,klarna_pay_now,klarna_slice_it,klarna_direct_bank_transfer,klarna_direct_debit,diners,maestro,laser,discover,jcb,china_union_pay,ffk,applepay,paypal,resurs,vipps,googlepay,ideal,blik,p24,verkkopankki,giropay,sepa</allowwed_payment>
-				<payment_icons>american-express,dankort,diners-club-international,discover,forbrugsforeningen,jcb,maestro,mastercard,mobilepay,unionpay,viabill,anyday,visa,visa-electron,klarna-pay-later,klarna-pay-now,klarna-slice-it,klarna-direct-bank-transfer,klarna-direct-debit,applepay,paypal,resurs,vipps,googlepay,ideal,blik,p24,verkkopankki,giropay,sepa</payment_icons>
+				<allowwed_payment>card,dankort,visa,visa_dk,visa_elec,mc,amex,mobilepay,viabill,anyday,klarna_pay_later,klarna_pay_now,klarna_slice_it,klarna_direct_bank_transfer,klarna_direct_debit,diners,maestro,laser,discover,jcb,china_union_pay,ffk,applepay,paypal,resurs,vipps,googlepay,ideal,blik,p24,giropay</allowwed_payment>
+				<payment_icons>american-express,dankort,diners-club-international,discover,forbrugsforeningen,jcb,maestro,mastercard,mobilepay,unionpay,viabill,anyday,visa,visa-electron,klarna-pay-later,klarna-pay-now,klarna-slice-it,klarna-direct-bank-transfer,klarna-direct-debit,applepay,paypal,resurs,vipps,googlepay,ideal,blik,p24,giropay</payment_icons>
 				<payment_link>payment_reepay_payment_payment_link</payment_link>
 				<sort_order>0</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepaypayment</model>
@@ -238,6 +238,16 @@
 				<sort_order>2</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepaysepa</model>
 			</reepay_sepa>
+            <reepay_bancontact>
+				<active></active>
+				<title>Bancontact payment by Reepay</title>
+				<instructions>Bancontact payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaybancontact</model>
+			</reepay_bancontact>
 		</payment>
 	</default>
 </config>

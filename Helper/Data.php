@@ -30,7 +30,8 @@ class Data extends AbstractHelper
         'reepay_p24',
         'reepay_verkkopankki',
         'reepay_giropay',
-        'reepay_sepa'
+        'reepay_sepa',
+        'reepay_bancontact'
     ];
 
     /**
@@ -600,6 +601,9 @@ class Data extends AbstractHelper
                 break;
             case 'reepay_sepa':
                 $paymentMethods[] = 'sepa';
+                break;
+            case 'reepay_bancontact':
+                $paymentMethods[] = 'bancontact';
                 break;
             default:
                 $allowedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());
