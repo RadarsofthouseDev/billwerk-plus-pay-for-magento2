@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="radarsofthouse_reepay_status" resource="default" engine="innodb" comment="Reepay Status">
+        <column xsi:type="int" name="status_id" unsigned="true" nullable="false" identity="true" comment="Status ID"/>
+        <column xsi:type="varchar" name="order_id" length="255" nullable="true" comment="Order ID"/>
+        <column xsi:type="varchar" name="status" length="255" nullable="true" comment="Status"/>
+        <column xsi:type="varchar" name="first_name" length="255" nullable="true" comment="First Name"/>
+        <column xsi:type="varchar" name="last_name" length="255" nullable="true" comment="Last Name"/>
+        <column xsi:type="varchar" name="email" length="255" nullable="true" comment="Email"/>
+        <column xsi:type="varchar" name="token" length="255" nullable="true" comment="Token"/>
+        <column xsi:type="varchar" name="masked_card_number" length="255" nullable="true" comment="Masked Card Number"/>
+        <column xsi:type="varchar" name="fingerprint" length="255" nullable="true" comment="Fingerprint"/>
+        <column xsi:type="varchar" name="card_type" length="255" nullable="true" comment="Card Type"/>
+        <column xsi:type="varchar" name="error" length="255" nullable="true" comment="Error"/>
+        <column xsi:type="varchar" name="error_state" length="255" nullable="true" comment="Error State"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="status_id"/>
+        </constraint>
+    </table>
+    <table name="radarsofthouse_reepay_customer" resource="default" engine="innodb" comment="Reepay Customers">
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" identity="true" comment="Customer ID"/>
+        <column xsi:type="int" name="magento_customer_id" unsigned="true" identity="false" comment="Magento Customer ID"/>
+        <column xsi:type="varchar" name="magento_email" length="255" nullable="true" comment="Magento Email"/>
+        <column xsi:type="varchar" name="handle" length="255" nullable="true" comment="Customer Handle"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="customer_id"/>
+        </constraint>
+    </table>
+    <table name="quote" resource="default">
+        <column xsi:type="decimal" name="reepay_surcharge_fee" scale="2" precision="10" default="0.00" unsigned="false" nullable="true" comment="Surcharge Fee"/>
+        <column xsi:type="varchar" name="reepay_credit_card" nullable="true" length="255" comment="Reepay credit card"/>
+    </table>
+    <table name="sales_order" resource="default">
+        <column xsi:type="decimal" name="reepay_surcharge_fee" scale="2" precision="10" default="0.00" unsigned="false" nullable="true" comment="Surcharge Fee"/>
+        <column xsi:type="varchar" name="reepay_credit_card" nullable="true" length="255" comment="Reepay credit card"/>
+    </table>
+    <table name="sales_invoice" resource="default">
+        <column xsi:type="decimal" name="reepay_surcharge_fee" scale="2" precision="10" default="0.00" unsigned="false" nullable="true" comment="Surcharge Fee"/>
+    </table>
+    <table name="sales_creditmemo" resource="default">
+        <column xsi:type="decimal" name="reepay_surcharge_fee" scale="2" precision="10" default="0.00" unsigned="false" nullable="true" comment="Surcharge Fee"/>
+    </table>
+</schema>

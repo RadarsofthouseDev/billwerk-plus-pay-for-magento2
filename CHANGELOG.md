@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.31 on 24 January 2023
+- Checked compatible with Magento 2.4.5
+
 ## Version 1.2.30 on 13 January 2023
 - Changed "iDEAL" payment to the "auto_captute" payment flow.
 
