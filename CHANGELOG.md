@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.32 on 27 January 2023
+- Supported Magento 2.2.x and below
+
 ## Version 1.2.31 on 24 January 2023
 - Checked compatible with Magento 2.4.5
 
