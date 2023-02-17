@@ -162,7 +162,7 @@
 				</field>
 			</group>
             <group id="reepay_anyday" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: AnyDay</label>
+				<label>Reepay: Anyday</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -177,7 +177,7 @@
 					<comment/>
 				</field>
 				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
-					<label>Show AnyDay icon</label>
+					<label>Show Anyday icon</label>
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>

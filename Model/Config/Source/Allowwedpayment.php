@@ -21,7 +21,7 @@ class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'amex', 'label' => __('American Express')],
             ['value' => 'mobilepay', 'label' => __('MobilePay')],
             ['value' => 'viabill', 'label' => __('ViaBill')],
-            ['value' => 'anyday', 'label' => __('AnyDay')],
+            ['value' => 'anyday', 'label' => __('Anyday')],
             ['value' => 'klarna_pay_later', 'label' => __('Klarna Pay Later')],
             ['value' => 'klarna_pay_now', 'label' => __('Klarna Pay Now')],
             ['value' => 'klarna_slice_it', 'label' => __('Klarna Slice It')],

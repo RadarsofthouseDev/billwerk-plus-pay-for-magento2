@@ -23,7 +23,7 @@ class Paymenticons implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'mobilepay', 'label' => __('Mobilepay')],
             ['value' => 'unionpay', 'label' => __('Unionpay')],
             ['value' => 'viabill', 'label' => __('Viabill')],
-            ['value' => 'anyday', 'label' => __('AnyDay')],
+            ['value' => 'anyday', 'label' => __('Anyday')],
             ['value' => 'visa', 'label' => __('Visa')],
             ['value' => 'visa-electron', 'label' => __('Visa electron')],
             ['value' => 'klarna-pay-later', 'label' => __('Klarna Pay Later')],

@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.33 on 17 February 2023
+- Changed "AnyDay" to "Anyday"
+
 ## Version 1.2.32 on 27 January 2023
 - Supported Magento 2.2.x and below
 

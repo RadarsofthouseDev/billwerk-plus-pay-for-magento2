@@ -40,8 +40,8 @@
 			</reepay_viabill>
             <reepay_anyday>
 				<active>0</active>
-				<title>AnyDay payment by Reepay</title>
-				<instructions>AnyDay payment</instructions>
+				<title>Anyday payment by Reepay</title>
+				<instructions>Anyday payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
 				<specificcountry>0</specificcountry>
