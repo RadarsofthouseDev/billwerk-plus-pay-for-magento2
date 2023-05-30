@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.34 on 30 May 2023
+- Handle PHP notice in Google Pay and Apple Pay
+- Updated the payment link local based on the store associated with the order.
+
 ## Version 1.2.33 on 17 February 2023
 - Changed "AnyDay" to "Anyday"
 

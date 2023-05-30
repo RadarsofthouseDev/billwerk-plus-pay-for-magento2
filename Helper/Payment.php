@@ -161,8 +161,10 @@ class Payment extends AbstractHelper
 
         $options = [];
 
-        if (!empty($localMapping[$this->_resolver->getLocale()])) {
-            $options['locale'] = $localMapping[$this->_resolver->getLocale()];
+        $store = $order->getStore();
+        $localeCode = $store->getConfig('general/locale/code');
+        if (!empty($localMapping[$localeCode])) {
+            $options['locale'] = $localMapping[$localeCode];
         }
 
         $baseUrl = $this->_storeManager->getStore($order->getStoreId())->getBaseUrl();
