@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.35 on 9 June 2023
+- Fixed the logo to be compatible with Magento 2.4.6 and higher.
+
 ## Version 1.2.34 on 30 May 2023
 - Handle PHP notice in Google Pay and Apple Pay
 - Updated the payment link local based on the store associated with the order.

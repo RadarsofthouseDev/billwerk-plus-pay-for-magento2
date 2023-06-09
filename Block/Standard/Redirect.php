@@ -38,7 +38,17 @@ class Redirect extends \Magento\Framework\View\Element\Template
      * @var \Magento\Framework\UrlInterface
      */
     protected $urlInterface;
-    
+
+    /**
+     * @var \Magento\MediaStorage\Helper\File\Storage\Database
+     */
+    protected $fileStorageHelper;
+
+    /**
+     * @var string
+     */
+    private $logoUrl;
+
     /**
      * Index constructor.
      *
@@ -57,6 +67,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
         \Magento\Sales\Model\OrderFactory $orderFactory,
         \Magento\Theme\Block\Html\Header\Logo $logo,
         \Magento\Framework\UrlInterface $urlInterface,
+        \Magento\MediaStorage\Helper\File\Storage\Database $fileStorageHelper,
         array $data = []
     ) {
         $this->invoice = $invoice;
@@ -65,6 +76,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
         $this->logo = $logo;
         $this->scopeConfig = $context->getScopeConfig();
         $this->urlInterface = $urlInterface;
+        $this->fileStorageHelper = $fileStorageHelper;
         parent::__construct($context, $data);
     }
 
@@ -86,6 +98,12 @@ class Redirect extends \Magento\Framework\View\Element\Template
         return false;
     }
 
+    public function setLogoUrl($logoUrl)
+    {
+        $this->logoUrl = $logoUrl;
+        return $this;
+    }
+
     /**
      * Get website logo
      *
@@ -93,6 +111,9 @@ class Redirect extends \Magento\Framework\View\Element\Template
      */
     public function getLogoSrc()
     {
+        if (!empty($this->logoUrl) && $this->_isFile($this->logoUrl)) {
+            return $this->urlInterface->getBaseUrl(['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]) . $this->logoUrl;
+        }
         return $this->logo->getLogoSrc();
     }
 
@@ -154,5 +175,14 @@ class Redirect extends \Magento\Framework\View\Element\Template
     public function getCancelUrl()
     {
         return $this->urlInterface->getUrl('reepay/standard/cancel');
+    }
+
+    protected function _isFile($filename)
+    {
+        if ($this->fileStorageHelper->checkDbUsage() && !$this->getMediaDirectory()->isFile($filename)) {
+            $this->fileStorageHelper->saveFileToFilesystem($filename);
+        }
+
+        return $this->getMediaDirectory()->isFile($filename);
     }
 }

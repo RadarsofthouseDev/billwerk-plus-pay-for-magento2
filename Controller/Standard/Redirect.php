@@ -58,6 +58,11 @@ class Redirect extends \Magento\Framework\App\Action\Action
     private $_resultRedirectFactory;
 
     /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\App\Action\Context $context
@@ -79,7 +84,8 @@ class Redirect extends \Magento\Framework\App\Action\Action
         \Radarsofthouse\Reepay\Helper\Logger $logger,
         \Radarsofthouse\Reepay\Model\Status $reepayStatus,
         \Magento\Customer\Model\Session $customerSession,
-        \Magento\Checkout\Model\Session $checkoutSession
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         parent::__construct($context);
         $this->_resultPageFactory = $resultPageFactory;
@@ -91,6 +97,7 @@ class Redirect extends \Magento\Framework\App\Action\Action
         $this->_reepayStatus = $reepayStatus;
         $this->_customerSession = $customerSession;
         $this->_checkoutSession = $checkoutSession;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -211,6 +218,7 @@ class Redirect extends \Magento\Framework\App\Action\Action
                 $resultPage->getLayout()
                     ->getBlock('reepay_standard_redirect')
                     ->setTemplate($template)
+                    ->setLogoUrl($this->getLogoUrl())
                     ->setPaymentTransactionId($paymentTransactionId);
             }
         } catch (\Exception $e) {
@@ -232,5 +240,19 @@ class Redirect extends \Magento\Framework\App\Action\Action
         $resultPage = $this->_resultRedirectFactory->create()->setPath('checkout/cart');
         $resultPage->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
         return $resultPage;
+    }
+
+    protected function getLogoUrl()
+    {
+        $folderName = \Magento\Config\Model\Config\Backend\Image\Logo::UPLOAD_DIR;
+        $storeLogoPath = $this->scopeConfig->getValue(
+            'design/header/logo_src',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+        $path = $folderName . '/' . $storeLogoPath;
+        if ($storeLogoPath !== null) {
+            return $path;
+        }
+        return null;
     }
 }
