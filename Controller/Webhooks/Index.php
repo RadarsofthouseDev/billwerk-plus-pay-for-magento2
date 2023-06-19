@@ -323,20 +323,23 @@ class Index extends \Magento\Framework\App\Action\Action
                     }
                 }
 
+                $chargeRes = $this->reepayCharge->get(
+                    $apiKey,
+                    $order_id
+                );
+
+                $reepayMethod = isset($chargeRes['source']['type']) ? $chargeRes['source']['type'] : '';
+
                 $_invoiceType = "";
                 $_createInvoice = false;
                 $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
                 if ($this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) ||
+                    $this->reepayHelper->isReepayMethodAutoCapture($paymentMethod, $reepayMethod) ||
                     ($this->reepayHelper->isReepayPaymentMethod($paymentMethod) && $order->getPayment()->getMethodInstance()->isAutoCapture())
                 ) {
                     $_invoiceType = 'auto_capture';
                     $_createInvoice = true;
                 }
-
-                $chargeRes = $this->reepayCharge->get(
-                    $apiKey,
-                    $order_id
-                );
 
                 if (!$_createInvoice &&
                     $this->reepayHelper->getConfig('auto_create_invoice', $order->getStoreId())

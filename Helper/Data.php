@@ -34,6 +34,15 @@ class Data extends AbstractHelper
         'reepay_bancontact'
     ];
 
+    const REEPAY_AUTO_CAPTURE_METHODS = [
+        'swish',
+        'bancontact',
+        'ideal',
+        'sepa',
+        'verkkopankki',
+    ];
+
+
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
@@ -796,7 +805,10 @@ class Data extends AbstractHelper
             $autoCapture = $this->getConfig('auto_capture', $order->getStoreId());
             
             $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
-            if ($this->isReepayPaymentMethod($paymentMethod) && $order->getPayment()->getMethodInstance()->isAutoCapture()) {
+            $reepayMethod = isset($chargeRes['source']['type']) ? $chargeRes['source']['type'] : '';
+            if (($this->isReepayPaymentMethod($paymentMethod) && $order->getPayment()->getMethodInstance()->isAutoCapture()) ||
+                $this->isReepayMethodAutoCapture($paymentMethod, $reepayMethod)
+            ) {
                 $autoCapture = 1;
             }
 
@@ -919,6 +931,14 @@ class Data extends AbstractHelper
     public function isReepayPaymentMethod($method = '')
     {
         if (in_array($method, self::REEPAY_PAYMENT_METHODS, true)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isReepayMethodAutoCapture($method = '', $reepayMethod = '')
+    {
+        if ($method === 'reepay_payment' && in_array($reepayMethod, self::REEPAY_AUTO_CAPTURE_METHODS, true)) {
             return true;
         }
         return false;

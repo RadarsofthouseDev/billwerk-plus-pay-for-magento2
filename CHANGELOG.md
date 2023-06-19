@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.36 on 19 June 2023
+- Added Swish, iDEAL, Verkkopankki, SEPA Direct Debit and Bancontact to payment options of main method.
+
 ## Version 1.2.35 on 9 June 2023
 - Fixed the logo to be compatible with Magento 2.4.6 and higher.
 

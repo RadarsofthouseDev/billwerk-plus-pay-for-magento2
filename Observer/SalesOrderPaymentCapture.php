@@ -65,10 +65,6 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
         $invoice = $observer->getInvoice();
         $paymentMethod = $payment->getMethod();
         if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
-            if ($payment->getMethodInstance()->isAutoCapture()) {
-                $this->logger->addDebug("Skip settle request to Reepay for the 'auto_capture' payment.");
-                return;
-            }
 
             $order = $payment->getOrder();
 
@@ -77,6 +73,15 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
                 $apiKey,
                 $order->getIncrementId()
             );
+
+            $reepayMethod = isset($reepay_charge['source']['type']) ? $reepay_charge['source']['type'] : '';
+
+            if ( $payment->getMethodInstance()->isAutoCapture() || 
+                $this->reepayHelper->isReepayMethodAutoCapture($paymentMethod, $reepayMethod)
+            ) {
+                $this->logger->addDebug("Skip settle request to Reepay for the 'auto_capture' payment.");
+                return;
+            }
 
             if ($this->reepayHelper->getConfig('auto_capture', $order->getStoreId())) {
                 if (!empty($reepay_charge)) {
