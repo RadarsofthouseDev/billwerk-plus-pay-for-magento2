@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.37 on 30 August 2023
+- Fixed cancel payment issue when the payment status on Reepay is "failed"
+- Hidden the "Send payment link" button on the order view backend when the order stage is "canceled"
+
 ## Version 1.2.36 on 19 June 2023
 - Added Swish, iDEAL, Verkkopankki, SEPA Direct Debit and Bancontact to payment options of main method.
 

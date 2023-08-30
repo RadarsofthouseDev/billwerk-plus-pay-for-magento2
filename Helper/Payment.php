@@ -52,6 +52,16 @@ class Payment extends AbstractHelper
     protected $_customerSession;
 
     /**
+     * @var \Radarsofthouse\Reepay\Api\Data\SessionInterfaceFactory
+     */
+    protected $_reepaySessionFactory;
+
+    /**
+     * @var \Radarsofthouse\Reepay\Api\SessionRepositoryInterface
+     */
+    protected $_reepaySessionRepository;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\App\Helper\Context $context
@@ -75,7 +85,9 @@ class Payment extends AbstractHelper
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Radarsofthouse\Reepay\Helper\Charge $reepayChargeHelper,
         \Radarsofthouse\Reepay\Api\CustomerRepositoryInterface $customerRepository,
-        \Magento\Customer\Model\Session $customerSession
+        \Magento\Customer\Model\Session $customerSession,
+        \Radarsofthouse\Reepay\Api\Data\SessionInterfaceFactory $reepaySessionFactory,
+        \Radarsofthouse\Reepay\Api\SessionRepositoryInterface $reepaySessionRepository
     ) {
         parent::__construct($context);
         $this->_resolver = $resolver;
@@ -87,6 +99,8 @@ class Payment extends AbstractHelper
         $this->_reepayChargeHelper = $reepayChargeHelper;
         $this->_customerRepository = $customerRepository;
         $this->_customerSession = $customerSession;
+        $this->_reepaySessionFactory = $reepaySessionFactory;
+        $this->_reepaySessionRepository = $reepaySessionRepository;
     }
 
     /**
@@ -204,6 +218,17 @@ class Payment extends AbstractHelper
 
         if (is_array($res) && isset($res['id'])) {
             $paymentTransactionId = $res['id'];
+            try {
+                /** @var \Radarsofthouse\Reepay\Api\Data\SessionInterface $reepaySession */
+                $reepaySession = $this->_reepaySessionFactory->create();
+                $reepaySession->setHandle($paymentTransactionId);
+                $reepaySession->setChargeHandle($orderData['handle']);
+                $reepaySession->setOrderId($order->getId());
+                $reepaySession->setOrderNumber($order->getIncrementId());
+                $reepaySession->setCreated(date('Y-m-d H:i:s'));
+                $this->_reepaySessionRepository->save($reepaySession);
+            }catch (\Magento\Framework\Exception\LocalizedException $exception){
+            }
             return $paymentTransactionId;
         } else {
             throw new \Magento\Framework\Exception\LocalizedException(
@@ -249,7 +274,7 @@ class Payment extends AbstractHelper
             $settle = true;
         }
         $options['settle'] = $settle;
-        
+
         $createCharge = $this->_reepayChargeHelper->createWithExistCustomer(
             $apiKey,
             $handle,

@@ -41,4 +41,15 @@
     <table name="sales_creditmemo" resource="default">
         <column xsi:type="decimal" name="reepay_surcharge_fee" scale="2" precision="10" default="0.00" unsigned="false" nullable="true" comment="Surcharge Fee"/>
     </table>
+    <table name="radarsofthouse_reepay_session" resource="default" engine="innodb" comment="radarsofthouse_reepay_session Table">
+        <column xsi:type="int" name="session_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+        <column name="handle" nullable="false" xsi:type="varchar" comment="Reepay session handle" length="255"/>
+        <column name="charge_handle" nullable="false" xsi:type="varchar" comment="Reepay charge handle" length="255"/>
+        <column name="order_id" nullable="false" xsi:type="int" comment="Order entity id" identity="false"/>
+        <column name="order_number" nullable="false" xsi:type="varchar" comment="Order increment id" length="255"/>
+        <column name="created" nullable="false" xsi:type="timestamp" comment="Created timestamp" default="CURRENT_TIMESTAMP"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="session_id"/>
+        </constraint>
+    </table>
 </schema>

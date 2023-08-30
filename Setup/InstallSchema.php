@@ -180,7 +180,7 @@ class InstallSchema implements InstallSchemaInterface
 
                 ]
             );
-        
+
         $setup->getConnection()
             ->addColumn(
                 $setup->getTable($orderTable),
@@ -259,6 +259,58 @@ class InstallSchema implements InstallSchemaInterface
         );
 
         $setup->getConnection()->createTable($table_radarsofthouse_reepay_customer);
+
+        $table_radarsofthouse_reepay_session = $setup->getConnection()->newTable($setup->getTable('radarsofthouse_reepay_session'));
+
+        $table_radarsofthouse_reepay_session->addColumn(
+            'session_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            null,
+            ['identity' => true,'nullable' => false,'primary' => true,'unsigned' => true,],
+            'Entity ID'
+        );
+
+        $table_radarsofthouse_reepay_session->addColumn(
+            'handle',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            255,
+            ['nullable' => False],
+            'Reepay session handle'
+        );
+
+        $table_radarsofthouse_reepay_session->addColumn(
+            'charge_handle',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            255,
+            ['nullable' => False],
+            'Reepay charge handle'
+        );
+
+        $table_radarsofthouse_reepay_session->addColumn(
+            'order_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            null,
+            ['nullable' => False],
+            'Order entity id'
+        );
+
+        $table_radarsofthouse_reepay_session->addColumn(
+            'order_number',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            255,
+            ['nullable' => False],
+            'Order increment id'
+        );
+
+        $table_radarsofthouse_reepay_session->addColumn(
+            'created',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+            null,
+            ['nullable' => False],
+            'Created timestamp'
+        );
+
+        $setup->getConnection()->createTable($table_radarsofthouse_reepay_session);
 
     }
 }

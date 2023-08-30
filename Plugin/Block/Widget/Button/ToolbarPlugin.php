@@ -6,7 +6,7 @@ use Magento\Sales\Block\Adminhtml\Order\Create;
 use Magento\Framework\View\Element\AbstractBlock;
 use Magento\Backend\Block\Widget\Button\ButtonList;
 use Magento\Backend\Block\Widget\Button\Toolbar as ToolbarContext;
- 
+
 class ToolbarPlugin
 {
 
@@ -68,14 +68,14 @@ class ToolbarPlugin
         if ('sales_order_edit' == $nameInLayout) {
             $order = $context->getOrder();
         }
- 
+
         if ($order) {
             $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
             $isReepayPaymentMethod = $this->reepayHelper->isReepayPaymentMethod($paymentMethod);
             if ($isReepayPaymentMethod) {
                 $orderTransactions = $this->getTransactionByOrderId($order->getId());
 
-                if (count($orderTransactions) <= 0) {
+                if (count($orderTransactions) <= 0 && $order->getState() !== 'canceled') {
                     $message = __('Are you sure you want to send payment link email to customer?');
                     $url = $this->backendUrl->getUrl(
                         "radarsofthouse_reepay/paymentlink/send",
@@ -95,7 +95,7 @@ class ToolbarPlugin
                 }
             }
         }
- 
+
         return [$context, $buttonList];
     }
 
