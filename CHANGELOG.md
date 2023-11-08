@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.38 on 8 November 2023
+- Changed "Przelewy24 (P24)" payment to the "auto_captute" payment flow.
+
 ## Version 1.2.37 on 30 August 2023
 - Fixed cancel payment issue when the payment status on Reepay is "failed"
 - Hidden the "Send payment link" button on the order view backend when the order stage is "canceled"
