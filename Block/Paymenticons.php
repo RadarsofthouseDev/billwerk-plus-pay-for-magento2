@@ -342,7 +342,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         $paymentIcon = [];
         if ($showIcon) {
-            $paymentIcon = ['blik'];
+            $paymentIcon = ['blik_oc'];
         }
 
         return $paymentIcon;

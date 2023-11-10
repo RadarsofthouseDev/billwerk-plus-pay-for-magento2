@@ -687,7 +687,7 @@
 				</field>
 			</group>
             <group id="reepay_blik" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: BLIK</label>
+				<label>Reepay: BLIK One Click</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -702,7 +702,7 @@
 					<comment/>
 				</field>
 				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
-					<label>Show BLIK icon</label>
+					<label>Show BLIK One Click icon</label>
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>

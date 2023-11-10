@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.39 on 10 November 2023
+- Changed "BLIK" payment to "BLIK One Click" payment
+
 ## Version 1.2.38 on 8 November 2023
 - Changed "Przelewy24 (P24)" payment to the "auto_captute" payment flow.
 

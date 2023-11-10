@@ -40,6 +40,7 @@ class Data extends AbstractHelper
         'ideal',
         'sepa',
         'verkkopankki',
+        'p24'
     ];
 
 
@@ -597,7 +598,7 @@ class Data extends AbstractHelper
                 $paymentMethods[] = 'ideal';
                 break;
             case 'reepay_blik':
-                $paymentMethods[] = 'blik';
+                $paymentMethods[] = 'blik_oc';
                 break;
             case 'reepay_p24':
                 $paymentMethods[] = 'p24';
