@@ -136,7 +136,7 @@ class Cancel extends \Magento\Framework\App\Action\Action
             // don't allowed the cancelation if already have transactions (payment is paid)
             if( count($transactions->getItems()) == 0 ){
                 $order->cancel();
-                $order->addStatusHistoryComment('Reepay : order have been cancelled by payment page');
+                $order->addStatusHistoryComment('Billwerk+ : order have been cancelled by payment page');
                 $order->save();
                 $this->logger->addDebug('Cancelled order : ' . $orderId);
                 $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());

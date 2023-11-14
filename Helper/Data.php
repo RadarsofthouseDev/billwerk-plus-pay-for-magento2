@@ -719,7 +719,7 @@ class Data extends AbstractHelper
 
                 $order->setState($orderStatusAfterPayment, true);
                 $order->setStatus($orderStatusAfterPayment);
-                $order->addStatusToHistory($order->getStatus(), 'Reepay : The authorized amount is ' . $totalDue);
+                $order->addStatusToHistory($order->getStatus(), 'Billwerk+ : The authorized amount is ' . $totalDue);
                 $order->save();
             }
 
@@ -782,7 +782,7 @@ class Data extends AbstractHelper
             $payment->setParentTransactionId($authorizationTxnId);
 
             $formatedPrice = $order->getBaseCurrency()->formatTxt($transactionData['amount']);
-            $message = __('Reepay : Captured amount of %1 by Reepay webhook.', $formatedPrice);
+            $message = __('Billwerk+ : Captured amount of %1 by the webhook.', $formatedPrice);
 
             $transaction = $this->_transactionBuilder->setPayment($payment)
                 ->setOrder($order)
@@ -875,7 +875,7 @@ class Data extends AbstractHelper
             );
 
             $formatedPrice = $order->getBaseCurrency()->formatTxt($transactionData['amount']);
-            $message = __('Reepay : Refunded amount of %1 by Reepay webhook.', $formatedPrice);
+            $message = __('Billwerk+ : Refunded amount of %1 by the webhook.', $formatedPrice);
 
             $transaction = $this->_transactionBuilder->setPayment($payment)
                 ->setOrder($order)

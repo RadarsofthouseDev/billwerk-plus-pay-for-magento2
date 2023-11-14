@@ -79,7 +79,7 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             if ( $payment->getMethodInstance()->isAutoCapture() || 
                 $this->reepayHelper->isReepayMethodAutoCapture($paymentMethod, $reepayMethod)
             ) {
-                $this->logger->addDebug("Skip settle request to Reepay for the 'auto_capture' payment.");
+                $this->logger->addDebug("Skip settle request to Billwerk+ for the 'auto_capture' payment.");
                 return;
             }
 
@@ -125,7 +125,7 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
             $charge = null;
             if( $this->registry->registry('is_reepay_settled_webhook') == 1 ){
                 // When invoice created from the settled webhook then don't do the settle request to Reepay
-                $this->logger->addDebug("Skip settle request to Reepay when invoice is created from Reepay settled webhook");
+                $this->logger->addDebug("Skip settle request to Billwerk+ when invoice is created from Billwerk+ settled webhook");
                 $charge = $reepay_charge;
             }else{
                 $charge = $this->reepayCharge->settle(
@@ -175,9 +175,9 @@ class SalesOrderPaymentCapture implements \Magento\Framework\Event\ObserverInter
                     $this->logger->addDebug('set capture transaction data');
                 }
             } else {
-                $this->logger->addDebug("Empty settle response from Reepay");
-                $this->messageManager->addError("Empty settle response from Reepay");
-                throw new \Magento\Framework\Exception\LocalizedException(__("Empty settle response from Reepay"));
+                $this->logger->addDebug("Empty settle response from Billwerk+");
+                $this->messageManager->addError("Empty settle response from Billwerk+");
+                throw new \Magento\Framework\Exception\LocalizedException(__("Empty settle response from Billwerk+"));
             }
         }
     }

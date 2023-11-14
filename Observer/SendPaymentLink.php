@@ -108,8 +108,8 @@ class SendPaymentLink implements \Magento\Framework\Event\ObserverInterface
                     $sessionId = $this->_reepayPayment->createReepaySession($order);
 
                     if (empty($sessionId)) {
-                        $this->_logger->addDebug("Cannot create Reepay payment session");
-                        $this->_messageManager->addError(__('Cannot create Reepay payment session'));
+                        $this->_logger->addDebug("Cannot create Billwerk+ payment session");
+                        $this->_messageManager->addError(__('Cannot create Billwerk+ payment session'));
 
                         return;
                     }

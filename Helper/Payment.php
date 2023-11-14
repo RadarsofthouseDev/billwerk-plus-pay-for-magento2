@@ -232,7 +232,7 @@ class Payment extends AbstractHelper
             return $paymentTransactionId;
         } else {
             throw new \Magento\Framework\Exception\LocalizedException(
-                __('Cannot create Reepay session.')
+                __('Cannot create Billwerk+ session.')
             );
         }
     }

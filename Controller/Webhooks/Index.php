@@ -412,11 +412,11 @@ class Index extends \Magento\Framework\App\Action\Action
                     ];
                 }
             } else {
-                $this->logger->addError('Cannot get transaction data from Reepay : transaction ID = ' . $data['transaction']);
+                $this->logger->addError('Cannot get transaction data from Billwerk+ : transaction ID = ' . $data['transaction']);
 
                 return [
                     'status' => 500,
-                    'message' => 'Cannot get transaction data from Reepay : transaction ID = ' . $data['transaction']
+                    'message' => 'Cannot get transaction data from Billwerk+ : transaction ID = ' . $data['transaction']
                 ];
             }
         } catch (\Exception $e) {
@@ -502,11 +502,11 @@ class Index extends \Magento\Framework\App\Action\Action
                     ];
                 }
             } else {
-                $this->logger->addError('Cannot get refund transaction data from Reepay : transaction ID = ' . $data['transaction']);
+                $this->logger->addError('Cannot get refund transaction data from Billwerk+ : transaction ID = ' . $data['transaction']);
 
                 return [
                     'status' => 500,
-                    'message' => 'Cannot get refund transaction data from Reepay : transaction ID = ' . $data['transaction'],
+                    'message' => 'Cannot get refund transaction data from Billwerk+ : transaction ID = ' . $data['transaction'],
                 ];
             }
         } catch (\Exception $e) {
@@ -544,6 +544,13 @@ class Index extends \Magento\Framework\App\Action\Action
             if (!$order->canCancel()) {
                 $this->logger->addError('Cannot cancel this order');
 
+                if ($order->getState() == \Magento\Sales\Model\Order::STATE_CANCELED) {
+                    return [
+                        'status' => 200,
+                        'message' => 'The order was cancelled in Magento'
+                    ];
+                }
+
                 return [
                     'status' => 500,
                     'message' => 'Cannot cancel this order'
@@ -551,7 +558,7 @@ class Index extends \Magento\Framework\App\Action\Action
             }
 
             $order->cancel();
-            $order->addStatusHistoryComment('Reepay : order have been cancelled by Reepay webhook');
+            $order->addStatusHistoryComment('Billwerk+ : order have been cancelled by the webhook');
             $order->save();
 
             $_payment = $order->getPayment();
@@ -624,12 +631,12 @@ class Index extends \Magento\Framework\App\Action\Action
             $this->logger->addDebug('save reepay status');
 
             $this->reepayHelper->addTransactionToOrder($order, $chargeRes);
-            $this->logger->addDebug('order #' . $order_id . ' has been authorized by Reepay webhook');
+            $this->logger->addDebug('order #' . $order_id . ' has been authorized by the webhook');
 
             $this->surchargeFee($order_id, $chargeRes);
             return [
                 'status' => 200,
-                'message' => 'order #' . $order_id . ' has been authorized by Reepay webhook',
+                'message' => 'order #' . $order_id . ' has been authorized by the webhook',
             ];
         } catch (\Exception $e) {
             $this->logger->addError('webhook authorize exception : ' . $e->getMessage());

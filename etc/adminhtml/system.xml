@@ -3,7 +3,7 @@
 	<system>
 		<section id="payment">
 			<group id="reepay_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label">
-				<label>Reepay payment</label>
+				<label>Billwerk+ payment</label>
                 <field id="version" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="label">
 					<label>Version</label>
 					<frontend_model>Radarsofthouse\Reepay\Block\System\Config\Form\Field\Version</frontend_model>
@@ -24,12 +24,12 @@
 				<field id="private_key_test" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="21" translate="label" type="text">
 					<label>Private API Key For Test</label>
 					<comment>
-						you can find at https://admin.reepay.com under "Developers" >> "API Credentials".</comment>
+						you can find at https://admin.billwerk.plus under "Developers" >> "API Credentials".</comment>
 				</field>
 				<field id="private_key" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="23" translate="label" type="text">
 					<label>Private API Key</label>
 					<comment>
-						you can find at https://admin.reepay.com under "Developers" >> "API Credentials".</comment>
+						you can find at https://admin.billwerk.plus under "Developers" >> "API Credentials".</comment>
 				</field>
 				<field id="api_key_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="24" translate="label" type="select">
 					<label>API Key Type</label>
@@ -38,7 +38,7 @@
 				</field>
                 <field id="webhook" translate="label comment" type="button" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
                     <frontend_model>Radarsofthouse\Reepay\Block\System\Config\Webhook</frontend_model>
-                    <label>Update webhook URL in Reepay</label>
+                    <label>Update webhook URL in Billwerk+</label>
                     <comment>Note: Save config before updating the webhook URL.</comment>
                 </field>
 				<field id="display_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
@@ -56,7 +56,7 @@
                     <comment>Invoice will be created automatically in Magento.</comment>
                 </field>
                 <field id="auto_create_invoice" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="41" translate="label" type="select">
-                    <label>Create invoice in Magento when full amount is settled in Reepay</label>
+                    <label>Create invoice in Magento when full amount is settled in Billwerk+</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
                         <field id="auto_capture">0</field>
@@ -127,7 +127,7 @@
 				</field>
 			</group>
 			<group id="reepay_viabill" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Viabill</label>
+				<label>Billwerk+: Viabill</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -162,7 +162,7 @@
 				</field>
 			</group>
             <group id="reepay_anyday" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Anyday</label>
+				<label>Billwerk+: Anyday</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -197,7 +197,7 @@
 				</field>
 			</group>
 			<group id="reepay_mobilepay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Mobilepay</label>
+				<label>Billwerk+: Mobilepay</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -232,7 +232,7 @@
 				</field>
 			</group>
             <group id="reepay_applepay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Apple Pay</label>
+				<label>Billwerk+: Apple Pay</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -267,7 +267,7 @@
 				</field>
 			</group>
             <group id="reepay_paypal" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Paypal</label>
+				<label>Billwerk+: Paypal</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -302,7 +302,7 @@
 				</field>
 			</group>
             <group id="reepay_klarnapaynow" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Klarna Pay Now</label>
+				<label>Billwerk+: Klarna Pay Now</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -337,7 +337,7 @@
 				</field>
 			</group>
             <group id="reepay_klarnapaylater" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Klarna Pay Later</label>
+				<label>Billwerk+: Klarna Pay Later</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -372,7 +372,7 @@
 				</field>
 			</group>
             <group id="reepay_klarnasliceit" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-                <label>Reepay: Klarna Slice It</label>
+                <label>Billwerk+: Klarna Slice It</label>
                 <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
                     <label>Enabled</label>
                     <comment/>
@@ -407,7 +407,7 @@
                 </field>
             </group>
             <group id="reepay_klarnadirectbanktransfer" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-                <label>Reepay: Klarna Direct Bank Transfer</label>
+                <label>Billwerk+: Klarna Direct Bank Transfer</label>
                 <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
                     <label>Enabled</label>
                     <comment/>
@@ -442,7 +442,7 @@
                 </field>
             </group>
             <group id="reepay_klarnadirectdebit" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-                <label>Reepay: Klarna Direct Debit</label>
+                <label>Billwerk+: Klarna Direct Debit</label>
                 <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
                     <label>Enabled</label>
                     <comment/>
@@ -477,7 +477,7 @@
                 </field>
             </group>
             <group id="reepay_swish" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Swish</label>
+				<label>Billwerk+: Swish</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -512,7 +512,7 @@
 				</field>
 			</group>
             <group id="reepay_resurs" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Resurs Bank</label>
+				<label>Billwerk+: Resurs Bank</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -547,7 +547,7 @@
 				</field>
 			</group>
             <group id="reepay_vipps" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-                <label>Reepay: Vipps</label>
+                <label>Billwerk+: Vipps</label>
                 <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
                     <label>Enabled</label>
                     <comment/>
@@ -582,7 +582,7 @@
                 </field>
             </group>
             <group id="reepay_forbrugsforeningen" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Forbrugsforeningen</label>
+				<label>Billwerk+: Forbrugsforeningen</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -617,7 +617,7 @@
 				</field>
 			</group>
             <group id="reepay_googlepay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Google Pay</label>
+				<label>Billwerk+: Google Pay</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -652,7 +652,7 @@
 				</field>
 			</group>
             <group id="reepay_ideal" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: iDEAL</label>
+				<label>Billwerk+: iDEAL</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -687,7 +687,7 @@
 				</field>
 			</group>
             <group id="reepay_blik" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: BLIK One Click</label>
+				<label>Billwerk+: BLIK One Click</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -722,7 +722,7 @@
 				</field>
 			</group>
             <group id="reepay_p24" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Przelewy24 (P24)</label>
+				<label>Billwerk+: Przelewy24 (P24)</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -757,7 +757,7 @@
 				</field>
 			</group>
             <group id="reepay_verkkopankki" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Verkkopankki</label>
+				<label>Billwerk+: Verkkopankki</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -792,7 +792,7 @@
 				</field>
 			</group>
             <group id="reepay_giropay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: giropay</label>
+				<label>Billwerk+: giropay</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -827,7 +827,7 @@
 				</field>
 			</group>
             <group id="reepay_sepa" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: SEPA Direct Debit</label>
+				<label>Billwerk+: SEPA Direct Debit</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>
@@ -862,7 +862,7 @@
 				</field>
 			</group>
             <group id="reepay_bancontact" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Reepay: Bancontact</label>
+				<label>Billwerk+: Bancontact</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
 					<comment/>

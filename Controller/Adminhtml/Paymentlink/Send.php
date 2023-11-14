@@ -94,8 +94,8 @@ class Send extends \Magento\Backend\App\Action
             $sessionId = $this->reepayPayment->createReepaySession($order);
 
             if (empty($sessionId)) {
-                $this->logger->addDebug("Cannot create Reepay payment session");
-                $this->messageManager->addError(__('Cannot create Reepay payment session'));
+                $this->logger->addDebug("Cannot create Billwerk+ payment session");
+                $this->messageManager->addError(__('Cannot create Billwerk+ payment session'));
 
                 return;
             }

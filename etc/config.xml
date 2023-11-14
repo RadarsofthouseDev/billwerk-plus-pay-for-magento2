@@ -4,8 +4,8 @@
 		<payment>
 			<reepay_payment>
 				<active>0</active>
-				<title>Credit card by Reepay</title>
-				<instructions>Reepay payment</instructions>
+				<title>Credit card by Billwerk+</title>
+				<instructions>Billwerk+ payment</instructions>
 				<private_key_test/>
 				<private_key/>
 				<api_key_type>0</api_key_type>
@@ -30,7 +30,7 @@
 			</reepay_payment>
 			<reepay_viabill>
 				<active>0</active>
-				<title>Viabill payment by Reepay</title>
+				<title>Viabill payment by Billwerk+</title>
 				<instructions>Viabill payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -40,7 +40,7 @@
 			</reepay_viabill>
             <reepay_anyday>
 				<active>0</active>
-				<title>Anyday payment by Reepay</title>
+				<title>Anyday payment by Billwerk+</title>
 				<instructions>Anyday payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -50,7 +50,7 @@
 			</reepay_anyday>
 			<reepay_mobilepay>
 				<active>0</active>
-				<title>Mobilepay payment by Reepay</title>
+				<title>Mobilepay payment by Billwerk+</title>
 				<instructions>Mobilepay payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -60,7 +60,7 @@
 			</reepay_mobilepay>
             <reepay_applepay>
 				<active>0</active>
-				<title>Apple Pay payment by Reepay</title>
+				<title>Apple Pay payment by Billwerk+</title>
 				<instructions>Apple Pay payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -70,7 +70,7 @@
 			</reepay_applepay>
             <reepay_paypal>
 				<active>0</active>
-				<title>Paypal payment by Reepay</title>
+				<title>Paypal payment by Billwerk+</title>
 				<instructions>Paypal payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -80,7 +80,7 @@
 			</reepay_paypal>
             <reepay_klarnapaynow>
 				<active>0</active>
-				<title>Klarna Pay Now payment by Reepay</title>
+				<title>Klarna Pay Now payment by Billwerk+</title>
 				<instructions>Klarna Pay Now payment</instructions>
                 <show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -90,7 +90,7 @@
 			</reepay_klarnapaynow>
             <reepay_klarnapaylater>
 				<active>0</active>
-				<title>Klarna Pay Later payment by Reepay</title>
+				<title>Klarna Pay Later payment by Billwerk+</title>
 				<instructions>Klarna Pay Later payment</instructions>
                 <show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -100,7 +100,7 @@
 			</reepay_klarnapaylater>
             <reepay_klarnasliceit>
                 <active>0</active>
-                <title>Klarna Slice It payment by Reepay</title>
+                <title>Klarna Slice It payment by Billwerk+</title>
                 <instructions>Klarna Slice It payment</instructions>
                 <show_icon>0</show_icon>
                 <allowspecific>0</allowspecific>
@@ -110,7 +110,7 @@
             </reepay_klarnasliceit>
             <reepay_klarnadirectbanktransfer>
                 <active>0</active>
-                <title>Klarna Direct Bank Transfer payment by Reepay</title>
+                <title>Klarna Direct Bank Transfer payment by Billwerk+</title>
                 <instructions>Klarna Direct Bank Transfer payment</instructions>
                 <show_icon>0</show_icon>
                 <allowspecific>0</allowspecific>
@@ -120,7 +120,7 @@
             </reepay_klarnadirectbanktransfer>
             <reepay_klarnadirectdebit>
                 <active>0</active>
-                <title>Klarna Direct Debit payment by Reepay</title>
+                <title>Klarna Direct Debit payment by Billwerk+</title>
                 <instructions>Klarna Direct Debit payment</instructions>
                 <show_icon>0</show_icon>
                 <allowspecific>0</allowspecific>
@@ -130,7 +130,7 @@
             </reepay_klarnadirectdebit>
             <reepay_swish>
 				<active>0</active>
-				<title>Swish payment by Reepay</title>
+				<title>Swish payment by Billwerk+</title>
 				<instructions>Swish payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -140,7 +140,7 @@
 			</reepay_swish>
             <reepay_resurs>
 				<active>0</active>
-				<title>Resurs Bank payment by Reepay</title>
+				<title>Resurs Bank payment by Billwerk+</title>
 				<instructions>Resurs Bank payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -150,7 +150,7 @@
 			</reepay_resurs>
             <reepay_vipps>
                 <active>0</active>
-                <title>Vipps payment by Reepay</title>
+                <title>Vipps payment by Billwerk+</title>
                 <instructions>Vipps payment</instructions>
                 <show_icon>0</show_icon>
                 <allowspecific>0</allowspecific>
@@ -160,7 +160,7 @@
             </reepay_vipps>
             <reepay_forbrugsforeningen>
 				<active>0</active>
-				<title>Forbrugsforeningen payment by Reepay</title>
+				<title>Forbrugsforeningen payment by Billwerk+</title>
 				<instructions>Forbrugsforeningen payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -170,7 +170,7 @@
 			</reepay_forbrugsforeningen>
             <reepay_googlepay>
 				<active>0</active>
-				<title>Googlepay payment by Reepay</title>
+				<title>Googlepay payment by Billwerk+</title>
 				<instructions>Googlepay payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -180,7 +180,7 @@
 			</reepay_googlepay>
             <reepay_ideal>
 				<active>0</active>
-				<title>iDEAL payment by Reepay</title>
+				<title>iDEAL payment by Billwerk+</title>
 				<instructions>iDEAL payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -190,7 +190,7 @@
 			</reepay_ideal>
             <reepay_blik>
 				<active>0</active>
-				<title>BLIK One Click payment by Reepay</title>
+				<title>BLIK One Click payment by Billwerk+</title>
 				<instructions>BLIK One Click payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -200,7 +200,7 @@
 			</reepay_blik>
             <reepay_p24>
 				<active>0</active>
-				<title>Przelewy24 (P24) payment by Reepay</title>
+				<title>Przelewy24 (P24) payment by Billwerk+</title>
 				<instructions>Przelewy24 (P24) payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -210,7 +210,7 @@
 			</reepay_p24>
             <reepay_verkkopankki>
 				<active>0</active>
-				<title>Verkkopankki payment by Reepay</title>
+				<title>Verkkopankki payment by Billwerk+</title>
 				<instructions>Verkkopankki payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -220,7 +220,7 @@
 			</reepay_verkkopankki>
             <reepay_giropay>
 				<active>0</active>
-				<title>giropay payment by Reepay</title>
+				<title>giropay payment by Billwerk+</title>
 				<instructions>giropay payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -230,7 +230,7 @@
 			</reepay_giropay>
             <reepay_sepa>
 				<active></active>
-				<title>SEPA Direct Debit payment by Reepay</title>
+				<title>SEPA Direct Debit payment by Billwerk+</title>
 				<instructions>SEPA Direct Debit payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>
@@ -240,7 +240,7 @@
 			</reepay_sepa>
             <reepay_bancontact>
 				<active></active>
-				<title>Bancontact payment by Reepay</title>
+				<title>Bancontact payment by Billwerk+</title>
 				<instructions>Bancontact payment</instructions>
 				<show_icon>0</show_icon>
 				<allowspecific>0</allowspecific>

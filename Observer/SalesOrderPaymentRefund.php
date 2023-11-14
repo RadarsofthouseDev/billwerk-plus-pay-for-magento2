@@ -127,9 +127,9 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
                     $this->logger->addDebug("set refund transaction data");
                 }
             } else {
-                $this->logger->addDebug("Empty refund response from Reepay");
-                $this->messageManager->addErrorMessage("Empty refund response from Reepay");
-                throw new \Magento\Framework\Exception\LocalizedException(__('Empty refund response from Reepay'));
+                $this->logger->addDebug("Empty refund response from Billwerk+");
+                $this->messageManager->addErrorMessage("Empty refund response from Billwerk+");
+                throw new \Magento\Framework\Exception\LocalizedException(__('Empty refund response from Billwerk+'));
             }
         }
     }

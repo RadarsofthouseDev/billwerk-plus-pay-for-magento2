@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.40 on 14 November 2023
+- Changed "Reepay" labels to "Billwerk+"
+- Prevent webhook retrying when cancel order from Magento
+
 ## Version 1.2.39 on 10 November 2023
 - Changed "BLIK" payment to "BLIK One Click" payment
 
