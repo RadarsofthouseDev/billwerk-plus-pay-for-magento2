@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.41 on 17 November 2023
+- Changed "BLIK One Click" payment to the "auto_capture" payment flow.
+
 ## Version 1.2.40 on 14 November 2023
 - Changed "Reepay" labels to "Billwerk+"
 - Prevent webhook retrying when cancel order from Magento
@@ -8,7 +11,7 @@
 - Changed "BLIK" payment to "BLIK One Click" payment
 
 ## Version 1.2.38 on 8 November 2023
-- Changed "Przelewy24 (P24)" payment to the "auto_captute" payment flow.
+- Changed "Przelewy24 (P24)" payment to the "auto_capture" payment flow.
 
 ## Version 1.2.37 on 30 August 2023
 - Fixed cancel payment issue when the payment status on Reepay is "failed"
@@ -34,7 +37,7 @@
 - Checked compatible with Magento 2.4.5
 
 ## Version 1.2.30 on 13 January 2023
-- Changed "iDEAL" payment to the "auto_captute" payment flow.
+- Changed "iDEAL" payment to the "auto_capture" payment flow.
 
 ## Version 1.2.29 on 11 January 2023
 - Added new payment method "Bancontact".
@@ -49,7 +52,7 @@
 ## Version 1.2.26 on 3 October 2022
 - Fixed PHP error when get error response from Reepay API.
 - Added automatic create invoice option when full amount is settled in Reepay.
-- Changed "SEPA Direct Debit" and "Verkkopankki" payments to the "auto_captute" payment flow.
+- Changed "SEPA Direct Debit" and "Verkkopankki" payments to the "auto_capture" payment flow.
 - Automatic create invoice for the "auto_capture" payments ("Swish", "SEPA Direct Debit" and "Verkkopankki").
 
 ## Version 1.2.25 on 15 September 2022

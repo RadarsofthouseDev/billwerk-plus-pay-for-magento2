@@ -53,7 +53,7 @@
                 <field id="auto_capture" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
                     <label>Auto Capture</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Invoice will be created automatically in Magento.</comment>
+                    <comment>If enabled, the auto capture feature will create invoice automatically in Magento. (BLIK One Click, Przelewy24 (P24), Swish, Ideal, Verkkopankki, Sepa, Bancontact are always auto-captured.)</comment>
                 </field>
                 <field id="auto_create_invoice" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="41" translate="label" type="select">
                     <label>Create invoice in Magento when full amount is settled in Billwerk+</label>
