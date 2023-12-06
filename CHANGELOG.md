@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.42 on 6 December 2023
+- Resolved JS library loading issue on certain themes by switching to requireJS.
+
 ## Version 1.2.41 on 17 November 2023
 - Changed "BLIK One Click" payment to the "auto_capture" payment flow.
 
