@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.43 on 23 April 2024
+- Added Santander payment method.
+- Fixed the warning for the deprecated function: "Operation is deprecated; use documented list operation".
+
 ## Version 1.2.42 on 6 December 2023
 - Resolved JS library loading issue on certain themes by switching to requireJS.
 

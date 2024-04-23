@@ -248,6 +248,16 @@
 				<sort_order>2</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepaybancontact</model>
 			</reepay_bancontact>
+            <reepay_santander>
+				<active></active>
+				<title>Santander payment by Billwerk+</title>
+				<instructions>Santander payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaysantander</model>
+			</reepay_santander>
 		</payment>
 	</default>
 </config>

@@ -65,18 +65,19 @@ class Customer extends AbstractHelper
     public function search($apiKey, $email)
     {
         $log = ['param' => ['email' => $email]];
-        $param = [
-            'page' => 1,
-            'size' => 20,
-            'search' => "email:{$email}",
-        ];
         if (empty($email)) {
             $log['input_error'] = 'empty email.';
             $this->logger->addInfo(__METHOD__, $log, true);
             return false;
         }
+        $param = [
+            'size' => 10,
+            'range' => 'created',
+            'from' => '1970-01-01',
+            'email' => "$email",
+        ];
         try {
-            $response = $this->client->get($apiKey, self::ENDPOINT, $param);
+            $response = $this->client->get($apiKey, 'list/' . self::ENDPOINT, $param);
             $log['response'] = $response;
             $this->logger->addInfo(__METHOD__, $log, true);
             if ($this->client->success() && array_key_exists('count', $response) && (int)$response['count'] > 0) {

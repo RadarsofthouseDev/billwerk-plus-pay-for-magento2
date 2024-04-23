@@ -32,7 +32,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
         $paymentIconsConfig = $this->scopeConfig->getValue('payment/reepay_payment/payment_icons', $storeScope);
-        
+
         if (empty($paymentIconsConfig)) {
             return [];
         }
@@ -433,6 +433,24 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
         $paymentIcon = [];
         if ($showIcon) {
             $paymentIcon = ['bancontact'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get Santander payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getSantanderPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_santander/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['santander'];
         }
 
         return $paymentIcon;

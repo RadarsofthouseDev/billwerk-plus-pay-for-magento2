@@ -94,6 +94,8 @@ class ConfigProvider implements ConfigProviderInterface
                 ->setTemplate('Radarsofthouse_Reepay::sepa_payment_icons.phtml')->toHtml(),
             'bancontact_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::bancontact_payment_icons.phtml')->toHtml(),
+            'santander_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::santander_payment_icons.phtml')->toHtml(),
             'saved_credit_cards' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\SavedCreditCards::class)
                 ->setTemplate('Radarsofthouse_Reepay::saved_credit_cards.phtml')->toHtml(),
             "reepay_payment_instructions" => $this->_scopeConfig->getValue(
@@ -208,6 +210,11 @@ class ConfigProvider implements ConfigProviderInterface
             ),
             "reepay_bancontact_instructions" => $this->_scopeConfig->getValue(
                 'payment/reepay_bancontact/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_santander_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_santander/instructions',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
                 $store_id
             )

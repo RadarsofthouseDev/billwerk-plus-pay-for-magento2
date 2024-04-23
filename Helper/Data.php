@@ -31,7 +31,8 @@ class Data extends AbstractHelper
         'reepay_verkkopankki',
         'reepay_giropay',
         'reepay_sepa',
-        'reepay_bancontact'
+        'reepay_bancontact',
+        'reepay_santander'
     ];
 
     const REEPAY_AUTO_CAPTURE_METHODS = [
@@ -241,7 +242,7 @@ class Data extends AbstractHelper
         }
 
         return [
-//            'handle' => $order->getBillingAddress()->getEmail(),
+            //            'handle' => $order->getBillingAddress()->getEmail(),
             'email' => $order->getBillingAddress()->getEmail(),
             'first_name' => $order->getBillingAddress()->getFirstname(),
             'last_name' => $order->getBillingAddress()->getLastname(),
@@ -275,8 +276,10 @@ class Data extends AbstractHelper
                 $vatId = $order->getBillingAddress()->getVatId();
             }
 
+            $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
+
             return [
-                'company' => $order->getBillingAddress()->getCompany(),
+                'company' => $paymentMethod == "reepay_santander" ? "" : $order->getBillingAddress()->getCompany(),
                 'vat' => $vatId,
                 'attention' => '',
                 'address' => $address1,
@@ -328,8 +331,10 @@ class Data extends AbstractHelper
             $vatId = $order->getShippingAddress()->getVatId();
         }
 
+        $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
+
         return [
-            'company' => $order->getShippingAddress()->getCompany(),
+            'company' => $paymentMethod == "reepay_santander" ? "" : $order->getShippingAddress()->getCompany(),
             'vat' => $vatId,
             'attention' => '',
             'address' => $address1,
@@ -370,7 +375,7 @@ class Data extends AbstractHelper
                 'ordertext' => $orderitem->getProduct()->getName(),
                 'amount' => $this->toInt($amount),
                 'quantity' => $this->toInt($qty),
-                'vat' => $orderitem->getTaxPercent()/100,
+                'vat' => $orderitem->getTaxPercent() / 100,
                 'amount_incl_vat' => "true",
             ];
             $orderLines[] = $line;
@@ -396,12 +401,12 @@ class Data extends AbstractHelper
         $shippingAmount = ($order->getShippingInclTax() * 100);
         if ($shippingAmount != 0) {
             $line = [
-                'ordertext' => !empty($order->getShippingDescription()) ? $order->getShippingDescription():  __('Shipping')->render(),
+                'ordertext' => !empty($order->getShippingDescription()) ? $order->getShippingDescription() :  __('Shipping')->render(),
                 'amount' => $this->toInt($shippingAmount),
                 'quantity' => 1,
             ];
             if ($order->getShippingTaxAmount() > 0) {
-                $line['vat'] = $order->getShippingTaxAmount()/$order->getShippingAmount();
+                $line['vat'] = $order->getShippingTaxAmount() / $order->getShippingAmount();
                 $line['amount_incl_vat'] = "true";
             } else {
                 $line['vat'] = 0;
@@ -415,7 +420,7 @@ class Data extends AbstractHelper
         $discountAmount = ($order->getDiscountAmount() * 100);
         if ($discountAmount != 0) {
             $line = [
-                'ordertext' => !empty($order->getDiscountDescription())? __('Discount: %1', $order->getDiscountDescription())->render() :  __('Discount')->render(),
+                'ordertext' => !empty($order->getDiscountDescription()) ? __('Discount: %1', $order->getDiscountDescription())->render() :  __('Discount')->render(),
                 'amount' => $this->toInt($discountAmount),
                 'quantity' => 1,
                 'vat' => 0,
@@ -467,7 +472,7 @@ class Data extends AbstractHelper
                 'ordertext' => $invoiceItem->getName(),
                 'amount' => $this->toInt($amount),
                 'quantity' => $this->toInt($qty),
-                'vat' => $invoiceItem->getOrderItem()->getTaxPercent()/100,
+                'vat' => $invoiceItem->getOrderItem()->getTaxPercent() / 100,
                 'amount_incl_vat' => "true",
             ];
             $orderLines[] = $line;
@@ -479,12 +484,12 @@ class Data extends AbstractHelper
         $shippingAmount = ($invoice->getShippingInclTax() * 100);
         if ($shippingAmount != 0) {
             $line = [
-                'ordertext' => !empty($order->getShippingDescription()) ? $order->getShippingDescription():  __('Shipping')->render(),
+                'ordertext' => !empty($order->getShippingDescription()) ? $order->getShippingDescription() :  __('Shipping')->render(),
                 'amount' => $this->toInt($shippingAmount),
                 'quantity' => 1,
             ];
             if ($invoice->getShippingTaxAmount() > 0) {
-                $line['vat'] = $invoice->getShippingTaxAmount()/$invoice->getShippingAmount();
+                $line['vat'] = $invoice->getShippingTaxAmount() / $invoice->getShippingAmount();
                 $line['amount_incl_vat'] = "true";
             } else {
                 $line['vat'] = 0;
@@ -498,7 +503,7 @@ class Data extends AbstractHelper
         $discountAmount = ($invoice->getDiscountAmount() * 100);
         if ($discountAmount != 0) {
             $line = [
-                'ordertext' => !empty($invoice->getDiscountDescription())? __('Discount: %1', $invoice->getDiscountDescription())->render() :  __('Discount')->render(),
+                'ordertext' => !empty($invoice->getDiscountDescription()) ? __('Discount: %1', $invoice->getDiscountDescription())->render() :  __('Discount')->render(),
                 'amount' => $this->toInt($discountAmount),
                 'quantity' => 1,
                 'vat' => 0,
@@ -615,6 +620,9 @@ class Data extends AbstractHelper
             case 'reepay_bancontact':
                 $paymentMethods[] = 'bancontact';
                 break;
+            case 'reepay_santander':
+                $paymentMethods[] = 'santander';
+                break;
             default:
                 $allowedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());
                 $paymentMethods = explode(',', $allowedPaymentConfig);
@@ -648,7 +656,7 @@ class Data extends AbstractHelper
             unset($paymentData['source']);
 
             foreach ($source as $key => $value) {
-                $paymentData['source_'.$key] = $value;
+                $paymentData['source_' . $key] = $value;
             }
         }
 
@@ -790,8 +798,8 @@ class Data extends AbstractHelper
                 ->setAdditionalInformation(
                     [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $transactionData]
                 )
-            ->setFailSafe(true)
-            ->build(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE);
+                ->setFailSafe(true)
+                ->build(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE);
 
             $payment->addTransactionCommentsToOrder(
                 $transaction,
@@ -804,7 +812,7 @@ class Data extends AbstractHelper
 
             $orderStatusAfterPayment = $this->getConfig('order_status_after_payment', $order->getStoreId());
             $autoCapture = $this->getConfig('auto_capture', $order->getStoreId());
-            
+
             $paymentMethod = $order->getPayment()->getMethodInstance()->getCode();
             $reepayMethod = isset($chargeRes['source']['type']) ? $chargeRes['source']['type'] : '';
             if (($this->isReepayPaymentMethod($paymentMethod) && $order->getPayment()->getMethodInstance()->isAutoCapture()) ||
@@ -883,8 +891,8 @@ class Data extends AbstractHelper
                 ->setAdditionalInformation(
                     [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $transactionData]
                 )
-            ->setFailSafe(true)
-            ->build(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_REFUND);
+                ->setFailSafe(true)
+                ->build(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_REFUND);
 
             $payment->addTransactionCommentsToOrder(
                 $transaction,
@@ -910,7 +918,7 @@ class Data extends AbstractHelper
      */
     public function convertAmount($amount)
     {
-        return number_format((float)($amount/100), 2, '.', '');
+        return number_format((float)($amount / 100), 2, '.', '');
     }
 
     /**
