@@ -931,6 +931,586 @@
 					<comment/>
 				</field>
 			</group>
+            <group id="reepay_eps" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: EPS</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show EPS icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_estoniabanks" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Estonian Banks</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_latviabanks" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Latvian Banks</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_lithuaniabanks" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Lithuanian Banks</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_mbway" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: MB Way</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show MB Way icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_multibanco" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Multibanco</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Multibanco icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_mybank" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: mBank</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show mBank icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_payconiq" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Payconiq</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Payconiq icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_paysafecard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Paysafecard</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Paysafecard icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_paysera" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Paysera</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Paysera icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_postfinance" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: PostFinance</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show PostFinance icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_satispay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Satisfy</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Satisfy icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_trustly" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Trustly</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Trustly icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_wechatpay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: WeChat Pay</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show WeChat Pay icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_banktransfer" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Bank Transfer</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Bank Transfer icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_cash" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Cash</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Cash icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
+            <group id="reepay_other" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Other</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>title</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Other icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+			</group>
 		</section>
 	</system>
 </config>

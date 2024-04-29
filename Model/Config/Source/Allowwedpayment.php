@@ -46,7 +46,24 @@ class Allowwedpayment implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'ideal', 'label' => __('iDEAL')],
             ['value' => 'verkkopankki', 'label' => __('Verkkopankki')],
             ['value' => 'sepa', 'label' => __('SEPA Direct Debit')],
-            ['value' => 'bancontact', 'label' => __('Bancontact')]
+            ['value' => 'bancontact', 'label' => __('Bancontact')],
+            ['value' => 'eps', 'label' => __('EPS')],
+            ['value' => 'estonia_banks', 'label' => __('Estonian Banks')],
+            ['value' => 'latvia_banks', 'label' => __('Latvian Banks')],
+            ['value' => 'lithuania_banks', 'label' => __('Lithuanian Banks')],
+            ['value' => 'mb_way', 'label' => __('MB Way')],
+            ['value' => 'multibanco', 'label' => __('Multibanco')],
+            ['value' => 'mybank', 'label' => __('mBank')],
+            ['value' => 'payconiq', 'label' => __('Payconiq')],
+            ['value' => 'paysafecard', 'label' => __('Paysafecard')],
+            ['value' => 'paysera', 'label' => __('Paysera')],
+            ['value' => 'postfinance', 'label' => __('PostFinance')],
+            ['value' => 'satispay', 'label' => __('Satisfy')],
+            ['value' => 'trustly', 'label' => __('Trustly')],
+            ['value' => 'wechatpay', 'label' => __('WeChat Pay')],
+            ['value' => 'bank_transfer', 'label' => __('Bank Transfer')],
+            ['value' => 'cash', 'label' => __('Cash')],
+            ['value' => 'other', 'label' => __('Other')]
         ];
     }
 }

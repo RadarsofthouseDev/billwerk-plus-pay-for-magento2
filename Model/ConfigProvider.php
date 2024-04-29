@@ -96,6 +96,28 @@ class ConfigProvider implements ConfigProviderInterface
                 ->setTemplate('Radarsofthouse_Reepay::bancontact_payment_icons.phtml')->toHtml(),
             'santander_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::santander_payment_icons.phtml')->toHtml(),
+            'eps_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::eps_payment_icons.phtml')->toHtml(),
+            'mbway_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::mbway_payment_icons.phtml')->toHtml(),
+            'multibanco_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::multibanco_payment_icons.phtml')->toHtml(),
+            'mybank_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::mybank_payment_icons.phtml')->toHtml(),
+            'payconiq_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::payconiq_payment_icons.phtml')->toHtml(),
+            'paysafecard_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::paysafecard_payment_icons.phtml')->toHtml(),
+            'paysera_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::paysera_payment_icons.phtml')->toHtml(),
+            'postfinance_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::postfinance_payment_icons.phtml')->toHtml(),
+            'satispay_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::satispay_payment_icons.phtml')->toHtml(),
+            'trustly_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::trustly_payment_icons.phtml')->toHtml(),
+            'wechatpay_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::wechatpay_payment_icons.phtml')->toHtml(),
             'saved_credit_cards' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\SavedCreditCards::class)
                 ->setTemplate('Radarsofthouse_Reepay::saved_credit_cards.phtml')->toHtml(),
             "reepay_payment_instructions" => $this->_scopeConfig->getValue(
@@ -217,7 +239,92 @@ class ConfigProvider implements ConfigProviderInterface
                 'payment/reepay_santander/instructions',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
                 $store_id
-            )
+            ),
+            "reepay_eps_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_eps/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_estoniabanks_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_estoniabanks/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_latviabanks_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_latviabanks/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_lithuaniabanks_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_lithuaniabanks/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_mbway_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_mbway/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_multibanco_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_multibanco/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_mybank_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_mybank/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_payconiq_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_payconiq/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_paysafecard_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_paysafecard/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_paysera_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_paysera/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_postfinance_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_postfinance/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_satispay_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_satispay/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_trustly_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_trustly/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_wechatpay_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_wechatpay/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_banktransfer_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_banktransfer/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_cash_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_cash/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
+            "reepay_other_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_other/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
         ];
     }
 }

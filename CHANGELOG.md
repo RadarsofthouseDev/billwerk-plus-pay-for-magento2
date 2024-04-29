@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.44 on 29 April 2024
+- Added new payment methods "EPS", "Estonian Banks", "Latvian Banks", "Lithuanian Banks", "MB Way", "Multibanco", "mBank", "Payconiq", "Paysafecard", "Paysera", "PostFinance", "Satisfy", "Trustly", "WeChat Pay", "Bank Transfer", "Cash" and "Other".
+
 ## Version 1.2.43 on 23 April 2024
 - Added Santander payment method.
 - Fixed the warning for the deprecated function: "Operation is deprecated; use documented list operation".

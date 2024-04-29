@@ -22,8 +22,8 @@
 				<cancel_order_after_payment_cancel>0</cancel_order_after_payment_cancel>
 				<allowspecific/>
 				<specificcountry/>
-				<allowwed_payment>card,dankort,visa,visa_dk,visa_elec,mc,amex,mobilepay,viabill,anyday,klarna_pay_later,klarna_pay_now,klarna_slice_it,klarna_direct_bank_transfer,klarna_direct_debit,diners,maestro,laser,discover,jcb,china_union_pay,ffk,applepay,paypal,resurs,vipps,googlepay,blik_oc,giropay,p24,swish,ideal,verkkopankki,sepa,bancontact</allowwed_payment>
-				<payment_icons>american-express,dankort,diners-club-international,discover,forbrugsforeningen,jcb,maestro,mastercard,mobilepay,unionpay,viabill,anyday,visa,visa-electron,klarna-pay-later,klarna-pay-now,klarna-slice-it,klarna-direct-bank-transfer,klarna-direct-debit,applepay,paypal,resurs,vipps,googlepay,blik_oc,giropay,p24,swish,ideal,verkkopankki,sepa,bancontact</payment_icons>
+				<allowwed_payment>card</allowwed_payment>
+				<payment_icons></payment_icons>
 				<payment_link>payment_reepay_payment_payment_link</payment_link>
 				<sort_order>0</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepaypayment</model>
@@ -258,6 +258,176 @@
 				<sort_order>2</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepaysantander</model>
 			</reepay_santander>
+            <reepay_eps>
+				<active></active>
+				<title>EPS payment by Billwerk+</title>
+				<instructions>EPS payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayeps</model>
+			</reepay_eps>
+            <reepay_estoniabanks>
+				<active></active>
+				<title>Estonian Banks payment by Billwerk+</title>
+				<instructions>Estonian Banks payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayestoniabanks</model>
+			</reepay_estoniabanks>
+            <reepay_latviabanks>
+				<active></active>
+				<title>Latvian Banks payment by Billwerk+</title>
+				<instructions>Latvian Banks payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaylatviabanks</model>
+			</reepay_latviabanks>
+            <reepay_lithuaniabanks>
+				<active></active>
+				<title>Lithuanian Banks payment by Billwerk+</title>
+				<instructions>Lithuanian Banks payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaylithuaniabanks</model>
+			</reepay_lithuaniabanks>
+            <reepay_mbway>
+				<active></active>
+				<title>MB Way payment by Billwerk+</title>
+				<instructions>MB Way payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaymbway</model>
+			</reepay_mbway>
+            <reepay_multibanco>
+				<active></active>
+				<title>Multibanco payment by Billwerk+</title>
+				<instructions>Multibanco payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaymultibanco</model>
+			</reepay_multibanco>
+            <reepay_mybank>
+				<active></active>
+				<title>mBank payment by Billwerk+</title>
+				<instructions>mBank payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaymybank</model>
+			</reepay_mybank>
+            <reepay_payconiq>
+				<active></active>
+				<title>Payconiq payment by Billwerk+</title>
+				<instructions>Payconiq payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaypayconiq</model>
+			</reepay_payconiq>
+            <reepay_paysafecard>
+				<active></active>
+				<title>Paysafecard payment by Billwerk+</title>
+				<instructions>Paysafecard payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaypaysafecard</model>
+			</reepay_paysafecard>
+            <reepay_paysera>
+				<active></active>
+				<title>Paysera payment by Billwerk+</title>
+				<instructions>Paysera payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaypaysera</model>
+			</reepay_paysera>
+            <reepay_postfinance>
+				<active></active>
+				<title>PostFinance payment by Billwerk+</title>
+				<instructions>PostFinance payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaypostfinance</model>
+			</reepay_postfinance>
+            <reepay_satispay>
+				<active></active>
+				<title>Satisfy payment by Billwerk+</title>
+				<instructions>Satisfy payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaysatispay</model>
+			</reepay_satispay>
+            <reepay_trustly>
+				<active></active>
+				<title>Trustly payment by Billwerk+</title>
+				<instructions>Trustly payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaytrustly</model>
+			</reepay_trustly>
+            <reepay_wechatpay>
+				<active></active>
+				<title>WeChat Pay payment by Billwerk+</title>
+				<instructions>WeChat Pay payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaywechatpay</model>
+			</reepay_wechatpay>
+            <reepay_banktransfer>
+				<active></active>
+				<title>Bank Transfer payment by Billwerk+</title>
+				<instructions>Bank Transfer payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaybanktransfer</model>
+			</reepay_banktransfer>
+            <reepay_cash>
+				<active></active>
+				<title>Cash payment by Billwerk+</title>
+				<instructions>Cash payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepaycash</model>
+			</reepay_cash>
+            <reepay_other>
+				<active></active>
+				<title>Other payment by Billwerk+</title>
+				<instructions>Other payment</instructions>
+				<show_icon>0</show_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayother</model>
+			</reepay_other>
 		</payment>
 	</default>
 </config>

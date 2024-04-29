@@ -43,7 +43,17 @@ class Paymenticons implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'ideal', 'label' => __('iDEAL')],
             ['value' => 'verkkopankki', 'label' => __('Verkkopankki')],
             ['value' => 'sepa', 'label' => __('SEPA Direct Debit')],
-            ['value' => 'bancontact', 'label' => __('Bancontact')]
+            ['value' => 'eps', 'label' => __('EPS')],
+            ['value' => 'mb-way', 'label' => __('MB Way')],
+            ['value' => 'multibanco', 'label' => __('Multibanco')],
+            ['value' => 'mybank', 'label' => __('mBank')],
+            ['value' => 'payconiq', 'label' => __('Payconiq')],
+            ['value' => 'paysafecard', 'label' => __('Paysafecard')],
+            ['value' => 'paysera', 'label' => __('Paysera')],
+            ['value' => 'postfinance', 'label' => __('PostFinance')],
+            ['value' => 'satispay', 'label' => __('Satisfy')],
+            ['value' => 'trustly', 'label' => __('Trustly')],
+            ['value' => 'wechatpay', 'label' => __('WeChat Pay')]
         ];
     }
 }

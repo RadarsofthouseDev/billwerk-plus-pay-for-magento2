@@ -32,7 +32,24 @@ class Data extends AbstractHelper
         'reepay_giropay',
         'reepay_sepa',
         'reepay_bancontact',
-        'reepay_santander'
+        'reepay_santander',
+        'reepay_eps',
+        'reepay_estoniabanks',
+        'reepay_latviabanks',
+        'reepay_lithuaniabanks',
+        'reepay_mbway',
+        'reepay_multibanco',
+        'reepay_mybank',
+        'reepay_payconiq',
+        'reepay_paysafecard',
+        'reepay_paysera',
+        'reepay_postfinance',
+        'reepay_satispay',
+        'reepay_trustly',
+        'reepay_wechatpay',
+        'reepay_banktransfer',
+        'reepay_cash',
+        'reepay_other'
     ];
 
     const REEPAY_AUTO_CAPTURE_METHODS = [
@@ -41,7 +58,23 @@ class Data extends AbstractHelper
         'ideal',
         'sepa',
         'verkkopankki',
-        'p24'
+        'p24',
+        'eps',
+        'estonia_banks',
+        'latvia_banks',
+        'lithuania_banks',
+        'mb_way',
+        'multibanco',
+        'mybank',
+        'payconiq',
+        'paysafecard',
+        'paysera',
+        'postfinance',
+        'satispay',
+        'wechatpay',
+        'offline_cash',
+        'offline_bank_transfer',
+        'offline_other'
     ];
 
 
@@ -622,6 +655,57 @@ class Data extends AbstractHelper
                 break;
             case 'reepay_santander':
                 $paymentMethods[] = 'santander';
+                break;
+            case 'reepay_eps':
+                $paymentMethods[] = 'eps';
+                break;
+            case 'reepay_estoniabanks':
+                $paymentMethods[] = 'estonia_banks';
+                break;
+            case 'reepay_latviabanks':
+                $paymentMethods[] = 'latvia_banks';
+                break;
+            case 'reepay_lithuaniabanks':
+                $paymentMethods[] = 'lithuania_banks';
+                break;
+            case 'reepay_mbway':
+                $paymentMethods[] = 'mb_way';
+                break;
+            case 'reepay_multibanco':
+                $paymentMethods[] = 'multibanco';
+                break;
+            case 'reepay_mybank':
+                $paymentMethods[] = 'mybank';
+                break;
+            case 'reepay_payconiq':
+                $paymentMethods[] = 'payconiq';
+                break;
+            case 'reepay_paysafecard':
+                $paymentMethods[] = 'paysafecard';
+                break;
+            case 'reepay_paysera':
+                $paymentMethods[] = 'paysera';
+                break;
+            case 'reepay_postfinance':
+                $paymentMethods[] = 'postfinance';
+                break;
+            case 'reepay_satispay':
+                $paymentMethods[] = 'satispay';
+                break;
+            case 'reepay_trustly':
+                $paymentMethods[] = 'trustly';
+                break;
+            case 'reepay_wechatpay':
+                $paymentMethods[] = 'wechatpay';
+                break;
+            case 'reepay_banktransfer':
+                $paymentMethods[] = 'bank_transfer';
+                break;
+            case 'reepay_cash':
+                $paymentMethods[] = 'cash';
+                break;
+            case 'reepay_other':
+                $paymentMethods[] = 'other';
                 break;
             default:
                 $allowedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());

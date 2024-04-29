@@ -455,4 +455,202 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         return $paymentIcon;
     }
+
+    /**
+     * Get EPS payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getEpsPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_eps/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['eps'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get MB Way payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getMbWayPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_mbway/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['mb-way'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get Multibanco payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getMultibancoPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_multibanco/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['multibanco'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get mBank payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getMybankPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_mybank/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['mybank'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get Payconiq payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getPayconiqPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_payconiq/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['payconiq'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get Paysafecard payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getPaysafecardPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_paysafecard/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['paysafecard'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get Paysera payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getPayseraPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_paysera/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['paysera'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get PostFinance payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getPostfinancePaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_postfinance/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['postfinance'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get Satisfy payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getSatispayPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_satispay/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['satispay'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get Trustly payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getTrustlyPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_trustly/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['trustly'];
+        }
+
+        return $paymentIcon;
+    }
+
+    /**
+     * Get WeChat Pay payment icon
+     *
+     * @return array $paymentIcon
+     */
+    public function getWechatpayPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_wechatpay/show_icon', $storeScope);
+
+        $paymentIcon = [];
+        if ($showIcon) {
+            $paymentIcon = ['wechatpay'];
+        }
+
+        return $paymentIcon;
+    }
 }

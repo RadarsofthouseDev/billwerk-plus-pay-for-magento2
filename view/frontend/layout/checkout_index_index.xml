@@ -212,6 +212,142 @@
 																		</item>
 																	</item>
 																</item>
+                                                                <item name="reepay_eps" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_eps</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_eps" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_estoniabanks" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_estoniabanks</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_estoniabanks" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_latviabanks" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_latviabanks</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_latviabanks" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_lithuaniabanks" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_lithuaniabanks</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_lithuaniabanks" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_mbway" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_mbway</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_mbway" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_multibanco" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_multibanco</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_multibanco" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_mybank" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_mybank</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_mybank" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_payconiq" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_payconiq</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_payconiq" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_paysafecard" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_paysafecard</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_paysafecard" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_paysera" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_paysera</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_paysera" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_postfinance" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_postfinance</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_postfinance" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_satispay" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_satispay</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_satispay" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_trustly" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_trustly</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_trustly" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_wechatpay" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_wechatpay</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_wechatpay" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_banktransfer" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_banktransfer</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_banktransfer" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_cash" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_cash</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_cash" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
+                                                                <item name="reepay_other" xsi:type="array">
+																	<item name="component" xsi:type="string">Radarsofthouse_Reepay/js/view/payment/reepay_other</item>
+																	<item name="methods" xsi:type="array">
+																		<item name="reepay_other" xsi:type="array">
+																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+																		</item>
+																	</item>
+																</item>
 															</item>
 														</item>
 													</item>
