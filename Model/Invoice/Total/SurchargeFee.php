@@ -49,13 +49,14 @@ class SurchargeFee extends \Magento\Sales\Model\Order\Invoice\Total\AbstractTota
     public function collect(\Magento\Sales\Model\Order\Invoice $invoice)
     {
         $payment = $invoice->getOrder()->getPayment();
+        $storeId = $invoice->getOrder()->getStoreId();
         $paymentMethod = null;
         if ($payment !== null) {
             $paymentMethod = $payment->getMethod();
         }
 
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
-        $isEnable = $this->_helperData->isSurchargeFeeEnabled();
+        $isEnable = $this->_helperData->isSurchargeFeeEnabled($storeId);
         $this->_helperLogger->addDebug(
             __METHOD__,
             [

@@ -54,12 +54,13 @@ class CreditmemoFactory
         /** @var \Magento\Sales\Model\Order\Creditmemo $result */
         $result = $proceed($order, $data);
         $payment = $order->getPayment();
+        $storeId = $order->getStoreId();
         $paymentMethod = null;
         if ($payment !== null) {
             $paymentMethod = $payment->getMethod();
         }
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
-        $isEnable = $this->_helperData->isSurchargeFeeEnabled();
+        $isEnable = $this->_helperData->isSurchargeFeeEnabled($storeId);
         $this->_helperLogger->addDebug(
             __METHOD__,
             [
@@ -126,12 +127,13 @@ class CreditmemoFactory
         $result = $proceed($invoice, $data);
         $order = $invoice->getOrder();
         $payment = $order->getPayment();
+        $storeId = $order->getStoreId();
         $paymentMethod = null;
         if ($payment !== null) {
             $paymentMethod = $payment->getMethod();
         }
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
-        $isEnable = $this->_helperData->isSurchargeFeeEnabled();
+        $isEnable = $this->_helperData->isSurchargeFeeEnabled($storeId);
         $this->_helperLogger->addDebug(
             __METHOD__,
             [
