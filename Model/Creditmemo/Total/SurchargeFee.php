@@ -48,7 +48,7 @@ class SurchargeFee extends \Magento\Sales\Model\Order\Creditmemo\Total\AbstractT
     public function collect(\Magento\Sales\Model\Order\Creditmemo $creditmemo)
     {
         $payment = $creditmemo->getOrder()->getPayment();
-        $storeId = $creditmemo->getStoreId();
+        $storeId = $creditmemo->getOrder()->getStoreId();
         $paymentMethod = null;
         if ($payment !== null) {
             $paymentMethod = $payment->getMethod();
