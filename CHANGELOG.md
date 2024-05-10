@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.45 on 10 May 2024
+- Fixed surcharge fee calculation on admin order invoice creating
+
 ## Version 1.2.44 on 29 April 2024
 - Added new payment methods "EPS", "Estonian Banks", "Latvian Banks", "Lithuanian Banks", "MB Way", "Multibanco", "mBank", "Payconiq", "Paysafecard", "Paysera", "PostFinance", "Satisfy", "Trustly", "WeChat Pay", "Bank Transfer", "Cash" and "Other".
 

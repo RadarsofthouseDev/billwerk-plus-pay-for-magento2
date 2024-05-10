@@ -656,7 +656,9 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     private function surchargeFee($orderIncrementId, $chargeRes)
     {
-        $isSurchargeFeeEnable = $this->reepayHelper->isSurchargeFeeEnabled();
+		$order = $this->orderInterface->loadByIncrementId($orderIncrementId);
+        $storeId = $order->getStoreId();
+        $isSurchargeFeeEnable = $this->reepayHelper->isSurchargeFeeEnabled($storeId);
         $this->logger->addDebug(__METHOD__, ['isSurchargeFeeEnable' => $isSurchargeFeeEnable, 'orderIncrementId' => $orderIncrementId]);
         if ($isSurchargeFeeEnable) {
             //to test add 50.00
