@@ -47,9 +47,10 @@ class SurchargeFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTota
             return $this;
         }
         $paymentMethod = $quote->getPayment()->getMethod();
+        $storeId = $quote->getStoreId();
 
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
-        $isEnable = $this->_helperData->isSurchargeFeeEnabled();
+        $isEnable = $this->_helperData->isSurchargeFeeEnabled($storeId);
         $this->_helperLogger->addDebug(
             __METHOD__,
             [
@@ -85,8 +86,9 @@ class SurchargeFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTota
     public function fetch(\Magento\Quote\Model\Quote $quote, \Magento\Quote\Model\Quote\Address\Total $total)
     {
         $paymentMethod = $quote->getPayment()->getMethod();
+        $storeId = $quote->getStoreId();
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
-        $isEnable = $this->_helperData->isSurchargeFeeEnabled();
+        $isEnable = $this->_helperData->isSurchargeFeeEnabled($storeId);
         $this->_helperLogger->addDebug(
             __METHOD__,
             [

@@ -66,12 +66,13 @@ class Totals extends \Magento\Framework\View\Element\Template
         $this->getSource();
         /** @var \Magento\Sales\Api\Data\OrderPaymentInterface $payment */
         $payment = $this->getInvoice()->getOrder()->getPayment();
+        $storeId = $this->getInvoice()->getOrder()->getStoreId();
         $paymentMethod = null;
         if ($payment !== null) {
             $paymentMethod = $payment->getMethod();
         }
         $isReepayPaymentMethod = $this->_helperData->isReepayPaymentMethod($paymentMethod);
-        $isEnable = $this->_helperData->isSurchargeFeeEnabled();
+        $isEnable = $this->_helperData->isSurchargeFeeEnabled($storeId);
         $surchargeFee = $this->getSource()->getReepaySurchargeFee();
         $this->_helperLogger->addDebug(
             __METHOD__,
