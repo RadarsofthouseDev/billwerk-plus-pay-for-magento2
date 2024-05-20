@@ -309,4 +309,28 @@ class Invoice extends AbstractHelper
             return false;
         }
     }
+
+    /**
+     * Get invoice metadata by handle
+     *
+     * @param string $apiKey
+     * @param string $handle
+     * @return bool|array
+     * @throws \Exception
+     */
+    public function getMetadata($apiKey, $handle)
+    {
+        $log = ['param' => ['handle' => $handle]];
+        $response = $this->client->get($apiKey, self::ENDPOINT . "/$handle/metadata");
+        if ($this->client->success()) {
+            $log['response'] = $response;
+            $this->logger->addInfo(__METHOD__, $log, true);
+            return $response;
+        } else {
+            $log['http_errors'] = $this->client->getHttpError();
+            $log['response_errors'] = $this->client->getErrors();
+            $this->logger->addError(__METHOD__, $log, true);
+            return false;
+        }
+    }
 }

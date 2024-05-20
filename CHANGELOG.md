@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.46 on 20 May 2024
+- Removed PHP payment validation
+- Added compatibility with Billwerk+ Subscription for Magento 2 module
+
 ## Version 1.2.45 on 10 May 2024
 - Fixed surcharge fee calculation on admin order invoice creating
 

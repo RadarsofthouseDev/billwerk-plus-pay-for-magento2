@@ -295,6 +295,14 @@ class Index extends \Magento\Framework\App\Action\Action
         $order_id = $data['invoice'];
         $this->logger->addDebug(__METHOD__, [$order_id]);
         $order = $this->orderInterface->loadByIncrementId($order_id);
+        $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
+        $metadata = $this->invoiceHelper->getMetadata($apiKey, $data['invoice']);
+        if (isset($metadata['magento']['module']) && $metadata['magento']['module'] === 'subscription') {
+            return [
+                'status' => 200,
+                'message' => "This order not created from checkout module.",
+            ];
+        }
 
         try {
             if (!$order->getId()) {
@@ -440,6 +448,14 @@ class Index extends \Magento\Framework\App\Action\Action
         $order_id = $data['invoice'];
         $this->logger->addDebug(__METHOD__, [$order_id]);
         $order = $this->orderInterface->loadByIncrementId($order_id);
+        $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
+        $metadata = $this->invoiceHelper->getMetadata($apiKey, $data['invoice']);
+        if (isset($metadata['magento']['module']) && $metadata['magento']['module'] === 'subscription') {
+            return [
+                'status' => 200,
+                'message' => "This order not created from checkout module.",
+            ];
+        }
 
         try {
             if (!$order->getId()) {
@@ -530,6 +546,14 @@ class Index extends \Magento\Framework\App\Action\Action
         $order_id = $data['invoice'];
         $this->logger->addDebug(__METHOD__, [$order_id]);
         $order = $this->orderInterface->loadByIncrementId($order_id);
+        $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
+        $metadata = $this->invoiceHelper->getMetadata($apiKey, $data['invoice']);
+        if (isset($metadata['magento']['module']) && $metadata['magento']['module'] === 'subscription') {
+            return [
+                'status' => 200,
+                'message' => "This order not created from checkout module.",
+            ];
+        }
 
         try {
             if (!$order->getId()) {
@@ -593,6 +617,14 @@ class Index extends \Magento\Framework\App\Action\Action
         $order_id = $data['invoice'];
         $this->logger->addDebug(__METHOD__, [$order_id]);
         $order = $this->orderInterface->loadByIncrementId($order_id);
+        $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
+        $metadata = $this->invoiceHelper->getMetadata($apiKey, $data['invoice']);
+        if (isset($metadata['magento']['module']) && $metadata['magento']['module'] === 'subscription') {
+            return [
+                'status' => 200,
+                'message' => "This order not created from checkout module.",
+            ];
+        }
 
         try {
             // check if has reepay status row for the order, That means the order has been authorized
