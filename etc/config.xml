@@ -5,7 +5,7 @@
 			<reepay_payment>
 				<active>0</active>
 				<title>Credit card by Billwerk+</title>
-				<instructions>Billwerk+ payment</instructions>
+				<instructions>Billwerk+ Pay</instructions>
 				<private_key_test/>
 				<private_key/>
 				<api_key_type>0</api_key_type>

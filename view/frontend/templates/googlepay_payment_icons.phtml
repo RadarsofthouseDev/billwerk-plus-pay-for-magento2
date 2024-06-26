@@ -1,19 +1,17 @@
 <?php $paymentIcons = $block->getGooglepayPaymentIcon(); ?>
-<?php if (count($paymentIcons) > 0): ?>
-    <?php foreach ($paymentIcons as $paymentIcon): ?>
-        <?php $imageUrl = $block->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/'.$paymentIcon.'.png'); ?>
+<?php if (count($paymentIcons) > 0) : ?>
+    <?php foreach ($paymentIcons as $paymentIcon) : ?>
+        <?php $imageUrl = $block->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/' . $paymentIcon . '.png'); ?>
         <img class="reepay-payment-icon" src="<?= $block->escapeUrl($imageUrl); ?>">
     <?php endforeach; ?>
 <?php endif; ?>
 
 <script>
-    require(['jquery','Reepay'],function($,Reepay){
+    require(['jquery', 'Reepay'], function($, Reepay) {
         Reepay.isGooglePayAvailable().then(isAvailable => {
-            if( !isAvailable ){
+            if (!isAvailable) {
                 console.log("Google pay is not available");
-                if( $('.reepay-payment-method-googlepay').length > 0 ){
-                    $('.reepay-payment-method-googlepay').remove();
-                }
+                $('input#reepay_googlepay').closest('.payment-method').remove();
             }
         });
     });

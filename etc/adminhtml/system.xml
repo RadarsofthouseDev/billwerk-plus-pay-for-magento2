@@ -3,7 +3,7 @@
 	<system>
 		<section id="payment">
 			<group id="reepay_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label">
-				<label>Billwerk+ payment</label>
+				<label>Billwerk+ Pay</label>
                 <field id="version" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label" type="label">
 					<label>Version</label>
 					<frontend_model>Radarsofthouse\Reepay\Block\System\Config\Form\Field\Version</frontend_model>

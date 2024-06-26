@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.47 on 26 June 2024
+- Fixed JavaScript validation for Google Pay and Apple Pay to be compatible with onestepcheckout.
+- Changed the module name to Billwerk+ Pay.
+
 ## Version 1.2.46 on 20 May 2024
 - Removed PHP payment validation
 - Added compatibility with Billwerk+ Subscription for Magento 2 module

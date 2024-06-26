@@ -1,7 +1,17 @@
 <?php $paymentIcons = $block->getApplepayPaymentIcon(); ?>
-<?php if (count($paymentIcons) > 0): ?>
-    <?php foreach ($paymentIcons as $paymentIcon): ?>
-        <?php $imageUrl = $block->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/'.$paymentIcon.'.png'); ?>
+<?php if (count($paymentIcons) > 0) : ?>
+    <?php foreach ($paymentIcons as $paymentIcon) : ?>
+        <?php $imageUrl = $block->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/' . $paymentIcon . '.png'); ?>
         <img class="reepay-payment-icon" src="<?= $block->escapeUrl($imageUrl); ?>">
     <?php endforeach; ?>
 <?php endif; ?>
+
+<script>
+    require(['jquery', 'Reepay'], function($, Reepay) {
+        const isApplePayAvailable = Reepay.isApplePayAvailable();
+        if (!isApplePayAvailable) {
+            console.log("Apple Pay is not available");
+            $('input#reepay_applepay').closest('.payment-method').remove();
+        }
+    });
+</script>
