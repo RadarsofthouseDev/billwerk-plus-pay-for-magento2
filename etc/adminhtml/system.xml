@@ -43,7 +43,6 @@
                 </field>
 				<field id="display_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
 					<label>Display type</label>
-					<comment>Note: ViaBill, Vipps, Resurs Bank and Apple Pay will be opened in "Window" display type.</comment>
 					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Displaytype</source_model>
 				</field>
 				<field id="send_order_line" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
@@ -53,7 +52,7 @@
                 <field id="auto_capture" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
                     <label>Auto Capture</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>If enabled, the auto capture feature will create invoice automatically in Magento. (BLIK One Click, Przelewy24 (P24), Swish, Ideal, Verkkopankki, Sepa, Bancontact are always auto-captured.)</comment>
+                    <comment>If enabled, the auto capture feature will create invoice automatically in Magento.</comment>
                 </field>
                 <field id="auto_create_invoice" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="41" translate="label" type="select">
                     <label>Create invoice in Magento when full amount is settled in Billwerk+</label>
@@ -112,7 +111,12 @@
 					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Paymenticons</source_model>
                     <can_be_empty>1</can_be_empty>
 				</field>
-				<field id="payment_link" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="82" translate="label" type="select">
+                <field id="use_custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="82" translate="label" type="select">
+                    <label>Use custom icons from the separated payment methods</label>
+                    <comment>Set to "No" to use the default icons</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				<field id="payment_link" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="83" translate="label" type="select">
 					<label>Payment Link Email Template</label>
 					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Email\Template</source_model>
 				</field>
@@ -146,6 +150,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -160,6 +171,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method will be displayed in the "Window" display type.</comment>
+                </field>
 			</group>
             <group id="reepay_anyday" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Anyday</label>
@@ -180,6 +195,13 @@
 					<label>Show Anyday icon</label>
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
 				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
@@ -216,6 +238,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -251,6 +280,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -265,6 +301,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method will be displayed in the "Window" display type.</comment>
+                </field>
 			</group>
             <group id="reepay_paypal" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Paypal</label>
@@ -285,6 +325,13 @@
 					<label>Show Paypal icon</label>
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
 				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
@@ -321,6 +368,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -355,6 +409,13 @@
 					<label>Show Klarna Pay Later icon</label>
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
 				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
@@ -391,6 +452,13 @@
                     <comment/>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
                 <field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
                     <label>Payment From Applicable Countries</label>
                     <comment/>
@@ -426,6 +494,13 @@
                     <comment/>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
                 <field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
                     <label>Payment From Applicable Countries</label>
                     <comment/>
@@ -461,6 +536,13 @@
                     <comment/>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
                 <field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
                     <label>Payment From Applicable Countries</label>
                     <comment/>
@@ -496,6 +578,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -506,10 +595,10 @@
 					<comment/>
 					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
 				</field>
-				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
-					<label>Sort order</label>
-					<comment/>
-				</field>
+				<field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_resurs" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Resurs Bank</label>
@@ -531,6 +620,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -545,6 +641,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method will be displayed in the "Window" display type.</comment>
+                </field>
 			</group>
             <group id="reepay_vipps" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
                 <label>Billwerk+: Vipps</label>
@@ -566,6 +666,13 @@
                     <comment/>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
                 <field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
                     <label>Payment From Applicable Countries</label>
                     <comment/>
@@ -579,6 +686,10 @@
                 <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
                     <label>Sort order</label>
                     <comment/>
+                </field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method will be displayed in the "Window" display type.</comment>
                 </field>
             </group>
             <group id="reepay_forbrugsforeningen" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
@@ -600,6 +711,13 @@
 					<label>Show Forbrugsforeningen icon</label>
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
 				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
@@ -636,6 +754,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -671,6 +796,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -685,6 +817,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_blik" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: BLIK One Click</label>
@@ -706,6 +842,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -720,6 +863,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_p24" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Przelewy24 (P24)</label>
@@ -741,6 +888,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -755,6 +909,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_verkkopankki" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Verkkopankki</label>
@@ -776,6 +934,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -790,6 +955,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_giropay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: giropay</label>
@@ -810,6 +979,13 @@
 					<label>Show giropay icon</label>
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
 				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
@@ -846,6 +1022,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -860,6 +1043,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_bancontact" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Bancontact</label>
@@ -881,6 +1068,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -895,6 +1089,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_santander" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Santander</label>
@@ -916,6 +1114,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -930,6 +1135,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>Santander does not support the "Auto Capture" function.</comment>
+                </field>
 			</group>
             <group id="reepay_eps" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: EPS</label>
@@ -951,6 +1160,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -965,6 +1181,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_estoniabanks" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Estonian Banks</label>
@@ -981,6 +1201,18 @@
 					<label>Instructions</label>
 					<comment/>
 				</field>
+                <field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Estonian Banks icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -995,6 +1227,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_latviabanks" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Latvian Banks</label>
@@ -1011,6 +1247,18 @@
 					<label>Instructions</label>
 					<comment/>
 				</field>
+                <field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Latvian Banks icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1025,6 +1273,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_lithuaniabanks" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Lithuanian Banks</label>
@@ -1041,6 +1293,18 @@
 					<label>Instructions</label>
 					<comment/>
 				</field>
+                <field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Lithuanian Banks icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1055,6 +1319,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_mbway" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: MB Way</label>
@@ -1076,6 +1344,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1090,6 +1365,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_multibanco" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Multibanco</label>
@@ -1111,6 +1390,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1125,6 +1411,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_mybank" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: mBank</label>
@@ -1146,6 +1436,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1160,6 +1457,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_payconiq" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Payconiq</label>
@@ -1181,6 +1482,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1195,6 +1503,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_paysafecard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Paysafecard</label>
@@ -1216,6 +1528,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1230,6 +1549,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_paysera" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Paysera</label>
@@ -1251,6 +1574,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1265,6 +1595,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_postfinance" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: PostFinance</label>
@@ -1286,6 +1620,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1300,6 +1641,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_satispay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Satisfy</label>
@@ -1321,6 +1666,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1335,6 +1687,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_trustly" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Trustly</label>
@@ -1356,6 +1712,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1370,6 +1733,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_wechatpay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: WeChat Pay</label>
@@ -1391,6 +1758,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1405,6 +1779,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_banktransfer" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Bank Transfer</label>
@@ -1426,6 +1804,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1440,6 +1825,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_cash" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Cash</label>
@@ -1461,6 +1850,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1475,6 +1871,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
             <group id="reepay_other" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
 				<label>Billwerk+: Other</label>
@@ -1496,6 +1896,13 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
 				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
 					<label>Payment From Applicable Countries</label>
 					<comment/>
@@ -1510,6 +1917,10 @@
 					<label>Sort order</label>
 					<comment/>
 				</field>
+                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+                    <label>Notice</label>
+                    <comment>This payment method is always Auto-Captured.</comment>
+                </field>
 			</group>
 		</section>
 	</system>

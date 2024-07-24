@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.48 on 24 July 2024
+- Added "Upload custom icon" function. Admins can override the default icons.
+- Added the admin notice label to each payment method.
+
 ## Version 1.2.47 on 26 June 2024
 - Fixed JavaScript validation for Google Pay and Apple Pay to be compatible with onestepcheckout.
 - Changed the module name to Billwerk+ Pay.

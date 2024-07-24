@@ -98,6 +98,12 @@ class ConfigProvider implements ConfigProviderInterface
                 ->setTemplate('Radarsofthouse_Reepay::santander_payment_icons.phtml')->toHtml(),
             'eps_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::eps_payment_icons.phtml')->toHtml(),
+            'estoniabanks_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::estonia_banks_payment_icons.phtml')->toHtml(),
+            'latviabanks_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::latvia_banks_payment_icons.phtml')->toHtml(),
+            'lithuaniabanks_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::lithuania_banks_payment_icons.phtml')->toHtml(),
             'mbway_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::mbway_payment_icons.phtml')->toHtml(),
             'multibanco_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
@@ -118,6 +124,12 @@ class ConfigProvider implements ConfigProviderInterface
                 ->setTemplate('Radarsofthouse_Reepay::trustly_payment_icons.phtml')->toHtml(),
             'wechatpay_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::wechatpay_payment_icons.phtml')->toHtml(),
+            'banktransfer_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::banktransfer_payment_icons.phtml')->toHtml(),
+            'cash_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::cash_payment_icons.phtml')->toHtml(),
+            'other_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::other_payment_icons.phtml')->toHtml(),
             'saved_credit_cards' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\SavedCreditCards::class)
                 ->setTemplate('Radarsofthouse_Reepay::saved_credit_cards.phtml')->toHtml(),
             "reepay_payment_instructions" => $this->_scopeConfig->getValue(
