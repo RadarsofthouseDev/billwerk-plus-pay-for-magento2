@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.49 on 26 July 2024
+- Fixed the XML error
+
 ## Version 1.2.48 on 24 July 2024
 - Added "Upload custom icon" function. Admins can override the default icons.
 - Added the admin notice label to each payment method.

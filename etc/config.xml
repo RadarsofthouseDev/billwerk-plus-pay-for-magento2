@@ -471,11 +471,4 @@
 			</reepay_other>
 		</payment>
 	</default>
-    <system>
-        <filesystem>
-            <directory id="media" path="pub/media" xsi:type="directory" group="var" />
-            <directory id="billwerk" path="billwerk" parent="media" />
-            <directory id="billwerk_icons" path="icons" parent="billwerk" />
-        </filesystem>
-    </system>
 </config>
