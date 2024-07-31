@@ -233,7 +233,6 @@ class Api
         $response = $this->prepareStateForRequest($verb, $endpoint, $url, $timeout);
         $responseContent = null;
         $options = [
-            RequestOptions::VERSION => 1.0,
             RequestOptions::AUTH => [$this->privateKey, 'password'],
             RequestOptions::HEADERS => [
                 'User-Agent' => 'magento/ba460eaaf82cf719170e3365f63094c4',

@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.50 on 31 July 2024
+- Fixed the error for guzzlehttp/guzzle 7.8.2+
+
 ## Version 1.2.49 on 26 July 2024
 - Fixed the XML error
 
