@@ -8,13 +8,13 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Radarsofthouse_Reepay/payment/form_resurs',
+                template: 'Radarsofthouse_Reepay/payment/form_vippsepayment',
             },
             
             redirectAfterPlaceOrder: false,
 
             getCode: function() {
-                return 'reepay_resurs';
+                return 'reepay_vippsepayment';
             },
 
             afterPlaceOrder: function() {

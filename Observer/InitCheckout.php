@@ -41,7 +41,7 @@ class InitCheckout implements \Magento\Framework\Event\ObserverInterface
      * Observe controller_action_predispatch_checkout_index_index
      *
      * @param \Magento\Framework\Event\Observer $observer
-     * @return void
+     * @return bool|void
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
@@ -52,8 +52,13 @@ class InitCheckout implements \Magento\Framework\Event\ObserverInterface
                 if ($this->reepayHelper->isReepayPaymentMethod($paymentMethod)) {
                     $quoteItems = $this->checkoutSession->getQuote()->getAllVisibleItems();
 
+                    if (!$this->checkoutSession->getLastSuccessQuoteId()) {
+                        // prevent restore the last cart when user refresh the success page
+                        return false;
+                    }
+
                     if (count($quoteItems) == 0) {
-                        $this->logger->addDebug("restore the last order : ".$lastRealOrder->getEntityId());
+                        $this->logger->addDebug("restore the last order : " . $lastRealOrder->getEntityId());
                         $this->checkoutSession->restoreQuote();
                     }
                 }

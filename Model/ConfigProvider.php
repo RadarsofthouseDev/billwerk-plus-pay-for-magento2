@@ -56,6 +56,8 @@ class ConfigProvider implements ConfigProviderInterface
                 ->setTemplate('Radarsofthouse_Reepay::anyday_payment_icons.phtml')->toHtml(),
             'mobilepay_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::mobilepay_payment_icons.phtml')->toHtml(),
+            'vippsepayment_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
+                ->setTemplate('Radarsofthouse_Reepay::vippsepayment_payment_icons.phtml')->toHtml(),
             'applepay_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::applepay_payment_icons.phtml')->toHtml(),
             'paypal_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
@@ -72,8 +74,6 @@ class ConfigProvider implements ConfigProviderInterface
                 ->setTemplate('Radarsofthouse_Reepay::klarnadirectdebit_payment_icons.phtml')->toHtml(),
             'swish_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::swish_payment_icons.phtml')->toHtml(),
-            'resurs_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
-                ->setTemplate('Radarsofthouse_Reepay::resurs_payment_icons.phtml')->toHtml(),
             'vipps_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
                 ->setTemplate('Radarsofthouse_Reepay::vipps_payment_icons.phtml')->toHtml(),
             'forbrugsforeningen_payment_icons' => $this->_layout->createBlock(\Radarsofthouse\Reepay\Block\Paymenticons::class)
@@ -147,6 +147,11 @@ class ConfigProvider implements ConfigProviderInterface
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
                 $store_id
             ),
+            "reepay_vippsepayment_instructions" => $this->_scopeConfig->getValue(
+                'payment/reepay_vippsepayment/instructions',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store_id
+            ),
             "reepay_klarnapaynow_instructions" => $this->_scopeConfig->getValue(
                 'payment/reepay_klarnapaynow/instructions',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
@@ -174,11 +179,6 @@ class ConfigProvider implements ConfigProviderInterface
             ),
             "reepay_swish_instructions" => $this->_scopeConfig->getValue(
                 'payment/reepay_swish/instructions',
-                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-                $store_id
-            ),
-            "reepay_resurs_instructions" => $this->_scopeConfig->getValue(
-                'payment/reepay_resurs/instructions',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
                 $store_id
             ),

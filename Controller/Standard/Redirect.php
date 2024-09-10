@@ -197,7 +197,6 @@ class Redirect extends \Magento\Framework\App\Action\Action
                 [
                     'reepay_viabill',
                     'reepay_vipps',
-                    'reepay_resurs',
                     'reepay_applepay'
                 ]
             )) {

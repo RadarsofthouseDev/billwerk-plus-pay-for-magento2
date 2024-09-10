@@ -21,7 +21,6 @@ class Data extends AbstractHelper
         'reepay_klarnadirectbanktransfer',
         'reepay_klarnadirectdebit',
         'reepay_swish',
-        'reepay_resurs',
         'reepay_vipps',
         'reepay_forbrugsforeningen',
         'reepay_googlepay',
@@ -49,7 +48,8 @@ class Data extends AbstractHelper
         'reepay_wechatpay',
         'reepay_banktransfer',
         'reepay_cash',
-        'reepay_other'
+        'reepay_other',
+        'reepay_vippsepayment'
     ];
 
     const REEPAY_AUTO_CAPTURE_METHODS = [
@@ -617,12 +617,6 @@ class Data extends AbstractHelper
             case 'reepay_klarnadirectdebit':
                 $paymentMethods[] = 'klarna_direct_debit';
                 break;
-            case 'reepay_swish':
-                $paymentMethods[] = 'swish';
-                break;
-            case 'reepay_resurs':
-                $paymentMethods[] = 'resurs';
-                break;
             case 'reepay_vipps':
                 $paymentMethods[] = 'vipps';
                 break;
@@ -707,9 +701,20 @@ class Data extends AbstractHelper
             case 'reepay_other':
                 $paymentMethods[] = 'other';
                 break;
+            case 'reepay_vippsepayment':
+                $paymentMethods[] = 'vipps_epayment';
+                break;
             default:
                 $allowedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());
                 $paymentMethods = explode(',', $allowedPaymentConfig);
+                $currencyCode = $order->getOrderCurrency();
+                if (!in_array($currencyCode, ['DKK', 'EUR', 'NOK'])) {
+                    $key = array_search('vipps_epayment', $paymentMethods);
+                    if ($key !== false) {
+                        unset($paymentMethods[$key]);
+                        $paymentMethods = array_values($paymentMethods);
+                    }
+                }
         }
 
         return $paymentMethods;

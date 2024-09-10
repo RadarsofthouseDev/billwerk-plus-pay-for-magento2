@@ -33,7 +33,6 @@ class Paymenticons implements \Magento\Framework\Option\ArrayInterface
             ['value' => 'klarna-direct-debit', 'label' => __('Klarna Direct Debit')],
             ['value' => 'applepay', 'label' => __('Apple Pay')],
             ['value' => 'paypal', 'label' => __('PayPal')],
-            ['value' => 'resurs', 'label' => __('Resurs Bank')],
             ['value' => 'vipps', 'label' => __('Vipps')],
             ['value' => 'googlepay', 'label' => __('Google Pay')],
             ['value' => 'blik_oc', 'label' => __('BLIK One Click')],

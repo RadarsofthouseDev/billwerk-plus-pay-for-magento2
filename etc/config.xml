@@ -150,17 +150,6 @@
 				<sort_order>2</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepayswish</model>
 			</reepay_swish>
-            <reepay_resurs>
-				<active>0</active>
-				<title>Resurs Bank payment by Billwerk+</title>
-				<instructions>Resurs Bank payment</instructions>
-				<show_icon>0</show_icon>
-				<custom_icon></custom_icon>
-				<allowspecific>0</allowspecific>
-				<specificcountry>0</specificcountry>
-				<sort_order>2</sort_order>
-				<model>Radarsofthouse\Reepay\Model\Reepayresurs</model>
-			</reepay_resurs>
             <reepay_vipps>
                 <active>0</active>
                 <title>Vipps payment by Billwerk+</title>
@@ -469,6 +458,19 @@
 				<sort_order>2</sort_order>
 				<model>Radarsofthouse\Reepay\Model\Reepayother</model>
 			</reepay_other>
+			<reepay_vippsepayment>
+				<active>0</active>
+				<title>Vipps Mobilepay payment by Billwerk+</title>
+				<title_dkk_eur>Mobilepay payment by Billwerk+</title_dkk_eur>
+				<title_nok>Vipps payment by Billwerk+</title_nok>
+				<instructions>Mobilepay</instructions>
+				<show_icon>0</show_icon>
+				<custom_icon></custom_icon>
+				<allowspecific>0</allowspecific>
+				<specificcountry>0</specificcountry>
+				<sort_order>2</sort_order>
+				<model>Radarsofthouse\Reepay\Model\Reepayvippsepayment</model>
+			</reepay_vippsepayment>
 		</payment>
 	</default>
 </config>

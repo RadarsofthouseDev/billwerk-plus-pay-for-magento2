@@ -2,6 +2,8 @@
 
 namespace Radarsofthouse\Reepay\Block;
 
+use Magento\Framework\Exception\NoSuchEntityException;
+
 class Paymenticons extends \Magento\Framework\View\Element\Template
 {
     const CUSTOM_ICON_FOLDER = "billwerk/icons/";
@@ -19,7 +21,6 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
         'klarna-direct-debit',
         'applepay',
         'paypal',
-        'resurs',
         'vipps',
         'googlepay',
         'blik_oc',
@@ -174,6 +175,38 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         // default icon
         return $this->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/mobilepay.png');
+    }
+
+    /**
+     * Get vipps mobile pay payment icon
+     *
+     * @return string|null
+     */
+    public function getVippsepaymentPaymentIcon()
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+        $showIcon = $this->scopeConfig->getValue('payment/reepay_vippsepayment/show_icon', $storeScope);
+        if (!$showIcon) {
+            return null;
+        }
+
+        $customIcon = $this->scopeConfig->getValue('payment/reepay_vippsepayment/custom_icon', $storeScope);
+        if (!empty($customIcon)) {
+            $mediaUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+            // custom icon
+            return $mediaUrl . self::CUSTOM_ICON_FOLDER . $customIcon;
+        }
+
+        try {
+            $currencyCode = $this->storeManager->getStore()->getCurrentCurrencyCode();
+            if($currencyCode == 'NOK') {
+                return $this->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/vipps.png');
+            } elseif (in_array($currencyCode, ['DKK', 'EUR'])) {
+                return $this->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/mobilepay.png');
+            }
+        } catch (NoSuchEntityException $e) {
+            return $this->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/mobilepay.png');
+        }
     }
 
     /**
@@ -366,30 +399,6 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         // default icon
         return $this->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/swish.png');
-    }
-
-    /**
-     * Get Resurs payment icon
-     *
-     * @return string|null
-     */
-    public function getResursPaymentIcon()
-    {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
-        $showIcon = $this->scopeConfig->getValue('payment/reepay_resurs/show_icon', $storeScope);
-        if (!$showIcon) {
-            return null;
-        }
-
-        $customIcon = $this->scopeConfig->getValue('payment/reepay_resurs/custom_icon', $storeScope);
-        if (!empty($customIcon)) {
-            $mediaUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-            // custom icon
-            return $mediaUrl . self::CUSTOM_ICON_FOLDER . $customIcon;
-        }
-
-        // default icon
-        return $this->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/resurs.png');
     }
 
     /**

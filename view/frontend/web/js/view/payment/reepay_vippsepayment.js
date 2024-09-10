@@ -10,8 +10,8 @@ define(
         'use strict';
         rendererList.push(
             {
-                type: 'reepay_resurs',
-                component: 'Radarsofthouse_Reepay/js/view/payment/method-renderer/reepay_resurs'
+                type: 'reepay_vippsepayment',
+                component: 'Radarsofthouse_Reepay/js/view/payment/method-renderer/reepay_vippsepayment'
             }
         );
         /** Add view logic here if needed */

@@ -1,5 +1,11 @@
 
 # Changelog
+## Version 1.2.51 on 10 September 2024
+- New payment method added: "Vipps MobilePay"
+- Warning messages added for "Mobilepay" to encourage switch to "Vipps Mobilepay"
+- Removed payment method "Resurs bank"
+- Fix: Refreshing the success page now redirects the user to the basket and restores the previous cart
+
 ## Version 1.2.50 on 31 July 2024
 - Fixed the error for guzzlehttp/guzzle 7.8.2+
 

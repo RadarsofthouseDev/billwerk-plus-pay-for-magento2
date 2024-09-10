@@ -1,0 +1,4 @@
+#row_payment_other_reepay_payment_allowwed_payment > td.value > p > span, #row_payment_other_reepay_mobilepay_active > td.value > p > span {
+    color: red !important;
+    font-weight: bold !important;
+}

@@ -102,7 +102,7 @@
 				</field>
 				<field id="allowwed_payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
 					<label>Allowed payments</label>
-					<comment/>
+					<comment>The new Vipps MobilePay payment method, which utilizes bank transfers instead of card payments, will replace the old MobilePay Online payment method. Please refer to Vipps MobilePay for more efficient transactions and a better conversion rate.</comment>
 					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Allowwedpayment</source_model>
 				</field>
 				<field id="payment_icons" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="81" translate="label" type="multiselect">
@@ -222,7 +222,7 @@
 				<label>Billwerk+: Mobilepay</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enabled</label>
-					<comment/>
+					<comment>The new Vipps MobilePay payment method, which utilizes bank transfers instead of card payments, will replace the old MobilePay Online payment method. Please refer to Vipps MobilePay for more efficient transactions and a better conversion rate.</comment>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
 				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
@@ -258,6 +258,56 @@
 				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
 					<label>Sort order</label>
 					<comment/>
+				</field>
+			</group>
+			<group id="reepay_vippsepayment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
+				<label>Billwerk+: Vipps MobilePay</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title_dkk_eur" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>Title DKK, EUR</label>
+					<comment/>
+				</field>
+				<field id="title_nok" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
+					<label>Title NOK</label>
+					<comment/>
+				</field>
+				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
+					<label>Instructions</label>
+					<comment/>
+				</field>
+				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
+					<label>Show Mobilepay icon</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
+					<label>Upload custom icon</label>
+					<comment>Leave empty to use the default icon.</comment>
+					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
+					<base_url type="media" scope_info="1">billwerk/icons</base_url>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label>Payment From Applicable Countries</label>
+					<comment/>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
+					<label>Payment From Specific Countries</label>
+					<comment/>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label>Sort order</label>
+					<comment/>
+				</field>
+				<field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
+					<label>Notice</label>
+					<comment>This payment method support only 3 currencies (DKK, EUR, NOK).</comment>
 				</field>
 			</group>
             <group id="reepay_applepay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
@@ -598,52 +648,6 @@
 				<field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
                     <label>Notice</label>
                     <comment>This payment method is always Auto-Captured.</comment>
-                </field>
-			</group>
-            <group id="reepay_resurs" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
-				<label>Billwerk+: Resurs Bank</label>
-				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
-					<label>Enabled</label>
-					<comment/>
-					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-				</field>
-				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="11" translate="label" type="text">
-					<label>title</label>
-					<comment/>
-				</field>
-				<field id="instructions" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="12" translate="label" type="textarea">
-					<label>Instructions</label>
-					<comment/>
-				</field>
-				<field id="show_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="13" translate="label" type="select">
-					<label>Show Resurs Bank icon</label>
-					<comment/>
-					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-				</field>
-                <field id="custom_icon" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="15" translate="label" type="image">
-					<label>Upload custom icon</label>
-					<comment>Leave empty to use the default icon.</comment>
-					<backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-					<upload_dir config="system/filesystem/media" scope_info="1">billwerk/icons</upload_dir>
-					<base_url type="media" scope_info="1">billwerk/icons</base_url>
-				</field>
-				<field id="allowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
-					<label>Payment From Applicable Countries</label>
-					<comment/>
-					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
-				</field>
-				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="multiselect">
-					<label>Payment From Specific Countries</label>
-					<comment/>
-					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
-				</field>
-				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="text">
-					<label>Sort order</label>
-					<comment/>
-				</field>
-                <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
-                    <label>Notice</label>
-                    <comment>This payment method will be displayed in the "Window" display type.</comment>
                 </field>
 			</group>
             <group id="reepay_vipps" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">
