@@ -189,7 +189,7 @@ class Redirect extends \Magento\Framework\App\Action\Action
             $resultPage->getConfig()
                 ->getTitle()
                 ->set($pageTitleConfig);
-            
+
             $displayTypeConfig = (string)$this->_reepayHelper->getConfig('display_type', $order->getStoreId());
 
             if (in_array(
@@ -197,7 +197,8 @@ class Redirect extends \Magento\Framework\App\Action\Action
                 [
                     'reepay_viabill',
                     'reepay_vipps',
-                    'reepay_applepay'
+                    'reepay_applepay',
+                    'reepay_ideal'
                 ]
             )) {
                 // force viabill into payment window always

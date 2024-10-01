@@ -823,7 +823,7 @@
 				</field>
                 <field id="notice_label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="label">
                     <label>Notice</label>
-                    <comment>This payment method is always Auto-Captured.</comment>
+                    <comment><![CDATA[This payment method is always Auto-Captured.<br />This payment method will be displayed in the "Window" display type.]]></comment>
                 </field>
 			</group>
             <group id="reepay_blik" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label">

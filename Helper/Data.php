@@ -707,7 +707,7 @@ class Data extends AbstractHelper
             default:
                 $allowedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());
                 $paymentMethods = explode(',', $allowedPaymentConfig);
-                $currencyCode = $order->getOrderCurrency();
+                $currencyCode = $order->getOrderCurrency()->getCurrencyCode();
                 if (!in_array($currencyCode, ['DKK', 'EUR', 'NOK'])) {
                     $key = array_search('vipps_epayment', $paymentMethods);
                     if ($key !== false) {

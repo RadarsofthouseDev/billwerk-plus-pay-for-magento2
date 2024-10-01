@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.52 on 1 October 2024
+- Fixed the issue with retrieving the order currency code for Vipps MobilePay.
+- Changed iDEAL payment method to display only in the "Window" display type.
+
 ## Version 1.2.51 on 10 September 2024
 - New payment method added: "Vipps MobilePay"
 - Warning messages added for "Mobilepay" to encourage switch to "Vipps Mobilepay"
