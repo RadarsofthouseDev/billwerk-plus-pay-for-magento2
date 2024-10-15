@@ -1,5 +1,10 @@
 
 # Changelog
+## Version 1.2.53 on 15 October 2024
+- Fixed the error when saving the module configuration in the store or website scopes.
+- Fixed incorrect currency in order comments for multiple currency setups.
+- Fixed incorrect amount shown on embedded/overlay display for multiple currency setups.
+
 ## Version 1.2.52 on 1 October 2024
 - Fixed the issue with retrieving the order currency code for Vipps MobilePay.
 - Changed iDEAL payment method to display only in the "Window" display type.

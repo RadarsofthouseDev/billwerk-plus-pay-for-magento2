@@ -791,7 +791,7 @@ class Data extends AbstractHelper
             $payment->setTransactionId($paymentData['transaction']);
             $payment->setAdditionalInformation([\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $paymentData]);
 
-            $formatedPrice = $order->getBaseCurrency()->formatTxt($order->getGrandTotal());
+            $formatedPrice = $order->formatPrice($order->getGrandTotal());
 
             $transaction = $this->_transactionBuilder->setPayment($payment)
                 ->setOrder($order)
@@ -812,8 +812,7 @@ class Data extends AbstractHelper
 
             $orderStatusAfterPayment = $this->getConfig('order_status_after_payment', $order->getStoreId());
             if (!empty($orderStatusAfterPayment)) {
-                $totalDue = $this->_priceHelper->currency($order->getTotalDue(), true, false);
-
+                $totalDue = $order->formatPrice($order->getTotalDue());
                 $order->setState($orderStatusAfterPayment, true);
                 $order->setStatus($orderStatusAfterPayment);
                 $order->addStatusToHistory($order->getStatus(), 'Billwerk+ : The authorized amount is ' . $totalDue);
@@ -878,7 +877,7 @@ class Data extends AbstractHelper
             );
             $payment->setParentTransactionId($authorizationTxnId);
 
-            $formatedPrice = $order->getBaseCurrency()->formatTxt($transactionData['amount']);
+            $formatedPrice = $order->formatPrice($transactionData['amount']);
             $message = __('Billwerk+ : Captured amount of %1 by the webhook.', $formatedPrice);
 
             $transaction = $this->_transactionBuilder->setPayment($payment)
@@ -911,7 +910,7 @@ class Data extends AbstractHelper
             }
 
             if (!empty($orderStatusAfterPayment) && $autoCapture) {
-                $totalDue = $this->_priceHelper->currency($order->getTotalDue(), true, false);
+                $totalDue = $order->formatPrice($order->getTotalDue());
                 $order->setState($orderStatusAfterPayment, true);
                 $order->setStatus($orderStatusAfterPayment);
                 $order->save();
@@ -971,7 +970,7 @@ class Data extends AbstractHelper
                 [\Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS => (array) $paymentData]
             );
 
-            $formatedPrice = $order->getBaseCurrency()->formatTxt($transactionData['amount']);
+            $formatedPrice = $order->formatPrice($transactionData['amount']);
             $message = __('Billwerk+ : Refunded amount of %1 by the webhook.', $formatedPrice);
 
             $transaction = $this->_transactionBuilder->setPayment($payment)

@@ -37,15 +37,14 @@ class ConfigChangeObserver implements ObserverInterface
 
         // Get the current scope
         $scope = $store ? 'stores' : ($website ? 'websites' : 'default');
-        $scopeId = $store ? $store->getId() : ($website ? $website->getId() : 0);
+        $scopeId = $store ? $this->_storeManager->getStore($store)->getId() : ($website ? $this->_storeManager->getWebsite($website)->getId() : 0);
 
         $allowedPaymentPath = 'payment/reepay_payment/allowwed_payment';
         $mobilePayActivePath = 'payment/reepay_mobilepay/active';
         $allowedPayment = $this->_scopeConfig->getValue($allowedPaymentPath, $scope, $scopeId);
         $mobilePayActive = $this->_scopeConfig->getValue($mobilePayActivePath, $scope, $scopeId);
-        if(strpos($allowedPayment, 'mobilepay') !== false || $mobilePayActive == '1') {
+        if (strpos($allowedPayment, 'mobilepay') !== false || $mobilePayActive == '1') {
             $this->_messageManager->addWarningMessage(_('The new Vipps MobilePay payment method, which utilizes bank transfers instead of card payments, will replace the old MobilePay Online payment method. Please refer to Vipps MobilePay for more efficient transactions and a better conversion rate.'));
         }
-
     }
 }

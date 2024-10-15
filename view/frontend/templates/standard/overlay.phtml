@@ -2,18 +2,14 @@
 
 <div class="reepay-payment-layout">
     <div class="logo-wrapper">
-        <img class="logo" src="<?= $block->escapeUrl($block->getLogoSrc()); ?>" 
+        <img class="logo" src="<?= $block->escapeUrl($block->getLogoSrc()); ?>"
             alt="<?= $block->escapeHtml($block->getLogoAlt()); ?>">
     </div>
     <div class="reepay-overlay">
         <div class="order-section">
             <div class="order-info">
                 <p><?= $block->escapeHtml(__('Order ID :')); ?> <?= $block->escapeHtml($order->getIncrementId()); ?></p>
-                <p><?= $block->escapeHtml(__('Total :')); ?> 
-                    <?= $block->escapeHtml($this->helper(\Magento\Framework\Pricing\Helper\Data::class)
-                        ->currency($order->getTotalDue(), true, false));
-                    ?>
-                </p>
+                <p><?= $block->escapeHtml(__('Total :')); ?> <?= $order->formatPrice($order->getTotalDue()); ?></p>
             </div>
 
             <div class="button pay-btn">
@@ -23,27 +19,26 @@
     </div>
 
     <script>
-
-        require(['jquery','Reepay'],function($,Reepay){
+        require(['jquery', 'Reepay'], function($, Reepay) {
 
             var rp = new Reepay.ModalCheckout("<?= $block->escapeHtml($block->getPaymentTransactionId()); ?>");
 
             rp.addEventHandler(Reepay.Event.Accept, function(data) {
                 data._isAjax = 1;
-                if( ( data.error == undefined || 
-                    data.error == "error.session.INVOICE_ALREADY_PAID" || 
-                    data.error == "invoice_already_settled" ) && 
-                    data.invoice 
-                ){
+                if ((data.error == undefined ||
+                        data.error == "error.session.INVOICE_ALREADY_PAID" ||
+                        data.error == "invoice_already_settled") &&
+                    data.invoice
+                ) {
                     $.ajax({
                         url: '<?= $block->escapeUrl($block->getAcceptUrl()); ?>',
                         method: 'POST',
                         data: data,
-                    }).done(function(data){
-                        if( data.status == 'success' ){
+                    }).done(function(data) {
+                        if (data.status == 'success') {
                             window.location = data.redirect_url;
                         }
-                    }).fail(function(err){
+                    }).fail(function(err) {
                         console.log('Ajax: error');
                         console.log(err);
                     });
@@ -57,11 +52,11 @@
                     url: '<?= $block->escapeUrl($block->getErrorUrl()); ?>',
                     method: 'POST',
                     data: data,
-                }).done(function(data){
-                    if( data.status == 'success' ){
+                }).done(function(data) {
+                    if (data.status == 'success') {
                         window.location = data.redirect_url;
                     }
-                }).fail(function(err){
+                }).fail(function(err) {
                     console.log("Ajax error");
                     console.log(err);
                 });
@@ -73,11 +68,11 @@
                     url: '<?= $block->escapeUrl($block->getCancelUrl()); ?>',
                     method: 'POST',
                     data: data,
-                }).done(function(data){
-                    if( data.status == 'success' ){
+                }).done(function(data) {
+                    if (data.status == 'success') {
                         window.location = data.redirect_url;
                     }
-                }).fail(function(err){
+                }).fail(function(err) {
                     console.log("Ajax error");
                     console.log(err);
                 });
@@ -87,13 +82,12 @@
                 // not do anything for overlay close
             });
 
-            $(document).ready(function(){
-                $(".pay-btn").click(function(){
+            $(document).ready(function() {
+                $(".pay-btn").click(function() {
                     rp.show('<?= $block->escapeHtml($block->getPaymentTransactionId()); ?>');
                 });
             });
         });
-
     </script>
-    
+
 </div>
