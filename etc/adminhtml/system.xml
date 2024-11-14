@@ -39,7 +39,6 @@
                 <field id="webhook" translate="label comment" type="button" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
                     <frontend_model>Radarsofthouse\Reepay\Block\System\Config\Webhook</frontend_model>
                     <label>Update webhook URL in Billwerk+</label>
-                    <comment>Note: Save config before updating the webhook URL.</comment>
                 </field>
 				<field id="display_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
 					<label>Display type</label>
@@ -48,6 +47,11 @@
 				<field id="send_order_line" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
 					<label>Send order lines</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="send_phone_number" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label>Prefilled phone number</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>Use the customers phone number entered in the checkout to prefill in the payment window for mobile payment types</comment>
 				</field>
                 <field id="auto_capture" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
                     <label>Auto Capture</label>
@@ -80,6 +84,25 @@
 					<label>Order status when the payment is made</label>
 					<comment>Suggest to use "Processing"</comment>
 					<source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+				</field>
+				<field id="auto_cancel_unpaid_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="select">
+					<label>Enable auto cancel of unpaid orders</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="auto_cancel_unpaid_order_status" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="multiselect">
+					<label>Cancel the orders when order status</label>
+					<comment/>
+					<source_model>Radarsofthouse\Reepay\Model\Config\Source\AutoCancelStatus</source_model>
+					<depends>
+						<field id="auto_cancel_unpaid_order">1</field>
+					</depends>
+				</field>
+				<field id="auto_cancel_unpaid_order_after" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="text">
+					<label>Cancel the orders after (minutes)</label>
+					<depends>
+						<field id="auto_cancel_unpaid_order">1</field>
+					</depends>
+					<comment>Cronjob runs every 5 mins.</comment>
 				</field>
                 <field id="cancel_order_after_payment_cancel" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="61" translate="label" type="select">
                     <label>Change order status to cancelled if the customer is redirected to the cancel_url</label>

@@ -12,12 +12,16 @@
 				<display_type>3</display_type>
 				<auto_capture>0</auto_capture>
                 <send_order_line>1</send_order_line>
+                <send_phone_number>1</send_phone_number>
                 <surcharge_fee>0</surcharge_fee>
                 <save_card_enable>0</save_card_enable>
                 <save_card_type>0</save_card_type>
 				<send_order_email_when_success>1</send_order_email_when_success>
 				<order_status_before_payment>pending</order_status_before_payment>
 				<order_status_after_payment>processing</order_status_after_payment>
+				<auto_cancel_unpaid_order>0</auto_cancel_unpaid_order>
+				<auto_cancel_unpaid_order_status>pending,pending_payment</auto_cancel_unpaid_order_status>
+				<auto_cancel_unpaid_order_after>30</auto_cancel_unpaid_order_after>
 				<auto_create_invoice>0</auto_create_invoice>
 				<cancel_order_after_payment_cancel>0</cancel_order_after_payment_cancel>
 				<allowspecific/>

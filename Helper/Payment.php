@@ -185,6 +185,13 @@ class Payment extends AbstractHelper
         $options['accept_url'] = $baseUrl . 'reepay/standard/accept';
         $options['cancel_url'] = $baseUrl . 'reepay/standard/cancel';
 
+        $options['phone'] = '';
+        $sendPhoneNumber = $this->_reepayHelper->getConfig('send_phone_number', $order->getStoreId());
+        if($sendPhoneNumber){
+            $options['phone'] = $billingAddress['phone'];
+        }
+
+
         $save_card_enable = $this->_reepayHelper->getConfig('save_card_enable', $order->getStoreId());
         if ($save_card_enable && $this->_customerSession->isLoggedIn()) {
             $options['recurring_optional'] = true;

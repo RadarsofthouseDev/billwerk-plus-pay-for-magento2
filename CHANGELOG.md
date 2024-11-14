@@ -1,5 +1,10 @@
 
 # Changelog
+## Version 1.2.54 on 14 November 2024
+- Added auto-cancel feature for unpaid orders.
+- Added a new feature to prefill the phone number in the payment window for mobile payment types.
+- Updated note for the webhook button.
+
 ## Version 1.2.53 on 15 October 2024
 - Fixed the error when saving the module configuration in the store or website scopes.
 - Fixed incorrect currency in order comments for multiple currency setups.
