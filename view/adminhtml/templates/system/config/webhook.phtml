@@ -3,18 +3,18 @@
     require([
         'jquery',
         'prototype'
-    ], function(jQuery){
+    ], function(jQuery) {
         var webhookSpan = jQuery('#webhook_span');
-        jQuery('#webhook_button').click(function () {
+        jQuery('#webhook_button').click(function() {
             var params = {};
             new Ajax.Request('<?= $block->escapeUrl($block->getAjaxUrl()) ?>', {
-                parameters:     params,
-                loaderArea:     false,
-                asynchronous:   true,
+                parameters: params,
+                loaderArea: false,
+                asynchronous: true,
                 onCreate: function() {
                     webhookSpan.find('.updated').hide();
                     webhookSpan.find('.processing').show();
-                    jQuery('#webhook_message_span').text('');
+                    jQuery('.webhook_message_span').text('');
                 },
                 onSuccess: function(response) {
                     webhookSpan.find('.processing').hide();
@@ -24,16 +24,16 @@
                         resultText = response.statusText;
                     } else {
                         let jsonResponse = response.responseJSON;
-                        if(jsonResponse.success === true){
+                        if (jsonResponse.success === true) {
                             // resultText = 'Updated at:'+jsonResponse.time;
                             resultText = 'Updated.';
                             webhookSpan.find('.updated').show();
-                        }else{
+                        } else {
                             resultText = 'Something went wrong!';
                             webhookSpan.find('.processing').hide();
                         }
                     }
-                    jQuery('#webhook_message_span').text(resultText);
+                    jQuery('.webhook_message_span').text(resultText);
                 }
             });
         });
@@ -43,11 +43,11 @@
 
 <?= $block->getButtonHtml() ?>
 <span class="collect-indicator" id="webhook_span">
-    <img class="processing" hidden="hidden" alt="Processing" style="margin:0 5px" 
-        src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
-    <img class="updated" hidden="hidden" alt="Updated" style="margin:-3px 5px" 
-        src="<?= $block->escapeUrl($block->getViewFileUrl('images/rule_component_apply.gif')) ?>"/>
-    <span id="webhook_message_span"></span>
+    <img class="processing" hidden="hidden" alt="Processing" style="margin:0 5px"
+        src="<?= $block->escapeUrl($block->getViewFileUrl('images/process_spinner.gif')) ?>" />
+    <img class="updated" hidden="hidden" alt="Updated" style="margin:-3px 5px"
+        src="<?= $block->escapeUrl($block->getViewFileUrl('images/rule_component_apply.gif')) ?>" />
+    <span class="webhook_message_span" style="color: red; font-size: 12px;"></span>
 </span>
 <p class="note"><span>Note: Save config before updating the webhook URL.</span></p>
 <p class="note"><span style="color: red">After clicking the button then go to Billwerk+ administration and verify that the webhook was updated. If it´s not, then add the webhook manually in Billwerk+</span></p>

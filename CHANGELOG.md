@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.55 on 4 December 2024
+- Fixed 'Update Webhook' button to support multiple store/domain setups with different API keys.
+
 ## Version 1.2.54 on 14 November 2024
 - Added auto-cancel feature for unpaid orders.
 - Added a new feature to prefill the phone number in the payment window for mobile payment types.

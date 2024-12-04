@@ -36,7 +36,7 @@
 					<comment/>
 					<source_model>Radarsofthouse\Reepay\Model\Config\Source\Keytype</source_model>
 				</field>
-                <field id="webhook" translate="label comment" type="button" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="webhook" translate="label comment" type="button" sortOrder="25" showInDefault="1" showInWebsite="0" showInStore="0">
                     <frontend_model>Radarsofthouse\Reepay\Block\System\Config\Webhook</frontend_model>
                     <label>Update webhook URL in Billwerk+</label>
                 </field>

@@ -12,6 +12,7 @@ use Radarsofthouse\Reepay\Client\Api;
 class Webhook extends AbstractHelper
 {
     public const ENDPOINT = 'account/webhook_settings';
+    const WEBHOOK_PATH = '/reepay/webhooks/index';
 
     /**
      * @var \Radarsofthouse\Reepay\Client\Api
@@ -77,22 +78,40 @@ class Webhook extends AbstractHelper
      */
     public function updateUrl($apiKey)
     {
-        try {
-            $url = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_LINK, true);
-            $url .= $url[-1] === '/' ? '' : '/';
-            $url .= 'reepay/webhooks/index';
-        } catch (NoSuchEntityException $e) {
-            $log['exception_error'] = $e->getMessage();
-            $this->logger->addInfo(__METHOD__, $log, true);
-            return false;
+        // Try to get the default store view first
+        $defaultStore = $this->storeManager->getDefaultStoreView();
+        if (!$defaultStore) {
+            // Default store not found, get the first activated store
+            $stores = $this->storeManager->getStores();
+            foreach ($stores as $store) {
+                if ($store->getIsActive()) {
+                    $defaultStore = $store;
+                    break;
+                }
+            }
+
+            if (!$defaultStore) {
+                $this->logger->addError('No active store found.');
+                return false;
+            }
         }
-        $urls = [$url];
+
+        $defaultStoreBaseUrl = rtrim($defaultStore->getBaseUrl(), '/');
+        $webhookUrl = $defaultStoreBaseUrl . self::WEBHOOK_PATH;
+
+        $urls = [$webhookUrl];
         $currentUrls = $this->getUrl($apiKey);
-        if ($currentUrls !== false && !empty($currentUrls)) {
+        if (is_array($currentUrls) && !empty($currentUrls)) {
+            // Remove any URLs that contain the webhook path
+            $currentUrls = array_filter($currentUrls, function ($url) {
+                return strpos($url, self::WEBHOOK_PATH) === false;
+            });
+            $currentUrls = array_values($currentUrls);
+
             $urls = $currentUrls;
-            $isExistUrl = array_search($url, $currentUrls);
-            if ($isExistUrl === false) {
-                $urls[] = $url;
+            // add webhook URL
+            if (!in_array($webhookUrl, $currentUrls)) {
+                $urls[] = $webhookUrl;
             }
         }
 

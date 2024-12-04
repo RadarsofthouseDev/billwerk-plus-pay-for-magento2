@@ -80,31 +80,51 @@ class Webhook extends Action
     {
         $result = $this->resultJsonFactory->create();
         $lastUpdateTime = $this->timezone->formatDate(null, \IntlDateFormatter::MEDIUM, true);
+
         try {
-            $urls = null;
-            $urlsTest = null;
-            $storeId = $this->storeManager->getStore()->getId();
-            $apiKey = $this->helper->getConfig('private_key', $storeId);
-            $apiKeyTest = $this->helper->getConfig('private_key_test', $storeId);
-            $this->logger->addDebug('api key.', ['api_key'=>$apiKey, 'api_key_test'=>$apiKeyTest]);
-            if (!empty($apiKey)) {
-                $urls = $this->webhookHelper->updateUrl($apiKey);
+            $apiKeys = [];
+            $stores = $this->storeManager->getStores();
+            foreach ($stores as $store) {
+                $storeId = $store->getId();
+                foreach (['private_key', 'private_key_test'] as $keyType) {
+                    $apiKey = $this->helper->getConfig($keyType, $storeId);
+                    if (!empty($apiKey)) {
+                        $apiKeys[] = $apiKey;
+                    }
+                }
             }
-            if (!empty($apiKeyTest)) {
-                $urlsTest = $this->webhookHelper->updateUrl($apiKeyTest);
+            $apiKeys = array_unique($apiKeys);
+
+            $failure = [];
+            $success = [];
+            foreach ($apiKeys as $apiKey) {
+                $updatedUrls = $this->webhookHelper->updateUrl($apiKey);
+                if ($updatedUrls === false) {
+                    $failure[] = $apiKey;
+                } else {
+                    $success[$apiKey] = $updatedUrls;
+                }
             }
-            $this->logger->addDebug('webhook update result', ['urls'=>$urls, 'urls_test'=>$urlsTest]);
-            if (($urls !== false && $urls !== null) || ($urlsTest !== false && $urlsTest !== null)) {
+
+            if (!empty($failure)) {
+                $this->logger->addError('Failed to update webhook URLs', ['failed_keys' => $failure]);
                 return $result->setData([
-                    'success' => true,
-                    'urls' => $urls,
-                    'urls_test' => $urlsTest,
+                    'success' => false,
+                    'failed_keys' => $failure,
                     'time' => $lastUpdateTime
                 ]);
             }
+
+            $this->logger->addInfo('Updated webhook URLs', ['success' => $success]);
+            return $result->setData([
+                'success' => true,
+                'updated_urls' => $success,
+                'time' => $lastUpdateTime
+            ]);
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());
         }
+
         return $result->setData(['success' => false, 'time' => $lastUpdateTime]);
     }
 
