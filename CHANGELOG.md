@@ -1,5 +1,9 @@
 
 # Changelog
+## Version 1.2.56 on 23 January 2025
+- Added logic to handle refunds when canceling orders paid via auto-capture payment methods.
+- Fixed the issue where the customer's address line 2 was incorrect in Billwerk when creating a new customer.
+
 ## Version 1.2.55 on 4 December 2024
 - Fixed 'Update Webhook' button to support multiple store/domain setups with different API keys.
 

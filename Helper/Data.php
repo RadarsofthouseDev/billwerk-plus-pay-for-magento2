@@ -266,8 +266,8 @@ class Data extends AbstractHelper
             $testMode = false;
         }
 
-        $address1 = $order->getBillingAddress()->getStreet(1);
-        $address2 = $order->getBillingAddress()->getStreet(2);
+        $address1 = $order->getBillingAddress()->getStreetLine(1);
+        $address2 = $order->getBillingAddress()->getStreetLine(2);
 
         $vatId = '';
         if (!empty($order->getBillingAddress()->getVatId())) {
@@ -279,8 +279,8 @@ class Data extends AbstractHelper
             'email' => $order->getBillingAddress()->getEmail(),
             'first_name' => $order->getBillingAddress()->getFirstname(),
             'last_name' => $order->getBillingAddress()->getLastname(),
-            'address' => $address1[0],
-            'address2' => $address2[0],
+            'address' => $address1,
+            'address2' => $address2,
             'city' => $order->getBillingAddress()->getCity(),
             'country' => $order->getBillingAddress()->getCountryId(),
             'phone' => $order->getBillingAddress()->getTelephone(),
