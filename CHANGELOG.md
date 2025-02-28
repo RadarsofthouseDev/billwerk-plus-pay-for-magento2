@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.57 on 28 February 2025
+- Added configuration option "Default value not checked?" to control whether the "Save credit card" checkbox is checked by default.
+
 ## Version 1.2.56 on 23 January 2025
 - Added logic to handle refunds when canceling orders paid via auto-capture payment methods.
 - Fixed the issue where the customer's address line 2 was incorrect in Billwerk when creating a new customer.

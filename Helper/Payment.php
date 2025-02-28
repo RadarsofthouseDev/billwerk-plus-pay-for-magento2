@@ -192,9 +192,13 @@ class Payment extends AbstractHelper
         }
 
 
-        $save_card_enable = $this->_reepayHelper->getConfig('save_card_enable', $order->getStoreId());
-        if ($save_card_enable && $this->_customerSession->isLoggedIn()) {
+        $saveCardEnable = $this->_reepayHelper->getConfig('save_card_enable', $order->getStoreId());
+        $defaultSaveCardNotChecked = $this->_reepayHelper->getConfig('default_save_card_not_checked', $order->getStoreId());
+
+        if ($saveCardEnable && $this->_customerSession->isLoggedIn() && !$defaultSaveCardNotChecked) {
             $options['recurring_optional'] = true;
+        }elseif($saveCardEnable && $this->_customerSession->isLoggedIn()){
+            $options['recurring_optional'] = false;
         }
 
         if ($reepayCreditCard !== null) {

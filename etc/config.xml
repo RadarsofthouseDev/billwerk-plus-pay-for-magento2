@@ -15,6 +15,7 @@
                 <send_phone_number>1</send_phone_number>
                 <surcharge_fee>0</surcharge_fee>
                 <save_card_enable>0</save_card_enable>
+                <default_save_card_not_checked>0</default_save_card_not_checked>
                 <save_card_type>0</save_card_type>
 				<send_order_email_when_success>1</send_order_email_when_success>
 				<order_status_before_payment>pending</order_status_before_payment>
