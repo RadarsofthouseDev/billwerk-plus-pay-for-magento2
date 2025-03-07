@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.58 on 7 March 2025
+- Updated order cancellation logic: Instead of deleting the session on Billwerk, the module now correctly performs invoice cancellation.
+
 ## Version 1.2.57 on 28 February 2025
 - Added configuration option "Default value not checked?" to control whether the "Save credit card" checkbox is checked by default.
 

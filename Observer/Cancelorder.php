@@ -40,6 +40,11 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
     protected $reepayRefund;
 
     /**
+     * @var \Radarsofthouse\Reepay\Helper\Invoice
+     */
+    protected $reepayInvoice;
+
+    /**
      * Constructor
      *
      * @param \Radarsofthouse\Reepay\Helper\Charge $reepayCharge
@@ -49,6 +54,7 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
      * @param \Radarsofthouse\Reepay\Api\SessionRepositoryInterface $reepaySessionRepository
      * @param \Radarsofthouse\Reepay\Helper\Logger $logger
      * @param \Radarsofthouse\Reepay\Helper\Refund $reepayRefund
+     * @param \Radarsofthouse\Reepay\Helper\Invoice $reepayInvoice
      */
     public function __construct(
         \Radarsofthouse\Reepay\Helper\Charge $reepayCharge,
@@ -57,7 +63,8 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
         \Radarsofthouse\Reepay\Helper\Data $reepayHelper,
         \Radarsofthouse\Reepay\Api\SessionRepositoryInterface $reepaySessionRepository,
         \Radarsofthouse\Reepay\Helper\Logger $logger,
-        \Radarsofthouse\Reepay\Helper\Refund $reepayRefund
+        \Radarsofthouse\Reepay\Helper\Refund $reepayRefund,
+        \Radarsofthouse\Reepay\Helper\Invoice $reepayInvoice
     ) {
         $this->reepayCharge = $reepayCharge;
         $this->scopeConfig = $scopeConfig;
@@ -66,6 +73,7 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
         $this->reepaySessionRepository = $reepaySessionRepository;
         $this->logger = $logger;
         $this->reepayRefund = $reepayRefund;
+        $this->reepayInvoice = $reepayInvoice;
     }
 
     /**
@@ -100,28 +108,20 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
                 $isAutoCapture = true;
             }
 
-            if ($charge !== false && $charge['state'] == 'created') {
-                $charge = $this->reepayCharge->delete(
+            if ($charge !== false && ($charge['state'] == 'created' || $charge['state'] == 'failed')) {
+                $cancelRes = $this->reepayInvoice->cancel(
                     $apiKey,
                     $order->getIncrementId()
                 );
 
-                $this->logger->addDebug("Delete charge for order #" . $order->getIncrementId());
-            } elseif ($charge !== false && $charge['state'] == 'failed') {
-                try {
-                    $reepaySessions = $this->reepaySessionRepository->getListByOrderNumber($order->getIncrementId());
-                    if ($reepaySessions->getTotalCount() > 0) {
-                        /** @var \Radarsofthouse\Reepay\Api\Data\SessionInterface $reepaySession */
-                        foreach ($reepaySessions->getItems() as $reepaySession) {
-                            $this->reepaySession->delete($apiKey, $reepaySession->getHandle());
-                            $this->logger->addDebug("Delete session # {$reepaySession->getHandle()} for order #" . $order->getIncrementId());
-                        }
-                    }
-                } catch (\Magento\Framework\Exception\LocalizedException | \Exception $e) {
-                    $this->logger->addError("Delete session for order #" . $order->getIncrementId() . ' has errors  ' . $e->getMessage());
-                }
+                $this->logger->addDebug("Cancel invoice for order #" . $order->getIncrementId());
 
-                $this->logger->addDebug("Delete session for order #" . $order->getIncrementId());
+                if (!empty($cancelRes)) {
+                    if ($cancelRes['state'] == 'cancelled') {
+                        $_payment = $order->getPayment();
+                        $this->reepayHelper->setReepayPaymentState($_payment, 'cancelled');
+                    }
+                }
             } elseif ($charge !== false && $charge['state'] == 'settled' && $isAutoCapture) {
                 try {
                     $settledAmount = $charge['amount'];
@@ -162,12 +162,6 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
                     if ($cancelRes['state'] == 'cancelled') {
                         $_payment = $order->getPayment();
                         $this->reepayHelper->setReepayPaymentState($_payment, 'cancelled');
-
-                        // delete reepay session
-                        $sessionRes = $this->reepaySession->delete(
-                            $apiKey,
-                            $order->getIncrementId()
-                        );
                     }
                 }
             }
