@@ -704,6 +704,9 @@ class Data extends AbstractHelper
             case 'reepay_vippsepayment':
                 $paymentMethods[] = 'vipps_epayment';
                 break;
+            case 'reepay_swish':
+                $paymentMethods[] = 'swish';
+                break;
             default:
                 $allowedPaymentConfig = $this->getConfig('allowwed_payment', $order->getStoreId());
                 $paymentMethods = explode(',', $allowedPaymentConfig);

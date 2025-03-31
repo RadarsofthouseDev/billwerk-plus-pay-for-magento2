@@ -1,5 +1,8 @@
 
 # Changelog
+## Version 1.2.59 on 31 March 2025
+- Fixed an issue where the Swish payment method fell back to the standard payment during checkout.
+
 ## Version 1.2.58 on 7 March 2025
 - Updated order cancellation logic: Instead of deleting the session on Billwerk, the module now correctly performs invoice cancellation.
 
