@@ -1,6 +1,6 @@
 <?php $paymentIcons = $block->getPaymentIcons(); ?>
-<?php if (count($paymentIcons) > 0) : ?>
-    <?php foreach ($paymentIcons as $paymentIcon) : ?>
-        <img class="reepay-payment-icon" src="<?= $block->escapeUrl($paymentIcon); ?>">
+<?php if (count($paymentIcons) > 0): ?>
+    <?php foreach ($paymentIcons as $paymentIcon): ?>
+        <img class="reepay-payment-icon" src="<?= $escaper->escapeUrl($paymentIcon); ?>">
     <?php endforeach; ?>
 <?php endif; ?>

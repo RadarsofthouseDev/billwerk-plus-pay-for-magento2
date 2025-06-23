@@ -373,8 +373,8 @@ class Index extends \Magento\Framework\App\Action\Action
                         $invoice->setState(\Magento\Sales\Model\Order\Invoice::STATE_PAID);
                         $transactionSave = $this->transactionFactory->create()->addObject($invoice)->addObject($invoice->getOrder());
                         $transactionSave->save();
-    
-                        $this->logger->addDebug("#1 : Automatic create invoice for the order #".$order_id." : Invoice type => ".$_invoiceType);
+
+                        $this->logger->addDebug("#1 : Automatic create invoice for the order #" . $order_id . " : Invoice type => " . $_invoiceType);
                     }
 
                     $this->logger->addDebug("Magento have created the transaction '" . $reepayTransactionData['id'] . "' already.");
@@ -384,7 +384,7 @@ class Index extends \Magento\Framework\App\Action\Action
                         'message' => "Magento have created the transaction '" . $reepayTransactionData['id'] . "' already.",
                     ];
                 }
-                
+
                 $transactionID = $this->reepayHelper->addCaptureTransactionToOrder($order, $reepayTransactionData, $chargeRes, $authorizationTxnId);
                 if ($transactionID) {
                     $this->reepayHelper->setReepayPaymentState($order->getPayment(), 'settled');
@@ -401,8 +401,8 @@ class Index extends \Magento\Framework\App\Action\Action
                         $invoice->setState(\Magento\Sales\Model\Order\Invoice::STATE_PAID);
                         $transactionSave = $this->transactionFactory->create()->addObject($invoice)->addObject($invoice->getOrder());
                         $transactionSave->save();
-    
-                        $this->logger->addDebug("#2 : Automatic create invoice for the order #".$order_id." : Invoice type => ".$_invoiceType);
+
+                        $this->logger->addDebug("#2 : Automatic create invoice for the order #" . $order_id . " : Invoice type => " . $_invoiceType);
                     }
 
                     $this->logger->addDebug('Settled order #' . $order_id . " , transaction ID : " . $transactionID);
@@ -420,11 +420,11 @@ class Index extends \Magento\Framework\App\Action\Action
                     ];
                 }
             } else {
-                $this->logger->addError('Cannot get transaction data from Billwerk+ : transaction ID = ' . $data['transaction']);
+                $this->logger->addError('Cannot get transaction data from Frisbii : transaction ID = ' . $data['transaction']);
 
                 return [
                     'status' => 500,
-                    'message' => 'Cannot get transaction data from Billwerk+ : transaction ID = ' . $data['transaction']
+                    'message' => 'Cannot get transaction data from Frisbii : transaction ID = ' . $data['transaction']
                 ];
             }
         } catch (\Exception $e) {
@@ -496,7 +496,7 @@ class Index extends \Magento\Framework\App\Action\Action
                     $order_id
                 );
 
-//                $refundAmount = $this->reepayHelper->convertAmount($refundData['amount']);
+                //                $refundAmount = $this->reepayHelper->convertAmount($refundData['amount']);
                 $transactionID = $this->reepayHelper->addRefundTransactionToOrder($order, $refundData, $chargeRes);
 
                 if ($transactionID) {
@@ -518,11 +518,11 @@ class Index extends \Magento\Framework\App\Action\Action
                     ];
                 }
             } else {
-                $this->logger->addError('Cannot get refund transaction data from Billwerk+ : transaction ID = ' . $data['transaction']);
+                $this->logger->addError('Cannot get refund transaction data from Frisbii : transaction ID = ' . $data['transaction']);
 
                 return [
                     'status' => 500,
-                    'message' => 'Cannot get refund transaction data from Billwerk+ : transaction ID = ' . $data['transaction'],
+                    'message' => 'Cannot get refund transaction data from Frisbii : transaction ID = ' . $data['transaction'],
                 ];
             }
         } catch (\Exception $e) {
@@ -582,7 +582,7 @@ class Index extends \Magento\Framework\App\Action\Action
             }
 
             $order->cancel();
-            $order->addStatusHistoryComment('Billwerk+ : order have been cancelled by the webhook');
+            $order->addStatusHistoryComment('Frisbii : order have been cancelled by the webhook');
             $order->save();
 
             $_payment = $order->getPayment();
@@ -688,13 +688,13 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     private function surchargeFee($orderIncrementId, $chargeRes)
     {
-		$order = $this->orderInterface->loadByIncrementId($orderIncrementId);
+        $order = $this->orderInterface->loadByIncrementId($orderIncrementId);
         $storeId = $order->getStoreId();
         $isSurchargeFeeEnable = $this->reepayHelper->isSurchargeFeeEnabled($storeId);
         $this->logger->addDebug(__METHOD__, ['isSurchargeFeeEnable' => $isSurchargeFeeEnable, 'orderIncrementId' => $orderIncrementId]);
         if ($isSurchargeFeeEnable) {
             //to test add 50.00
-//            $chargeRes['source']['surcharge_fee'] = '5100';
+            //            $chargeRes['source']['surcharge_fee'] = '5100';
             $this->logger->addDebug('updateFeeToOrder', $chargeRes);
             $this->reepaySurchargeFee->updateFeeToOrder($orderIncrementId, $chargeRes);
         } else {

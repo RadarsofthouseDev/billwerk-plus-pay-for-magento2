@@ -78,7 +78,8 @@ class Reepaypayment extends \Magento\Payment\Model\Method\AbstractMethod
      *
      * @return $bool
      */
-    public function isAutoCapture(){
+    public function isAutoCapture()
+    {
         return $this->_isAutoCapture;
     }
 }

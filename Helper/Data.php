@@ -818,7 +818,7 @@ class Data extends AbstractHelper
                 $totalDue = $order->formatPrice($order->getTotalDue());
                 $order->setState($orderStatusAfterPayment, true);
                 $order->setStatus($orderStatusAfterPayment);
-                $order->addStatusToHistory($order->getStatus(), 'Billwerk+ : The authorized amount is ' . $totalDue);
+                $order->addStatusToHistory($order->getStatus(), 'Frisbii : The authorized amount is ' . $totalDue);
                 $order->save();
             }
 
@@ -881,7 +881,7 @@ class Data extends AbstractHelper
             $payment->setParentTransactionId($authorizationTxnId);
 
             $formatedPrice = $order->formatPrice($transactionData['amount']);
-            $message = __('Billwerk+ : Captured amount of %1 by the webhook.', $formatedPrice);
+            $message = __('Frisbii : Captured amount of %1 by the webhook.', $formatedPrice);
 
             $transaction = $this->_transactionBuilder->setPayment($payment)
                 ->setOrder($order)
@@ -974,7 +974,7 @@ class Data extends AbstractHelper
             );
 
             $formatedPrice = $order->formatPrice($transactionData['amount']);
-            $message = __('Billwerk+ : Refunded amount of %1 by the webhook.', $formatedPrice);
+            $message = __('Frisbii : Refunded amount of %1 by the webhook.', $formatedPrice);
 
             $transaction = $this->_transactionBuilder->setPayment($payment)
                 ->setOrder($order)

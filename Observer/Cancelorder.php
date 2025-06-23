@@ -100,8 +100,7 @@ class Cancelorder implements \Magento\Framework\Event\ObserverInterface
             $reepayMethod = isset($charge['source']['type']) ? $charge['source']['type'] : '';
 
             $isAutoCapture = false;
-            if (
-                $this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) ||
+            if ($this->reepayHelper->getConfig('auto_capture', $order->getStoreId()) ||
                 $this->reepayHelper->isReepayMethodAutoCapture($paymentMethod, $reepayMethod) ||
                 $order->getPayment()->getMethodInstance()->isAutoCapture()
             ) {

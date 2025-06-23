@@ -1,5 +1,8 @@
-
 # Changelog
+## Version 1.2.60 on 23 June 2025
+- Rebranded Billwerk+ to Frisbii
+- Magento Coding Standard
+
 ## Version 1.2.59 on 31 March 2025
 - Fixed an issue where the Swish payment method fell back to the standard payment during checkout.
 

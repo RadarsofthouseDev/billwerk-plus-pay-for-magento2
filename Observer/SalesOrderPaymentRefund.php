@@ -96,7 +96,7 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
                     $this->logger->addDebug("refund error : ", $refund);
                     $error_message = $refund["error"];
                     if (isset($refund["message"])) {
-                        $error_message = $refund["error"]." : ".$refund["message"];
+                        $error_message = $refund["error"] . " : " . $refund["message"];
                     }
                     throw new \Magento\Framework\Exception\LocalizedException(__($error_message));
                 }
@@ -127,9 +127,9 @@ class SalesOrderPaymentRefund implements \Magento\Framework\Event\ObserverInterf
                     $this->logger->addDebug("set refund transaction data");
                 }
             } else {
-                $this->logger->addDebug("Empty refund response from Billwerk+");
-                $this->messageManager->addErrorMessage("Empty refund response from Billwerk+");
-                throw new \Magento\Framework\Exception\LocalizedException(__('Empty refund response from Billwerk+'));
+                $this->logger->addDebug("Empty refund response from Frisbii");
+                $this->messageManager->addErrorMessage("Empty refund response from Frisbii");
+                throw new \Magento\Framework\Exception\LocalizedException(__('Empty refund response from Frisbii'));
             }
         }
     }

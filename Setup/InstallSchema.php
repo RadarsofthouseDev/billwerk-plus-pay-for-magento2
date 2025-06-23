@@ -6,11 +6,6 @@ use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 
-/**
- * Class InstallSchema
- *
- * @package Radarsofthouse\Reepay\Setup
- */
 class InstallSchema implements InstallSchemaInterface
 {
 
@@ -24,7 +19,7 @@ class InstallSchema implements InstallSchemaInterface
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $productMetadata = $objectManager->get(\Magento\Framework\App\ProductMetadataInterface::class);
         $magentoMinorVersion = (int)explode(".", $productMetadata->getVersion())[1];
-        if($magentoMinorVersion >= 3 ){
+        if ($magentoMinorVersion >= 3) {
             return;
         }
 
@@ -274,7 +269,7 @@ class InstallSchema implements InstallSchemaInterface
             'handle',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
-            ['nullable' => False],
+            ['nullable' => false],
             'Reepay session handle'
         );
 
@@ -282,7 +277,7 @@ class InstallSchema implements InstallSchemaInterface
             'charge_handle',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
-            ['nullable' => False],
+            ['nullable' => false],
             'Reepay charge handle'
         );
 
@@ -290,7 +285,7 @@ class InstallSchema implements InstallSchemaInterface
             'order_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
-            ['nullable' => False],
+            ['nullable' => false],
             'Order entity id'
         );
 
@@ -298,7 +293,7 @@ class InstallSchema implements InstallSchemaInterface
             'order_number',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             255,
-            ['nullable' => False],
+            ['nullable' => false],
             'Order increment id'
         );
 
@@ -306,11 +301,10 @@ class InstallSchema implements InstallSchemaInterface
             'created',
             \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
             null,
-            ['nullable' => False],
+            ['nullable' => false],
             'Created timestamp'
         );
 
         $setup->getConnection()->createTable($table_radarsofthouse_reepay_session);
-
     }
 }

@@ -94,8 +94,8 @@ class Send extends \Magento\Backend\App\Action
             $sessionId = $this->reepayPayment->createReepaySession($order);
 
             if (empty($sessionId)) {
-                $this->logger->addDebug("Cannot create Billwerk+ payment session");
-                $this->messageManager->addError(__('Cannot create Billwerk+ payment session'));
+                $this->logger->addDebug("Cannot create Frisbii payment session");
+                $this->messageManager->addError(__('Cannot create Frisbii payment session'));
 
                 return;
             }
@@ -104,7 +104,7 @@ class Send extends \Magento\Backend\App\Action
 
             $this->messageManager->addSuccess(__("Payment link email has been sent to the customer."));
         } catch (\Exception $e) {
-            $this->logger->addError(__METHOD__." Exception : ".$e->getMessage());
+            $this->logger->addError(__METHOD__ . " Exception : " . $e->getMessage());
             $this->messageManager->addException($e, $e->getMessage());
         }
 

@@ -187,7 +187,7 @@ class Payment extends AbstractHelper
 
         $options['phone'] = '';
         $sendPhoneNumber = $this->_reepayHelper->getConfig('send_phone_number', $order->getStoreId());
-        if($sendPhoneNumber){
+        if ($sendPhoneNumber) {
             $options['phone'] = $billingAddress['phone'];
         }
 
@@ -197,7 +197,7 @@ class Payment extends AbstractHelper
 
         if ($saveCardEnable && $this->_customerSession->isLoggedIn() && !$defaultSaveCardNotChecked) {
             $options['recurring_optional'] = true;
-        }elseif($saveCardEnable && $this->_customerSession->isLoggedIn()){
+        } elseif ($saveCardEnable && $this->_customerSession->isLoggedIn()) {
             $options['recurring_optional'] = false;
         }
 
@@ -238,12 +238,12 @@ class Payment extends AbstractHelper
                 $reepaySession->setOrderNumber($order->getIncrementId());
                 $reepaySession->setCreated(date('Y-m-d H:i:s'));
                 $this->_reepaySessionRepository->save($reepaySession);
-            }catch (\Magento\Framework\Exception\LocalizedException $exception){
+            } catch (\Magento\Framework\Exception\LocalizedException $exception) {
             }
             return $paymentTransactionId;
         } else {
             throw new \Magento\Framework\Exception\LocalizedException(
-                __('Cannot create Billwerk+ session.')
+                __('Cannot create Frisbii session.')
             );
         }
     }

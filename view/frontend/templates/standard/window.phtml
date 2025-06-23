@@ -2,12 +2,12 @@
 
 <div class="reepay-payment-layout">
     <div class="logo-wrapper">
-        <img class="logo" src="<?= $block->escapeUrl($block->getLogoSrc()); ?>" 
-            alt="<?= $block->escapeHtml($block->getLogoAlt()); ?>">
+        <img class="logo" src="<?= $escaper->escapeUrl($block->getLogoSrc()); ?>" 
+            alt="<?= $escaper->escapeHtml($block->getLogoAlt()); ?>">
     </div>
     <script>
         require(['jquery','Reepay'],function($,Reepay){
-             var rp = new Reepay.WindowCheckout('<?= $block->escapeHtml($block->getPaymentTransactionId()); ?>');
+             var rp = new Reepay.WindowCheckout('<?= $escaper->escapeHtml($block->getPaymentTransactionId()); ?>');
         });
     </script>
 </div>

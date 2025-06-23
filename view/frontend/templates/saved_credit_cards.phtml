@@ -15,22 +15,22 @@ foreach ($savedCreditCards as $key => $savedCreditCard) {
     <?php foreach ($savedCreditCards as $key => $savedCreditCard): ?>
         <div class="credit-card-container">
             <label class="credit-card">
-                <?= $block->escapeHtml($allAllowwedpayments[$savedCreditCard['card_type']].
+                <?= $escaper->escapeHtml($allAllowwedpayments[$savedCreditCard['card_type']].
                     " : ".$savedCreditCard['masked_card']); ?>
                 <input type="radio" name="credit-card" 
                     <?= ($key == $selected_key && $savedCreditCardInQuote != "new") ? 'checked="checked"' : ""; ?> 
-                    value="<?= $block->escapeHtml($savedCreditCard['id']); ?>"
+                    value="<?= $escaper->escapeHtml($savedCreditCard['id']); ?>"
                 >
                 <span class="checkmark"></span>
             </label>
             <span class="remove-credit-card-btn" 
-                data-cid="<?= $block->escapeHtml($savedCreditCard['id']); ?>" 
-                data-card="<?= $block->escapeHtml($savedCreditCard['masked_card']); ?>">
+                data-cid="<?= $escaper->escapeHtml($savedCreditCard['id']); ?>" 
+                data-card="<?= $escaper->escapeHtml($savedCreditCard['masked_card']); ?>">
             </span>
         </div>
     <?php endforeach; ?>
         <div class="credit-card-container">
-            <label class="credit-card"><?= $block->escapeHtml(__('New credit card')) ?>
+            <label class="credit-card"><?= $escaper->escapeHtml(__('New credit card')) ?>
                 <input type="radio" 
                     name="credit-card" <?= ($savedCreditCardInQuote == "new") ? 'checked="checked"' : ""; ?> 
                     value="new">
@@ -48,7 +48,7 @@ foreach ($savedCreditCards as $key => $savedCreditCard) {
                         cid: $('input[name="credit-card"]:checked').val(),
                     }
                     $.ajax({
-                        url: '<?= $block->escapeUrl($block->getSetCreditCardUrl()); ?>',
+                        url: '<?= $escaper->escapeUrl($block->getSetCreditCardUrl()); ?>',
                         method: 'POST',
                         data: data,
                         showLoader: true,
@@ -112,7 +112,7 @@ foreach ($savedCreditCards as $key => $savedCreditCard) {
                                 }
                                 
                                 $.ajax({
-                                    url: '<?= $block->escapeUrl($block->getRemoveCardUrl()); ?>',
+                                    url: '<?= $escaper->escapeUrl($block->getRemoveCardUrl()); ?>',
                                     method: 'POST',
                                     data: data,
                                     showLoader: true,

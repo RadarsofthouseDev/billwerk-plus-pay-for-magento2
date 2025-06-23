@@ -5,11 +5,11 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="logo">
-                    <img class="logo" src="<?= $block->escapeUrl($block->getLogoSrc()); ?>" 
-                        alt="<?= $block->escapeHtml($block->getLogoAlt()); ?>">
+                    <img class="logo" src="<?= $escaper->escapeUrl($block->getLogoSrc()); ?>" 
+                        alt="<?= $escaper->escapeHtml($block->getLogoAlt()); ?>">
                 </div>
                 <div>
-                    Transaction ID : <?= $block->escapeHtml($block->getPaymentTransactionId()); ?>
+                    Transaction ID : <?= $escaper->escapeHtml($block->getPaymentTransactionId()); ?>
                 </div>
             </div>
         </div>

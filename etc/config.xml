@@ -4,8 +4,8 @@
 		<payment>
 			<reepay_payment>
 				<active>0</active>
-				<title>Credit card by Billwerk+</title>
-				<instructions>Billwerk+ Pay</instructions>
+				<title>Credit card by Frisbii</title>
+				<instructions>Frisbii Pay</instructions>
 				<private_key_test/>
 				<private_key/>
 				<api_key_type>0</api_key_type>
@@ -36,7 +36,7 @@
 			</reepay_payment>
 			<reepay_viabill>
 				<active>0</active>
-				<title>Viabill payment by Billwerk+</title>
+				<title>Viabill payment by Frisbii</title>
 				<instructions>Viabill payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -47,7 +47,7 @@
 			</reepay_viabill>
             <reepay_anyday>
 				<active>0</active>
-				<title>Anyday payment by Billwerk+</title>
+				<title>Anyday payment by Frisbii</title>
 				<instructions>Anyday payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -58,7 +58,7 @@
 			</reepay_anyday>
 			<reepay_mobilepay>
 				<active>0</active>
-				<title>Mobilepay payment by Billwerk+</title>
+				<title>Mobilepay payment by Frisbii</title>
 				<instructions>Mobilepay payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -69,7 +69,7 @@
 			</reepay_mobilepay>
             <reepay_applepay>
 				<active>0</active>
-				<title>Apple Pay payment by Billwerk+</title>
+				<title>Apple Pay payment by Frisbii</title>
 				<instructions>Apple Pay payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -80,7 +80,7 @@
 			</reepay_applepay>
             <reepay_paypal>
 				<active>0</active>
-				<title>Paypal payment by Billwerk+</title>
+				<title>Paypal payment by Frisbii</title>
 				<instructions>Paypal payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -91,7 +91,7 @@
 			</reepay_paypal>
             <reepay_klarnapaynow>
 				<active>0</active>
-				<title>Klarna Pay Now payment by Billwerk+</title>
+				<title>Klarna Pay Now payment by Frisbii</title>
 				<instructions>Klarna Pay Now payment</instructions>
                 <show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -102,7 +102,7 @@
 			</reepay_klarnapaynow>
             <reepay_klarnapaylater>
 				<active>0</active>
-				<title>Klarna Pay Later payment by Billwerk+</title>
+				<title>Klarna Pay Later payment by Frisbii</title>
 				<instructions>Klarna Pay Later payment</instructions>
                 <show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -113,7 +113,7 @@
 			</reepay_klarnapaylater>
             <reepay_klarnasliceit>
                 <active>0</active>
-                <title>Klarna Slice It payment by Billwerk+</title>
+                <title>Klarna Slice It payment by Frisbii</title>
                 <instructions>Klarna Slice It payment</instructions>
                 <show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -124,7 +124,7 @@
             </reepay_klarnasliceit>
             <reepay_klarnadirectbanktransfer>
                 <active>0</active>
-                <title>Klarna Direct Bank Transfer payment by Billwerk+</title>
+                <title>Klarna Direct Bank Transfer payment by Frisbii</title>
                 <instructions>Klarna Direct Bank Transfer payment</instructions>
                 <show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -135,7 +135,7 @@
             </reepay_klarnadirectbanktransfer>
             <reepay_klarnadirectdebit>
                 <active>0</active>
-                <title>Klarna Direct Debit payment by Billwerk+</title>
+                <title>Klarna Direct Debit payment by Frisbii</title>
                 <instructions>Klarna Direct Debit payment</instructions>
                 <show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -146,7 +146,7 @@
             </reepay_klarnadirectdebit>
             <reepay_swish>
 				<active>0</active>
-				<title>Swish payment by Billwerk+</title>
+				<title>Swish payment by Frisbii</title>
 				<instructions>Swish payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -157,7 +157,7 @@
 			</reepay_swish>
             <reepay_vipps>
                 <active>0</active>
-                <title>Vipps payment by Billwerk+</title>
+                <title>Vipps payment by Frisbii</title>
                 <instructions>Vipps payment</instructions>
                 <show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -168,7 +168,7 @@
             </reepay_vipps>
             <reepay_forbrugsforeningen>
 				<active>0</active>
-				<title>Forbrugsforeningen payment by Billwerk+</title>
+				<title>Forbrugsforeningen payment by Frisbii</title>
 				<instructions>Forbrugsforeningen payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -179,7 +179,7 @@
 			</reepay_forbrugsforeningen>
             <reepay_googlepay>
 				<active>0</active>
-				<title>Googlepay payment by Billwerk+</title>
+				<title>Googlepay payment by Frisbii</title>
 				<instructions>Googlepay payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -190,7 +190,7 @@
 			</reepay_googlepay>
             <reepay_ideal>
 				<active>0</active>
-				<title>iDEAL payment by Billwerk+</title>
+				<title>iDEAL payment by Frisbii</title>
 				<instructions>iDEAL payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -201,7 +201,7 @@
 			</reepay_ideal>
             <reepay_blik>
 				<active>0</active>
-				<title>BLIK One Click payment by Billwerk+</title>
+				<title>BLIK One Click payment by Frisbii</title>
 				<instructions>BLIK One Click payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -212,7 +212,7 @@
 			</reepay_blik>
             <reepay_p24>
 				<active>0</active>
-				<title>Przelewy24 (P24) payment by Billwerk+</title>
+				<title>Przelewy24 (P24) payment by Frisbii</title>
 				<instructions>Przelewy24 (P24) payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -223,7 +223,7 @@
 			</reepay_p24>
             <reepay_verkkopankki>
 				<active>0</active>
-				<title>Verkkopankki payment by Billwerk+</title>
+				<title>Verkkopankki payment by Frisbii</title>
 				<instructions>Verkkopankki payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -234,7 +234,7 @@
 			</reepay_verkkopankki>
             <reepay_giropay>
 				<active>0</active>
-				<title>giropay payment by Billwerk+</title>
+				<title>giropay payment by Frisbii</title>
 				<instructions>giropay payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -245,7 +245,7 @@
 			</reepay_giropay>
             <reepay_sepa>
 				<active></active>
-				<title>SEPA Direct Debit payment by Billwerk+</title>
+				<title>SEPA Direct Debit payment by Frisbii</title>
 				<instructions>SEPA Direct Debit payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -256,7 +256,7 @@
 			</reepay_sepa>
             <reepay_bancontact>
 				<active></active>
-				<title>Bancontact payment by Billwerk+</title>
+				<title>Bancontact payment by Frisbii</title>
 				<instructions>Bancontact payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -267,7 +267,7 @@
 			</reepay_bancontact>
             <reepay_santander>
 				<active></active>
-				<title>Santander payment by Billwerk+</title>
+				<title>Santander payment by Frisbii</title>
 				<instructions>Santander payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -278,7 +278,7 @@
 			</reepay_santander>
             <reepay_eps>
 				<active></active>
-				<title>EPS payment by Billwerk+</title>
+				<title>EPS payment by Frisbii</title>
 				<instructions>EPS payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -289,7 +289,7 @@
 			</reepay_eps>
             <reepay_estoniabanks>
 				<active></active>
-				<title>Estonian Banks payment by Billwerk+</title>
+				<title>Estonian Banks payment by Frisbii</title>
 				<instructions>Estonian Banks payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -300,7 +300,7 @@
 			</reepay_estoniabanks>
             <reepay_latviabanks>
 				<active></active>
-				<title>Latvian Banks payment by Billwerk+</title>
+				<title>Latvian Banks payment by Frisbii</title>
 				<instructions>Latvian Banks payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -311,7 +311,7 @@
 			</reepay_latviabanks>
             <reepay_lithuaniabanks>
 				<active></active>
-				<title>Lithuanian Banks payment by Billwerk+</title>
+				<title>Lithuanian Banks payment by Frisbii</title>
 				<instructions>Lithuanian Banks payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -322,7 +322,7 @@
 			</reepay_lithuaniabanks>
             <reepay_mbway>
 				<active></active>
-				<title>MB Way payment by Billwerk+</title>
+				<title>MB Way payment by Frisbii</title>
 				<instructions>MB Way payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -333,7 +333,7 @@
 			</reepay_mbway>
             <reepay_multibanco>
 				<active></active>
-				<title>Multibanco payment by Billwerk+</title>
+				<title>Multibanco payment by Frisbii</title>
 				<instructions>Multibanco payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -344,7 +344,7 @@
 			</reepay_multibanco>
             <reepay_mybank>
 				<active></active>
-				<title>mBank payment by Billwerk+</title>
+				<title>mBank payment by Frisbii</title>
 				<instructions>mBank payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -355,7 +355,7 @@
 			</reepay_mybank>
             <reepay_payconiq>
 				<active></active>
-				<title>Payconiq payment by Billwerk+</title>
+				<title>Payconiq payment by Frisbii</title>
 				<instructions>Payconiq payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -366,7 +366,7 @@
 			</reepay_payconiq>
             <reepay_paysafecard>
 				<active></active>
-				<title>Paysafecard payment by Billwerk+</title>
+				<title>Paysafecard payment by Frisbii</title>
 				<instructions>Paysafecard payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -377,7 +377,7 @@
 			</reepay_paysafecard>
             <reepay_paysera>
 				<active></active>
-				<title>Paysera payment by Billwerk+</title>
+				<title>Paysera payment by Frisbii</title>
 				<instructions>Paysera payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -388,7 +388,7 @@
 			</reepay_paysera>
             <reepay_postfinance>
 				<active></active>
-				<title>PostFinance payment by Billwerk+</title>
+				<title>PostFinance payment by Frisbii</title>
 				<instructions>PostFinance payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -399,7 +399,7 @@
 			</reepay_postfinance>
             <reepay_satispay>
 				<active></active>
-				<title>Satisfy payment by Billwerk+</title>
+				<title>Satisfy payment by Frisbii</title>
 				<instructions>Satisfy payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -410,7 +410,7 @@
 			</reepay_satispay>
             <reepay_trustly>
 				<active></active>
-				<title>Trustly payment by Billwerk+</title>
+				<title>Trustly payment by Frisbii</title>
 				<instructions>Trustly payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -421,7 +421,7 @@
 			</reepay_trustly>
             <reepay_wechatpay>
 				<active></active>
-				<title>WeChat Pay payment by Billwerk+</title>
+				<title>WeChat Pay payment by Frisbii</title>
 				<instructions>WeChat Pay payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -432,7 +432,7 @@
 			</reepay_wechatpay>
             <reepay_banktransfer>
 				<active></active>
-				<title>Bank Transfer payment by Billwerk+</title>
+				<title>Bank Transfer payment by Frisbii</title>
 				<instructions>Bank Transfer payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -443,7 +443,7 @@
 			</reepay_banktransfer>
             <reepay_cash>
 				<active></active>
-				<title>Cash payment by Billwerk+</title>
+				<title>Cash payment by Frisbii</title>
 				<instructions>Cash payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -454,7 +454,7 @@
 			</reepay_cash>
             <reepay_other>
 				<active></active>
-				<title>Other payment by Billwerk+</title>
+				<title>Other payment by Frisbii</title>
 				<instructions>Other payment</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>
@@ -465,9 +465,9 @@
 			</reepay_other>
 			<reepay_vippsepayment>
 				<active>0</active>
-				<title>Vipps Mobilepay payment by Billwerk+</title>
-				<title_dkk_eur>Mobilepay payment by Billwerk+</title_dkk_eur>
-				<title_nok>Vipps payment by Billwerk+</title_nok>
+				<title>Vipps Mobilepay payment by Frisbii</title>
+				<title_dkk_eur>Mobilepay payment by Frisbii</title_dkk_eur>
+				<title_nok>Vipps payment by Frisbii</title_nok>
 				<instructions>Mobilepay</instructions>
 				<show_icon>0</show_icon>
 				<custom_icon></custom_icon>

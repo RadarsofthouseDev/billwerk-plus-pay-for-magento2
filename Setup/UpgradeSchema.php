@@ -20,7 +20,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $productMetadata = $objectManager->get(\Magento\Framework\App\ProductMetadataInterface::class);
         $magentoMinorVersion = (int)explode(".", $productMetadata->getVersion())[1];
-        if($magentoMinorVersion >= 3 ){
+        if ($magentoMinorVersion >= 3) {
             return;
         }
 
@@ -177,7 +177,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'handle',
                 \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                 255,
-                ['nullable' => False],
+                ['nullable' => false],
                 'Reepay session handle'
             );
 
@@ -185,7 +185,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'charge_handle',
                 \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                 255,
-                ['nullable' => False],
+                ['nullable' => false],
                 'Reepay charge handle'
             );
 
@@ -193,7 +193,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'order_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['nullable' => False],
+                ['nullable' => false],
                 'Order entity id'
             );
 
@@ -201,7 +201,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'order_number',
                 \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                 255,
-                ['nullable' => False],
+                ['nullable' => false],
                 'Order increment id'
             );
 
@@ -209,7 +209,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'created',
                 \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
                 null,
-                ['nullable' => False],
+                ['nullable' => false],
                 'Created timestamp'
             );
 

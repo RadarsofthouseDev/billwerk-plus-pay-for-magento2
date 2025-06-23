@@ -2,15 +2,15 @@
 
 <div class="reepay-payment-layout">
     <div class="logo-wrapper">
-        <img class="logo" src="<?= $block->escapeUrl($block->getLogoSrc()); ?>"
-            alt="<?= $block->escapeHtml($block->getLogoAlt()); ?>">
+        <img class="logo" src="<?= $escaper->escapeUrl($block->getLogoSrc()); ?>"
+            alt="<?= $escaper->escapeHtml($block->getLogoAlt()); ?>">
     </div>
 
     <div class="reepay-embedded">
         <div class="order-section">
             <div class="order-info">
-                <p><?= $block->escapeHtml(__('Order ID :')); ?> <?= $block->escapeHtml($order->getIncrementId()); ?></p>
-                <p><?= $block->escapeHtml(__('Total :')); ?> <?= $order->formatPrice($order->getTotalDue()); ?></p>
+                <p><?= $escaper->escapeHtml(__('Order ID :')); ?> <?= $escaper->escapeHtml($order->getIncrementId()); ?></p>
+                <p><?= $escaper->escapeHtml(__('Total :')); ?> <?= $escaper->escapeHtml($order->formatPrice($order->getTotalDue())); ?></p>
             </div>
         </div>
         <div id="rp_container"></div>
@@ -19,7 +19,7 @@
     <script>
         require(['jquery', 'Reepay'], function($, Reepay) {
 
-            var rp = new Reepay.EmbeddedCheckout("<?= $block->escapeHtml($block->getPaymentTransactionId()); ?>",
+            var rp = new Reepay.EmbeddedCheckout("<?= $escaper->escapeHtml($block->getPaymentTransactionId()); ?>",
                 'rp_container');
 
             rp.addEventHandler(Reepay.Event.Accept, function(data) {
@@ -30,7 +30,7 @@
                     data.invoice
                 ) {
                     $.ajax({
-                        url: '<?= $block->escapeUrl($block->getAcceptUrl()); ?>',
+                        url: '<?= $escaper->escapeUrl($block->getAcceptUrl()); ?>',
                         method: 'POST',
                         data: data,
                     }).done(function(data) {
@@ -47,7 +47,7 @@
             rp.addEventHandler(Reepay.Event.Error, function(data) {
                 // log error
                 $.ajax({
-                    url: '<?= $block->escapeUrl($block->getErrorUrl()); ?>',
+                    url: '<?= $escaper->escapeUrl($block->getErrorUrl()); ?>',
                     method: 'POST',
                     data: data,
                 }).done(function(data) {

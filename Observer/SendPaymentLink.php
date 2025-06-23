@@ -93,7 +93,7 @@ class SendPaymentLink implements \Magento\Framework\Event\ObserverInterface
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $order = $observer->getEvent()->getOrder();
-        if( $order == null ){
+        if ($order == null) {
             // multiple shipping address checkout
             $this->_logger->addDebug(__METHOD__, ["Order object is null, might be multiple shipping address checkout"]);
             return;
@@ -108,15 +108,15 @@ class SendPaymentLink implements \Magento\Framework\Event\ObserverInterface
                     $sessionId = $this->_reepayPayment->createReepaySession($order);
 
                     if (empty($sessionId)) {
-                        $this->_logger->addDebug("Cannot create Billwerk+ payment session");
-                        $this->_messageManager->addError(__('Cannot create Billwerk+ payment session'));
+                        $this->_logger->addDebug("Cannot create Frisbii payment session");
+                        $this->_messageManager->addError(__('Cannot create Frisbii payment session'));
 
                         return;
                     }
                     $this->_logger->addDebug("SEND EMAIL");
                     $this->_reepayEmail->sendPaymentLinkEmail($order, $sessionId);
                 } catch (\Exception $e) {
-                    $this->_logger->addError(__METHOD__." Exception : ".$e->getMessage());
+                    $this->_logger->addError(__METHOD__ . " Exception : " . $e->getMessage());
                     $this->_messageManager->addException($e, $e->getMessage());
                 }
             }

@@ -18,11 +18,11 @@ class Reepayvippsepayment extends \Radarsofthouse\Reepay\Model\Reepaypayment
      * @param CartInterface|null $quote
      * @return bool
      */
-    public function isAvailable(\Magento\Quote\Api\Data\CartInterface $quote = null)
+    public function isAvailable(?\Magento\Quote\Api\Data\CartInterface $quote = null)
     {
-        if(null !== $quote) {
+        if (null !== $quote) {
             $currencyCode = $quote->getCurrency()->getQuoteCurrencyCode();
-            if(class_exists('\Radarsofthouse\BillwerkPlusSubscription\Helper\Data')){
+            if (class_exists('\Radarsofthouse\BillwerkPlusSubscription\Helper\Data')) {
                 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
                 $paymentHelper = $objectManager->get('\Radarsofthouse\BillwerkPlusSubscription\Helper\Data');
                 foreach ($quote->getAllItems() as $item) {
@@ -35,7 +35,7 @@ class Reepayvippsepayment extends \Radarsofthouse\Reepay\Model\Reepaypayment
         } else {
             $currencyCode = $this->getCurrencyCode();
         }
-        if(in_array($currencyCode, ['DKK', 'EUR', 'NOK'])) {
+        if (in_array($currencyCode, ['DKK', 'EUR', 'NOK'])) {
             return true;
         }
         return false;
@@ -71,7 +71,7 @@ class Reepayvippsepayment extends \Radarsofthouse\Reepay\Model\Reepaypayment
     public function getTitle()
     {
         $currencyCode = $this->getCurrencyCode();
-        if($currencyCode == 'NOK') {
+        if ($currencyCode == 'NOK') {
             return $this->getConfigData('title_nok');
         } elseif (in_array($currencyCode, ['DKK', 'EUR'])) {
             return $this->getConfigData('title_dkk_eur');

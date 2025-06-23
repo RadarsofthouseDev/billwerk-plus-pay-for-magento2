@@ -49,7 +49,7 @@ class AutoCancelStatus implements \Magento\Framework\Option\ArrayInterface
                 continue; // Skip excluded states
             }
             $statuses = $this->orderConfig->getStateStatuses($state);
-            foreach ($statuses as $key  => $status) {
+            foreach ($statuses as $key => $status) {
                 $label = isset($statusLabels[$key]) ? $statusLabels[$key] : ucfirst($status);
                 $options[] = [
                     'value' => $key,

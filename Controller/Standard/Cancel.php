@@ -134,9 +134,9 @@ class Cancel extends \Magento\Framework\App\Action\Action
             $transactions = $this->transactionSearchResultInterfaceFactory->create()->addOrderIdFilter($order->getId());
 
             // don't allowed the cancelation if already have transactions (payment is paid)
-            if( count($transactions->getItems()) == 0 ){
+            if (count($transactions->getItems()) == 0) {
                 $order->cancel();
-                $order->addStatusHistoryComment('Billwerk+ : order have been cancelled by payment page');
+                $order->addStatusHistoryComment('Frisbii : order have been cancelled by payment page');
                 $order->save();
                 $this->logger->addDebug('Cancelled order : ' . $orderId);
                 $apiKey = $this->reepayHelper->getApiKey($order->getStoreId());
@@ -152,7 +152,7 @@ class Cancel extends \Magento\Framework\App\Action\Action
                     ->unsLastSuccessQuoteId()
                     ->unsLastOrderId()
                     ->unsLastRealOrderId();
-            }else{
+            } else {
                 $this->logger->addDebug('The payment is done : ignore cancellation for order ' . $orderId);
             }
         }

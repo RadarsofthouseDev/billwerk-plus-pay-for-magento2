@@ -1,6 +1,6 @@
 <?php $paymentIcon = $block->getApplepayPaymentIcon(); ?>
-<?php if (!empty($paymentIcon)) : ?>
-    <img class="reepay-payment-icon" src="<?= $block->escapeUrl($paymentIcon); ?>">
+<?php if (!empty($paymentIcon)): ?>
+    <img class="reepay-payment-icon" src="<?= $escaper->escapeUrl($paymentIcon); ?>">
 <?php endif; ?>
 
 <script>

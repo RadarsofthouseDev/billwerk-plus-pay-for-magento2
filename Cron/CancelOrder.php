@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Radarsofthouse\Reepay\Cron;
@@ -55,7 +56,6 @@ class CancelOrder
         $this->orderRepository = $orderRepository;
         $this->helper = $helper;
         $this->logger = $logger;
-
     }
 
     /**
@@ -76,8 +76,8 @@ class CancelOrder
             }
             $statuses = $this->helper->getConfig('auto_cancel_unpaid_order_status', $storeId);
             $minutes = $this->helper->getConfig('auto_cancel_unpaid_order_after', $storeId);
-            $orderIds = $this->getOrders($storeId,$statuses, $minutes);
-            if(!$orderIds) {
+            $orderIds = $this->getOrders($storeId, $statuses, $minutes);
+            if (!$orderIds) {
                 $this->logger->addInfo("No orders found for store $storeId-$storeName");
                 continue;
             }
@@ -88,7 +88,7 @@ class CancelOrder
                         $order->cancel();
 
                         $statusHistory = $this->orderStatusHistoryFactory->create();
-                        $statusHistory->setComment("Billwerk+ Pay: auto cancel unpaid order after $minutes minutes");
+                        $statusHistory->setComment("Frisbii Pay: auto cancel unpaid order after $minutes minutes");
                         $statusHistory->setEntityName(\Magento\Sales\Model\Order::STATUS_HISTORIES);
                         $statusHistory->setIsVisibleOnFront(false);
                         $statusHistory->setStatus($order->getStatus());
@@ -120,12 +120,12 @@ class CancelOrder
         $collection = $this->orderCollectionFactory->create()
             ->addAttributeToFilter('store_id', $storeId)
             ->addAttributeToFilter('status', ['in' => $status])
-            ->addAttributeToFilter('created_at', ['lteq'=> $currentTime]);
-        if($collection->count() > 0) {
+            ->addAttributeToFilter('created_at', ['lteq' => $currentTime]);
+        if ($collection->count() > 0) {
             /** @var \Magento\Sales\Model\Order $order */
             foreach ($collection->getItems() as $order) {
                 $method = $order->getPayment()->getMethod();
-                if($this->helper->isReepayPaymentMethod($method)) {
+                if ($this->helper->isReepayPaymentMethod($method)) {
                     $orderIds[] = $order->getId();
                 }
             }

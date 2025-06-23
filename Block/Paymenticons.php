@@ -199,7 +199,7 @@ class Paymenticons extends \Magento\Framework\View\Element\Template
 
         try {
             $currencyCode = $this->storeManager->getStore()->getCurrentCurrencyCode();
-            if($currencyCode == 'NOK') {
+            if ($currencyCode == 'NOK') {
                 return $this->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/vipps.png');
             } elseif (in_array($currencyCode, ['DKK', 'EUR'])) {
                 return $this->getViewFileUrl('Radarsofthouse_Reepay::img/payment_icons/mobilepay.png');
