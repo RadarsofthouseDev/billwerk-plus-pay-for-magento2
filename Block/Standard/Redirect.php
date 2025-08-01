@@ -45,6 +45,11 @@ class Redirect extends \Magento\Framework\View\Element\Template
     protected $fileStorageHelper;
 
     /**
+     * @var \Magento\Framework\Pricing\PriceCurrencyInterface
+     */
+    protected $priceCurrency;
+
+    /**
      * @var string
      */
     private $logoUrl;
@@ -58,6 +63,8 @@ class Redirect extends \Magento\Framework\View\Element\Template
      * @param \Magento\Sales\Model\OrderFactory $orderFactory
      * @param \Magento\Theme\Block\Html\Header\Logo $logo
      * @param \Magento\Framework\UrlInterface $urlInterface
+     * @param \Magento\MediaStorage\Helper\File\Storage\Database $fileStorageHelper
+     * @param \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency
      * @param array $data
      */
     public function __construct(
@@ -68,6 +75,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
         \Magento\Theme\Block\Html\Header\Logo $logo,
         \Magento\Framework\UrlInterface $urlInterface,
         \Magento\MediaStorage\Helper\File\Storage\Database $fileStorageHelper,
+        \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency,
         array $data = []
     ) {
         $this->invoice = $invoice;
@@ -77,6 +85,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
         $this->scopeConfig = $context->getScopeConfig();
         $this->urlInterface = $urlInterface;
         $this->fileStorageHelper = $fileStorageHelper;
+        $this->priceCurrency = $priceCurrency;
         parent::__construct($context, $data);
     }
 
@@ -184,5 +193,10 @@ class Redirect extends \Magento\Framework\View\Element\Template
         }
 
         return $this->getMediaDirectory()->isFile($filename);
+    }
+
+    public function getPriceCurrency()
+    {
+        return $this->priceCurrency;
     }
 }

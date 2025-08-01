@@ -1,4 +1,7 @@
 # Changelog
+## Version 1.2.61 on 1 August 2025
+- Added csp_whitelist.xml to configure Content Security Policy (CSP) whitelisting
+
 ## Version 1.2.60 on 23 June 2025
 - Rebranded Billwerk+ to Frisbii
 - Magento Coding Standard

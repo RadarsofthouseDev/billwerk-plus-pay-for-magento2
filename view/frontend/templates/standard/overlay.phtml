@@ -1,4 +1,7 @@
-<?php $order = $block->getOrder(); ?>
+<?php
+$order = $block->getOrder();
+$priceCurrency = $block->getPriceCurrency();
+?>
 
 <div class="reepay-payment-layout">
     <div class="logo-wrapper">
@@ -9,7 +12,7 @@
         <div class="order-section">
             <div class="order-info">
                 <p><?= $escaper->escapeHtml(__('Order ID :')); ?> <?= $escaper->escapeHtml($order->getIncrementId()); ?></p>
-                <p><?= $escaper->escapeHtml(__('Total :')); ?> <?= $escaper->escapeHtml($order->formatPrice($order->getTotalDue())); ?></p>
+                <p><?= $escaper->escapeHtml(__('Total :')); ?> <?= $escaper->escapeHtml($priceCurrency->convertAndFormat($order->getTotalDue(), false)); ?></p>
             </div>
 
             <div class="button pay-btn">
